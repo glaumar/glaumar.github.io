@@ -1,272 +1,141 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Shell特殊变量&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Shell特殊变量" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Shell特殊变量</h1><p class="article date">Friday, December 20, 2019</p></section><article class="article markdown-body"><p>shell中提供了一些特殊的变量方便在日常和脚本中使用</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">变量</th>
-<th style="text-align:left">意义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>0</code> ($0)</td>
-<td style="text-align:left">shell名称或执行脚本文件名称</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>digit</code> ($1~n)</td>
-<td style="text-align:left">传入的参数，依次是$1、$2…$n</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>*</code> ($*)</td>
-<td style="text-align:left">所有传入参数，&quot;$*&quot; 相当于 &ldquo;$1 $2 &hellip;&rdquo; （是 &ldquo;$*&rdquo; 而非 $*）</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>@</code> ($@)</td>
-<td style="text-align:left">所有传入参数，&quot;$@&quot; 相当于 &ldquo;$1&rdquo; &ldquo;$2&rdquo; &ldquo;&hellip;&rdquo; （是 &ldquo;$@&rdquo; 而非 $@）</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>#</code> ($#)</td>
-<td style="text-align:left">传入的参数数量</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>?</code> ($?)</td>
-<td style="text-align:left">上一个程序或命令的退出状态码</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>_</code> ($_)</td>
-<td style="text-align:left">执行的上一条命令的最后一个参数</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>$</code> ($$)</td>
-<td style="text-align:left">当前进程的PID</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>!</code> ($!)</td>
-<td style="text-align:left">最近一个被放到后台运行的进程的PID</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>-</code> ($-)</td>
-<td style="text-align:left">当前shell已设置的选项标志，很少使用</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>IFS</code></td>
-<td style="text-align:left">shell内部域分隔符（ The Internal Field Separator），用来分割文本字符串</td>
-</tr>
-</tbody>
-</table>
-<p><strong>注</strong>：实际上在 <em>&ldquo;Bash Reference Manual&rdquo;</em> 的描述里，上表中只有 <code>IFS</code> 被称为 <em>&ldquo;special variable&rdquo;</em> 其他都被称为 <em>&ldquo;special parameter&rdquo;</em></p>
-<p>下面进行具体的讲解和演示</p>
-<ul>
-<li><code>0</code> ($0) , <code>$</code> ($$)</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看当前shell名称</span>
-$ <span class="nb">echo</span> <span class="nv">$0</span>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>Shell特殊变量&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="Shell特殊变量"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">Shell特殊变量</h1><p class="article date">Friday, December 20, 2019</p></section><article class="article markdown-body"><p>shell中提供了一些特殊的变量方便在日常和脚本中使用</p><table><thead><tr><th style=text-align:left>变量</th><th style=text-align:left>意义</th></tr></thead><tbody><tr><td style=text-align:left><code>0</code> ($0)</td><td style=text-align:left>shell名称或执行脚本文件名称</td></tr><tr><td style=text-align:left><code>digit</code> ($1~n)</td><td style=text-align:left>传入的参数，依次是$1、$2…$n</td></tr><tr><td style=text-align:left><code>*</code> ($*)</td><td style=text-align:left>所有传入参数，"$*" 相当于 &ldquo;$1 $2 &mldr;&rdquo; （是 &ldquo;$*&rdquo; 而非 $*）</td></tr><tr><td style=text-align:left><code>@</code> ($@)</td><td style=text-align:left>所有传入参数，"$@" 相当于 &ldquo;$1&rdquo; &ldquo;$2&rdquo; &ldquo;&mldr;&rdquo; （是 &ldquo;$@&rdquo; 而非 $@）</td></tr><tr><td style=text-align:left><code>#</code> ($#)</td><td style=text-align:left>传入的参数数量</td></tr><tr><td style=text-align:left><code>?</code> ($?)</td><td style=text-align:left>上一个程序或命令的退出状态码</td></tr><tr><td style=text-align:left><code>_</code> ($_)</td><td style=text-align:left>执行的上一条命令的最后一个参数</td></tr><tr><td style=text-align:left><code>$</code> ($$)</td><td style=text-align:left>当前进程的PID</td></tr><tr><td style=text-align:left><code>!</code> ($!)</td><td style=text-align:left>最近一个被放到后台运行的进程的PID</td></tr><tr><td style=text-align:left><code>-</code> ($-)</td><td style=text-align:left>当前shell已设置的选项标志，很少使用</td></tr><tr><td style=text-align:left><code>IFS</code></td><td style=text-align:left>shell内部域分隔符（ The Internal Field Separator），用来分割文本字符串</td></tr></tbody></table><p><strong>注</strong>：实际上在 <em>&ldquo;Bash Reference Manual&rdquo;</em> 的描述里，上表中只有 <code>IFS</code> 被称为 <em>&ldquo;special variable&rdquo;</em> 其他都被称为 <em>&ldquo;special parameter&rdquo;</em></p><p>下面进行具体的讲解和演示</p><ul><li><code>0</code> ($0) , <code>$</code> ($$)</li></ul><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 查看当前shell名称</span>
+$ <span class=nb>echo</span> <span class=nv>$0</span>
 /bin/bash
 
-<span class="c1"># 看看当前shell的PID</span>
-$ <span class="nb">echo</span> <span class="nv">$$</span>
-<span class="m">1335</span>
+<span class=c1># 看看当前shell的PID</span>
+$ <span class=nb>echo</span> <span class=nv>$$</span>
+<span class=m>1335</span>
 
-<span class="c1"># 新建子shell再看看</span>
+<span class=c1># 新建子shell再看看</span>
 $ bash
-$ <span class="nb">echo</span> <span class="nv">$0</span>
+$ <span class=nb>echo</span> <span class=nv>$0</span>
 bash
-$ <span class="nb">echo</span> <span class="nv">$$</span>
-<span class="m">27334</span>
-</code></pre></div><ul>
-<li><code>digit</code> ($1~n), <code>#</code> ($#), <code>*</code> ($*), <code>@</code> ($@) （$* 和 $@ 的深入讨论我放到了<a href="#%e5%92%8c%e7%9a%84%e5%8c%ba%e5%88%ab">最后</a>
-）</li>
-</ul>
-<p>把下列代码保存为 <code>test.sh</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/usr/bin/bash
-</span><span class="cp"></span>
-<span class="nb">echo</span> <span class="s2">&#34;\$0:&#34;</span> <span class="nv">$0</span>
-<span class="nb">echo</span> <span class="s2">&#34;\$1:&#34;</span> <span class="nv">$1</span>
-<span class="nb">echo</span> <span class="s2">&#34;\$3:&#34;</span> <span class="nv">$3</span>
-<span class="nb">echo</span> <span class="s2">&#34;\$#:&#34;</span> <span class="nv">$#</span>
-<span class="nb">echo</span> <span class="s2">&#34;\$*:&#34;</span> <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span>
-<span class="nb">echo</span> <span class="s2">&#34;\$@:&#34;</span> <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
-</code></pre></div><p>添加可执行权限并执行</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ chmod +x test.sh
+$ <span class=nb>echo</span> <span class=nv>$$</span>
+<span class=m>27334</span>
+</code></pre></div><ul><li><code>digit</code> ($1~n), <code>#</code> ($#), <code>*</code> ($*), <code>@</code> ($@) （$* 和 $@ 的深入讨论我放到了<a href=#%e5%92%8c%e7%9a%84%e5%8c%ba%e5%88%ab>最后</a>
+）</li></ul><p>把下列代码保存为 <code>test.sh</code></p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=cp>#!/usr/bin/bash
+</span><span class=cp></span>
+<span class=nb>echo</span> <span class=s2>&#34;\$0:&#34;</span> <span class=nv>$0</span>
+<span class=nb>echo</span> <span class=s2>&#34;\$1:&#34;</span> <span class=nv>$1</span>
+<span class=nb>echo</span> <span class=s2>&#34;\$3:&#34;</span> <span class=nv>$3</span>
+<span class=nb>echo</span> <span class=s2>&#34;\$#:&#34;</span> <span class=nv>$#</span>
+<span class=nb>echo</span> <span class=s2>&#34;\$*:&#34;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;\$@:&#34;</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+</code></pre></div><p>添加可执行权限并执行</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ chmod +x test.sh
 $ ./test.sh a b c d e f g
-</code></pre></div><p>执行结果</p>
-<pre><code>$0: ./test.sh
+</code></pre></div><p>执行结果</p><pre><code>$0: ./test.sh
 $1: a
 $3: c
 $#: 7
 $*: a b c d e f g
 $@: a b c d e f g
-</code></pre><p>需要注意的是参数较多的时候，比如要引用第11个参数应该用 <code>${11}</code> 而不是 <code>$11</code></p>
-<ul>
-<li><code>?</code> ($?)</li>
-</ul>
-<p>命令或程序顺利执行结束，正常退出时，退出状态码一般是0，执行出错时根据原因返回其他数值</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ mkdir <span class="nb">test</span>
-$ <span class="nb">echo</span> <span class="nv">$?</span>
-<span class="m">0</span>
+</code></pre><p>需要注意的是参数较多的时候，比如要引用第11个参数应该用 <code>${11}</code> 而不是 <code>$11</code></p><ul><li><code>?</code> ($?)</li></ul><p>命令或程序顺利执行结束，正常退出时，退出状态码一般是0，执行出错时根据原因返回其他数值</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ mkdir <span class=nb>test</span>
+$ <span class=nb>echo</span> <span class=nv>$?</span>
+<span class=m>0</span>
 
-<span class="c1"># 手抖打错文件夹名称</span>
-$ <span class="nb">cd</span> tset
+<span class=c1># 手抖打错文件夹名称</span>
+$ <span class=nb>cd</span> tset
 bash: cd: tset: No such file or directory
-$ <span class="nb">echo</span> <span class="nv">$?</span>
-<span class="m">1</span>
+$ <span class=nb>echo</span> <span class=nv>$?</span>
+<span class=m>1</span>
 
-$ <span class="nb">cd</span> <span class="nb">test</span>
+$ <span class=nb>cd</span> <span class=nb>test</span>
 
-<span class="c1"># 再次手抖</span>
+<span class=c1># 再次手抖</span>
 $ touc test.sh
-bash: touc: <span class="nb">command</span> not found
-$ <span class="nb">echo</span> <span class="nv">$?</span>
-<span class="m">127</span>
-</code></pre></div><p>当然这只是约定，具体在什么情况下返回什么值完全由程序自己决定</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
-<span class="p">{</span>
-    <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Hello world!&#34;</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">214</span><span class="p">;</span> <span class="c1">//执行结束后返回214作为退出状态码
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><p>将上述代码保存为 <code>hello.c</code> ，然后编译运行</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 编译</span>
+bash: touc: <span class=nb>command</span> not found
+$ <span class=nb>echo</span> <span class=nv>$?</span>
+<span class=m>127</span>
+</code></pre></div><p>当然这只是约定，具体在什么情况下返回什么值完全由程序自己决定</p><div class=highlight><pre class=chroma><code class=language-c data-lang=c><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+<span class=p>{</span>
+    <span class=n>puts</span><span class=p>(</span><span class=s>&#34;Hello world!&#34;</span><span class=p>);</span>
+    <span class=k>return</span> <span class=mi>214</span><span class=p>;</span> <span class=c1>//执行结束后返回214作为退出状态码
+</span><span class=c1></span><span class=p>}</span>
+</code></pre></div><p>将上述代码保存为 <code>hello.c</code> ，然后编译运行</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 编译</span>
 $ gcc hello.c -o hello
-<span class="c1"># 运行</span>
+<span class=c1># 运行</span>
 $ ./hello 
 Hello world!
-$ <span class="nb">echo</span> <span class="nv">$?</span>
-<span class="m">214</span>
-</code></pre></div><ul>
-<li><code>!</code> ($!)</li>
-</ul>
-<p>在shell中把程序放到后台运行有两个方法：</p>
-<ol>
-<li>使用 <code>bg</code> 命令</li>
-<li>输入命令时最后加上 <code>&amp;</code></li>
-</ol>
-<p>首先我们需要两个终端，各自执行 <code>ps</code> , 我们需要的是 <code>TTY</code> 字段</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/shell-special-parameters-1.png"
-        alt/></p>
-<p>这两个终端一个用来执行命令（pts/2），一个用来显示输出信息（pts/3），在“pts/2”中执行以下命令</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 最后的 &amp; 表示将该命令放到后台执行</span>
-$ ping localhost &gt; /dev/pts/3 <span class="p">&amp;</span> 
-</code></pre></div><p>执行后会在“pts/2”中显示该进程的PID</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/shell-special-parameters-2.png"
-        alt/></p>
-<p>现在 <code>ping</code> 在后台运行，“pts/3”不断显示输出结果</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 看看 $! 的显示结果</span>
-$ <span class="nb">echo</span> <span class="nv">$!</span>
-<span class="m">14564</span>
+$ <span class=nb>echo</span> <span class=nv>$?</span>
+<span class=m>214</span>
+</code></pre></div><ul><li><code>!</code> ($!)</li></ul><p>在shell中把程序放到后台运行有两个方法：</p><ol><li>使用 <code>bg</code> 命令</li><li>输入命令时最后加上 <code>&</code></li></ol><p>首先我们需要两个终端，各自执行 <code>ps</code> , 我们需要的是 <code>TTY</code> 字段</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/shell-special-parameters-1.png alt></p><p>这两个终端一个用来执行命令（pts/2），一个用来显示输出信息（pts/3），在“pts/2”中执行以下命令</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 最后的 &amp; 表示将该命令放到后台执行</span>
+$ ping localhost &gt; /dev/pts/3 <span class=p>&amp;</span> 
+</code></pre></div><p>执行后会在“pts/2”中显示该进程的PID</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/shell-special-parameters-2.png alt></p><p>现在 <code>ping</code> 在后台运行，“pts/3”不断显示输出结果</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 看看 $! 的显示结果</span>
+$ <span class=nb>echo</span> <span class=nv>$!</span>
+<span class=m>14564</span>
 
-<span class="c1"># 用ps确认一下PID是否一致</span>
+<span class=c1># 用ps确认一下PID是否一致</span>
 $ ps 
   PID TTY          TIME CMD
-<span class="m">14500</span> pts/2    00:00:00 bash
-<span class="m">14564</span> pts/2    00:00:00 ping
-<span class="m">14618</span> pts/2    00:00:00 ps
+<span class=m>14500</span> pts/2    00:00:00 bash
+<span class=m>14564</span> pts/2    00:00:00 ping
+<span class=m>14618</span> pts/2    00:00:00 ps
 
-<span class="c1"># 杀死该进程</span>
-$ <span class="nb">kill</span> <span class="nv">$!</span>
-</code></pre></div><p>全过程如下</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/shell-special-parameters-3.gif"
-        alt/></p>
-<ul>
-<li><code>_</code> ($_)</li>
-</ul>
-<p><code>$_</code> 保存了上一条命令最后一个参数，使用起来也没什么太多可说，在不小心打错命令名的时候还是挺方便的</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">echo</span> a b c d e f
+<span class=c1># 杀死该进程</span>
+$ <span class=nb>kill</span> <span class=nv>$!</span>
+</code></pre></div><p>全过程如下</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/shell-special-parameters-3.gif alt></p><ul><li><code>_</code> ($_)</li></ul><p><code>$_</code> 保存了上一条命令最后一个参数，使用起来也没什么太多可说，在不小心打错命令名的时候还是挺方便的</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ <span class=nb>echo</span> a b c d e f
 a b c d e f
 
-$ <span class="nb">echo</span> <span class="nv">$_</span>
+$ <span class=nb>echo</span> <span class=nv>$_</span>
 f
 
-<span class="c1"># 日常手抖</span>
+<span class=c1># 日常手抖</span>
 $ dc  .config/GIMP/2.10/scripts/
 dc: Will not attempt to process directory .config/GIMP/2.10/scripts/
 
-$ <span class="nb">cd</span> <span class="nv">$_</span>
-</code></pre></div><h2 id="和的区别">$*和$@的区别</h2>
-<p>默认情况下，不加双引号的话 <code>$*</code> 和 <code>$@</code> 没有区别，但我推荐无论何时使用这两个变量都应该加上双引号，即使用 <code>&quot;$*&quot;</code> 和 <code>&quot;$@&quot;</code> 。</p>
-<p><code>&quot;$*&quot;</code> 相当于 <code>&quot;$1 $2 ... $n&quot;</code></p>
-<p><code>&quot;$@&quot;</code> 相当于 <code>&quot;$1&quot; &quot;$2&quot; &quot;...&quot; &quot;$n&quot;</code></p>
-<p>单纯的 <code>echo</code> 看不出区别，需要放到 <code>for</code> 语句中</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/usr/bin/bash
-</span><span class="cp"></span>
-<span class="nb">echo</span> <span class="s2">&#34;use \$*&#34;</span>
-<span class="k">for</span> x in <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span>
-<span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$x</span><span class="s2">&#34;</span>
-<span class="k">done</span>
+$ <span class=nb>cd</span> <span class=nv>$_</span>
+</code></pre></div><h2 id=和的区别>$*和$@的区别</h2><p>默认情况下，不加双引号的话 <code>$*</code> 和 <code>$@</code> 没有区别，但我推荐无论何时使用这两个变量都应该加上双引号，即使用 <code>"$*"</code> 和 <code>"$@"</code> 。</p><p><code>"$*"</code> 相当于 <code>"$1 $2 ... $n"</code></p><p><code>"$@"</code> 相当于 <code>"$1" "$2" "..." "$n"</code></p><p>单纯的 <code>echo</code> 看不出区别，需要放到 <code>for</code> 语句中</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=cp>#!/usr/bin/bash
+</span><span class=cp></span>
+<span class=nb>echo</span> <span class=s2>&#34;use \$*&#34;</span>
+<span class=k>for</span> x in <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span>
+<span class=k>do</span>
+    <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$x</span><span class=s2>&#34;</span>
+<span class=k>done</span>
 
-<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
-<span class="nb">echo</span> <span class="s2">&#34;use \$@&#34;</span>
-<span class="k">for</span> x in <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
-<span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$x</span><span class="s2">&#34;</span>
-<span class="k">done</span>
-</code></pre></div><p>执行结果</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ ./test.sh <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+<span class=nb>echo</span> <span class=s2>&#34;&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;use \$@&#34;</span>
+<span class=k>for</span> x in <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+<span class=k>do</span>
+    <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$x</span><span class=s2>&#34;</span>
+<span class=k>done</span>
+</code></pre></div><p>执行结果</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ ./test.sh <span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span>
 
-use <span class="nv">$*</span>
-<span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+use <span class=nv>$*</span>
+<span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span>
 
-use <span class="nv">$@</span>
-<span class="m">1</span>
-<span class="m">2</span>
-<span class="m">3</span>
-<span class="m">4</span>
-</code></pre></div><p>而实际上 <code>&quot;$*&quot;</code> 还会受到另一个变量 <code>IFS</code> 的影响，<code>IFS</code> 在shell脚本中也十分常见，用来告诉shell怎么分割字符串。对于 <code>IFS</code> 深入讲解的话恐怕又是一篇博客，这里你只需要知道默认 <code>IFS=$' \t\n'</code> ，即空格、制表符和换行符。<code>&quot;$*&quot;</code> 实际上相当于 <code>&quot;$1c$2c...c$n&quot;</code> , 而 <code>c</code> 则是 <code>IFS</code> 变量的第一个字符，即空格。下面我们修改上面的脚本看看差别</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/usr/bin/bash
-</span><span class="cp"></span>
-<span class="c1">#修改IFS变量</span>
-<span class="nv">IFS</span><span class="o">=</span>- 
+use <span class=nv>$@</span>
+<span class=m>1</span>
+<span class=m>2</span>
+<span class=m>3</span>
+<span class=m>4</span>
+</code></pre></div><p>而实际上 <code>"$*"</code> 还会受到另一个变量 <code>IFS</code> 的影响，<code>IFS</code> 在shell脚本中也十分常见，用来告诉shell怎么分割字符串。对于 <code>IFS</code> 深入讲解的话恐怕又是一篇博客，这里你只需要知道默认 <code>IFS=$' \t\n'</code> ，即空格、制表符和换行符。<code>"$*"</code> 实际上相当于 <code>"$1c$2c...c$n"</code> , 而 <code>c</code> 则是 <code>IFS</code> 变量的第一个字符，即空格。下面我们修改上面的脚本看看差别</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=cp>#!/usr/bin/bash
+</span><span class=cp></span>
+<span class=c1>#修改IFS变量</span>
+<span class=nv>IFS</span><span class=o>=</span>- 
 
-<span class="nb">echo</span> <span class="s2">&#34;use \$*&#34;</span>
-<span class="k">for</span> x in <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span>
-<span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$x</span><span class="s2">&#34;</span>
-<span class="k">done</span>
+<span class=nb>echo</span> <span class=s2>&#34;use \$*&#34;</span>
+<span class=k>for</span> x in <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span>
+<span class=k>do</span>
+    <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$x</span><span class=s2>&#34;</span>
+<span class=k>done</span>
 
-<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
-<span class="nb">echo</span> <span class="s2">&#34;use \$@&#34;</span>
-<span class="k">for</span> x in <span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
-<span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$x</span><span class="s2">&#34;</span>
-<span class="k">done</span>
-</code></pre></div><p>执行结果</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ ./test.sh <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+<span class=nb>echo</span> <span class=s2>&#34;&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;use \$@&#34;</span>
+<span class=k>for</span> x in <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+<span class=k>do</span>
+    <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$x</span><span class=s2>&#34;</span>
+<span class=k>done</span>
+</code></pre></div><p>执行结果</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ ./test.sh <span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span>
 
-use <span class="nv">$*</span>
+use <span class=nv>$*</span>
 1-2-3-4
 
-use <span class="nv">$@</span>
-<span class="m">1</span>
-<span class="m">2</span>
-<span class="m">3</span>
-<span class="m">4</span>
-</code></pre></div><hr>
-<p>参考：</p>
-<ul>
-<li>
-<p><a href="https://www.gnu.org/software/bash/manual/bash.html#Special-Parameters"target="_blank" rel="noopener noreferrer">https://www.gnu.org/software/bash/manual/bash.html#Special-Parameters</a>
-</p>
-</li>
-<li>
-<p><a href="http://c.biancheng.net/cpp/view/2739.html"target="_blank" rel="noopener noreferrer">http://c.biancheng.net/cpp/view/2739.html</a>
-</p>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/shell/>shell</a></section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/some-uesless-cli-tools/"><span class="iconfont icon-article"></span>一些毫无卵用的命令行工具</a></p><p><a class="link" href="/posts/glob-patterns/"><span class="iconfont icon-article"></span>Bash中的模式匹配”glob patterns“和”extglob“</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+use <span class=nv>$@</span>
+<span class=m>1</span>
+<span class=m>2</span>
+<span class=m>3</span>
+<span class=m>4</span>
+</code></pre></div><hr><p>参考：</p><ul><li><p><a href=https://www.gnu.org/software/bash/manual/bash.html#Special-Parameters target=_blank rel="noopener noreferrer">https://www.gnu.org/software/bash/manual/bash.html#Special-Parameters</a></p></li><li><p><a href=http://c.biancheng.net/cpp/view/2739.html target=_blank rel="noopener noreferrer">http://c.biancheng.net/cpp/view/2739.html</a></p></li></ul></article><section class="article labels"><a class=tag href=/tags/shell/>shell</a></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/some-uesless-cli-tools/><span class="iconfont icon-article"></span>一些毫无卵用的命令行工具</a></p><p><a class=link href=/posts/glob-patterns/><span class="iconfont icon-article"></span>Bash中的模式匹配”glob patterns“和”extglob“</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

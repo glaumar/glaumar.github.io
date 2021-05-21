@@ -1,322 +1,249 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>lua on Glaumar&#39;s Blog</title>
-    <link>https://geekgo.tech/tags/lua/</link>
-    <description>Recent content in lua on Glaumar&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>©2021 glaumar.</copyright>
-    <lastBuildDate>Sat, 02 May 2020 00:00:00 +0000</lastBuildDate>
-    
-        <atom:link href="https://geekgo.tech/tags/lua/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>About</title>
-      <link>https://geekgo.tech/about/</link>
-      <pubDate>Fri, 21 May 2021 19:45:05 +0800</pubDate>
-      
-      <guid>https://geekgo.tech/about/</guid>
-      <description>&lt;h1 id=&#34;log&#34;&gt;Log&lt;/h1&gt;
-&lt;blockquote&gt;
-&lt;p&gt;2021-5-21 从jekyll迁移到hugo&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;2019-12-1 发布第一篇文章&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>浮点数比较</title>
-      <link>https://geekgo.tech/posts/compare-float-values/</link>
-      <pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/compare-float-values/</guid>
-      <description>&lt;p&gt;计算机中的浮点数并不精确, 不能直接用 &lt;code&gt;==&lt;/code&gt; 比较两个浮点数是否相等, 应在可接受的范围定义一个比较小的数 &lt;code&gt;epsilon&lt;/code&gt; , 两个浮点数之差小于 &lt;code&gt;epsilon&lt;/code&gt; 即认为他们相等&lt;/p&gt;
-&lt;p&gt;C&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;float.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;math.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdbool.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;almost_equal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;double&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;double&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fabs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;DBL_EPSILON&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;C++&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;cmath&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;limits&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;almost_equal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;double&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;double&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fabs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;numeric_limits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;double&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;epsilon&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Qt&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;QtGlobal&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;qFuzzyCompare&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Javascript/QML&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;almost_equal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;abs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;pow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;52&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>this_thread::sleep_for()和chrono::duration, ratio;</title>
-      <link>https://geekgo.tech/posts/sleep-for-and-chrono-duration/</link>
-      <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/sleep-for-and-chrono-duration/</guid>
-      <description>&lt;p&gt;想着找个跨平台的 &lt;code&gt;sleep()&lt;/code&gt; , 看到了标准库里的 &lt;code&gt;sleep_for()&lt;/code&gt; , 用起来不难, 但涉及到一些没见过的类&lt;/p&gt;
-&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
-&lt;p&gt;C++11&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;this_thread&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;milliseconds&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;this_thread&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;seconds&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;this_thread&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;minutes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;C++14&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono_literals&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;this_thread&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ms&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;this_thread&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;this_thread&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;stdthis_threadsleep_for&#34;&gt;std::this_thread::sleep_for&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;header&lt;/strong&gt;: &amp;lt;thread&amp;gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;k&#34;&gt;template&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Rep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Period&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sleep_for&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;duration&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Rep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Period&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sleep_duration&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;阻塞当前线程至少一个 &lt;code&gt;sleep_duration&lt;/code&gt;  (可能会由于调度或者资源竞争产生延迟)&lt;/p&gt;
-&lt;p&gt;显然我们需要构造一个 &lt;code&gt;duration&lt;/code&gt; 对象来表示要阻塞的时间&lt;/p&gt;
-&lt;h2 id=&#34;stdchronoduration&#34;&gt;std::chrono::duration&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;header&lt;/strong&gt;: &amp;lt;chrono&amp;gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;k&#34;&gt;template&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Rep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
-    &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Period&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ratio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; 
-&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;duration&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Rep&lt;/code&gt; 是一个数值类型, 如: &lt;code&gt;int&lt;/code&gt; , &lt;code&gt;double&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Period&lt;/code&gt; 表示时间周期, 单位是秒, 默认是1秒 ( &lt;code&gt;std::ratio&lt;/code&gt; 类用来表示一个有理数, 将在后面讲解)&lt;/p&gt;
-&lt;p&gt;一个 &lt;code&gt;duration&lt;/code&gt; 对象内唯一的数据是一个 &lt;code&gt;Rep&lt;/code&gt; 类型的数, 用来表示时间&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;duration&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tow_sec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 一个表示2秒的duration对象
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;duration&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;double&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ratio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;half_min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 一个表示半分钟的duration对象
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chrono&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;duration&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ratio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;five_hundred_milli&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 一个表示500毫秒的duration对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;C++11中预先定义好的常用类型&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Type&lt;/th&gt;
-&lt;th&gt;Definition&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;std::chrono::nanoseconds&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;duration&amp;lt;/*signed integer type of at least 64 bits*/, std::nano&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;std::chrono::microseconds&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;duration&amp;lt;/*signed integer type of at least 55 bits*/, std::micro&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;std::chrono::milliseconds&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;duration&amp;lt;/*signed integer type of at least 45 bits*/, std::milli&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;std::chrono::seconds&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;duration&amp;lt;/*signed integer type of at least 35 bits*/&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;std::chrono::minutes&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;duration&amp;lt;/*signed integer type of at least 29 bits*/, std::ratio&amp;lt;60&amp;gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;std::chrono::hours&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;duration&amp;lt;/*signed integer type of at least 23 bits*/, std::ratio&amp;lt;3600&amp;gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;c14&#34;&gt;C++14&lt;/h3&gt;
-&lt;p&gt;C++14在标准库里添加了几个函数, 使得 &lt;code&gt;duration&lt;/code&gt; 的使用变得相当友好, 就像博客开头那样&lt;/p&gt;
-&lt;p&gt;Defined in inline namespace &lt;code&gt;std::literals::chrono_literals&lt;/code&gt;&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Function&lt;/th&gt;
-&lt;th&gt;Introduction&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;https://en.cppreference.com/w/cpp/chrono/operator%22%22h&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt; operator&amp;quot;&amp;ldquo;h&lt;/a&gt;
-(C++14)&lt;/td&gt;
-&lt;td&gt;A &lt;strong&gt;std::chrono::duration&lt;/strong&gt; literal representing hours    (function)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;https://en.cppreference.com/w/cpp/chrono/operator%22%22min&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt; operator&amp;quot;&amp;ldquo;min&lt;/a&gt;
-(C++14)&lt;/td&gt;
-&lt;td&gt;A &lt;strong&gt;std::chrono::duration&lt;/strong&gt; literal representing minutes    (function)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;https://en.cppreference.com/w/cpp/chrono/operator%22%22s&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt; operator&amp;quot;&amp;ldquo;s&lt;/a&gt;
-(C++14)&lt;/td&gt;
-&lt;td&gt;A &lt;strong&gt;std::chrono::duration&lt;/strong&gt; literal representing seconds    (function)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;https://en.cppreference.com/w/cpp/chrono/operator%22%22ms&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt; operator&amp;quot;&amp;ldquo;ms&lt;/a&gt;
-(C++14)&lt;/td&gt;
-&lt;td&gt;A &lt;strong&gt;std::chrono::duration&lt;/strong&gt; literal representing milliseconds    (function)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;https://en.cppreference.com/w/cpp/chrono/operator%22%22us&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt; operator&amp;quot;&amp;ldquo;us&lt;/a&gt;
-(C++14)&lt;/td&gt;
-&lt;td&gt;A &lt;strong&gt;std::chrono::duration&lt;/strong&gt; literal representing microseconds    (function)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&#34;https://en.cppreference.com/w/cpp/chrono/operator%22%22ns&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt; operator&amp;quot;&amp;ldquo;ns&lt;/a&gt;
-(C++14)&lt;/td&gt;
-&lt;td&gt;A &lt;strong&gt;std::chrono::duration&lt;/strong&gt; literal representing nanoseconds    (function)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;stdratio&#34;&gt;std::ratio&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;header&lt;/strong&gt;: &amp;lt;ratio&amp;gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;k&#34;&gt;template&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; 
-    &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;intmax_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
-    &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;intmax_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Denom&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; 
-&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ratio&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;ratio&lt;/code&gt; 以分数的形式来保存有理数, &lt;code&gt;Num&lt;/code&gt; 表示分子, &lt;code&gt;Denom&lt;/code&gt; 表示分母, 分母默认为1&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ration&lt;/code&gt; 定义了两个静态数据成员 &lt;code&gt;num&lt;/code&gt; 和 &lt;code&gt;den&lt;/code&gt; 来保存分子和分母, 可以通过 &lt;code&gt;对象名::num&lt;/code&gt; 和 &lt;code&gt;对象名::den&lt;/code&gt; 直接获取相应数据&lt;/p&gt;
-&lt;p&gt;从模板声明可以看出来, 不同有理数的类型并不一样, 直接重载算术运算符没有什么意义, 要对有理数进行运算需要用 &lt;code&gt;&amp;lt;ratio&amp;gt;&lt;/code&gt; 头文件里定义的类&lt;/p&gt;
-&lt;p&gt;下面是c++官方文档给出的将两个有理数相加的 Example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;ratio&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt; 
-&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ratio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;two_third&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ratio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;one_sixth&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
- 
-    &lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ratio_add&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;two_third&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;one_sixth&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;2/3 + 1/6 = &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;sc&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;den&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;sc&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;p&gt;参考:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://en.cppreference.com/w/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;C++官方文档&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/jwk000/p/3560086.html&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;博客园 - C++11 std::chrono库详解&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>QML实现图片圆角</title>
-      <link>https://geekgo.tech/posts/image-rounded-corners-in-qml/</link>
-      <pubDate>Sat, 04 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/image-rounded-corners-in-qml/</guid>
-      <description>&lt;p&gt;QML中的 &lt;code&gt;Image&lt;/code&gt; 类型没有 &lt;code&gt;radius&lt;/code&gt; 属性，不像 &lt;code&gt;Rectangle&lt;/code&gt; 可以自定义圆角，借助 &lt;code&gt;OpacityMask&lt;/code&gt;  （需要导入 &lt;code&gt;QtGraphicalEffects&lt;/code&gt; ）把他们结合到一起即可实现图片圆角&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;QtQuick&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.15&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;QtQuick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Controls&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.15&lt;/span&gt;
-&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;QtGraphicalEffects&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.15&lt;/span&gt;
-
-&lt;span class=&#34;nx&#34;&gt;ApplicationWindow&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;window&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;visible&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;640&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;480&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;rouned image&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;nx&#34;&gt;Image&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;nx&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;img&lt;/span&gt;
-        &lt;span class=&#34;nx&#34;&gt;anchors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;centerIn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;parent&lt;/span&gt;
-        &lt;span class=&#34;nx&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;200&lt;/span&gt;
-        &lt;span class=&#34;nx&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;200&lt;/span&gt;
-        &lt;span class=&#34;nx&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;qrc:/avatar.png&amp;#34;&lt;/span&gt;
-
-        &lt;span class=&#34;nx&#34;&gt;layer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;enabled&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;
-        &lt;span class=&#34;nx&#34;&gt;layer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;OpacityMask&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;nx&#34;&gt;maskSource&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Rectangle&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-                &lt;span class=&#34;nx&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;width&lt;/span&gt;
-                &lt;span class=&#34;nx&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;img&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;height&lt;/span&gt;
-                &lt;span class=&#34;nx&#34;&gt;radius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;
-            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果：&lt;/p&gt;
-&lt;p&gt;&lt;img  src=&#34;https://raw.githubusercontent.com/glaumar/pictures/master/blog/Image-rounded-corners-in-QML-1.png&#34;
-        alt/&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/6090740/image-rounded-corners-in-qml&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;stack overflow - Image rounded corners in QML&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Div&#43;CSS实现文本居中左对齐</title>
-      <link>https://geekgo.tech/posts/center-block-but-align-contents-to-the-left/</link>
-      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/center-block-but-align-contents-to-the-left/</guid>
-      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;style&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;text-align: center;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;style&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;display: inline-block; text-align: left;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;学院：&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;信息科学与工程&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;专业：&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;软件工程&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;班级：&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;软件-3班&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;姓名：&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;张三&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;div&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果：&lt;/p&gt;
-&lt;div style=&#34;text-align: center;&#34;&gt;
-    &lt;div style=&#34;display: inline-block; text-align: left;&#34;&gt;
-        &lt;p&gt;&lt;b&gt;学院：&lt;/b&gt;&lt;u&gt;信息科学与工程&lt;/u&gt;&lt;/p&gt;
-        &lt;p&gt;&lt;b&gt;专业：&lt;/b&gt;&lt;u&gt;软件工程&lt;/u&gt;&lt;/p&gt;
-        &lt;p&gt;&lt;b&gt;班级：&lt;/b&gt;&lt;u&gt;软件-3班&lt;/u&gt;&lt;/p&gt;
-        &lt;p&gt;&lt;b&gt;姓名：&lt;/b&gt;&lt;u&gt;张三&lt;/u&gt;&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;hr&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/1269589/css-center-block-but-align-contents-to-the-left&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;stack overflow - CSS: Center block, but align contents to the left&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>使用STL生成随机数</title>
-      <link>https://geekgo.tech/posts/generate-random-number-using-stl/</link>
-      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/generate-random-number-using-stl/</guid>
-      <description>&lt;h2 id=&#34;随机数种子&#34;&gt;随机数种子&lt;/h2&gt;
-&lt;p&gt;使用随机数引擎生成（伪）随机数前，我们通常需要传入一个种子以确保程序每次运行能生成不同的随机数&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;random_device&lt;/code&gt; 类可以使用系统提供的数据源，并返回一个&lt;strong&gt;真随机数&lt;/strong&gt;（根据实现，如果数据源不可用也可能生成伪随机数），取值范围是[std::random_device::min() , std::random_device::max()]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;random&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Max: &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;random_device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Min: &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;random_device&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;random_device&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Max: 4294967295
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>lua on Glaumar's Blog</title><link>https://geekgo.tech/tags/lua/</link><description>Recent content in lua on Glaumar's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>©2021 glaumar.</copyright><lastBuildDate>Sat, 02 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://geekgo.tech/tags/lua/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://geekgo.tech/about/</link><pubDate>Fri, 21 May 2021 19:45:05 +0800</pubDate><guid>https://geekgo.tech/about/</guid><description>&lt;h1 id="log">Log&lt;/h1>
+&lt;blockquote>
+&lt;p>2021-5-21 从jekyll迁移到hugo&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>2019-12-1 发布第一篇文章&lt;/p>
+&lt;/blockquote></description></item><item><title>浮点数比较</title><link>https://geekgo.tech/posts/compare-float-values/</link><pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/compare-float-values/</guid><description>&lt;p>计算机中的浮点数并不精确, 不能直接用 &lt;code>==&lt;/code> 比较两个浮点数是否相等, 应在可接受的范围定义一个比较小的数 &lt;code>epsilon&lt;/code> , 两个浮点数之差小于 &lt;code>epsilon&lt;/code> 即认为他们相等&lt;/p>
+&lt;p>C&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;float.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;math.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdbool.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="kt">bool&lt;/span> &lt;span class="nf">almost_equal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">fabs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">DBL_EPSILON&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>C++&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;cmath&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;limits&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="kt">bool&lt;/span> &lt;span class="nf">almost_equal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="kt">double&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">fabs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">numeric_limits&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">double&lt;/span>&lt;span class="o">&amp;gt;::&lt;/span>&lt;span class="n">epsilon&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Qt&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;QtGlobal&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="n">qFuzzyCompare&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Javascript/QML&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="kd">function&lt;/span> &lt;span class="nx">almost_equal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">Math&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">abs&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">a&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="nx">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="nb">Math&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pow&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">52&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>this_thread::sleep_for()和chrono::duration, ratio;</title><link>https://geekgo.tech/posts/sleep-for-and-chrono-duration/</link><pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/sleep-for-and-chrono-duration/</guid><description>&lt;p>想着找个跨平台的 &lt;code>sleep()&lt;/code> , 看到了标准库里的 &lt;code>sleep_for()&lt;/code> , 用起来不难, 但涉及到一些没见过的类&lt;/p>
+&lt;h2 id="tldr">TL;DR&lt;/h2>
+&lt;p>C++11&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">this_thread&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">milliseconds&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">500&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="n">this_thread&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">seconds&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="n">this_thread&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">minutes&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>C++14&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">chrono_literals&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">this_thread&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">500&lt;/span>&lt;span class="n">ms&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">this_thread&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">this_thread&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="stdthis_threadsleep_for">std::this_thread::sleep_for&lt;/h2>
+&lt;p>&lt;strong>header&lt;/strong>: &amp;lt;thread&amp;gt;&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">template&lt;/span>&lt;span class="o">&amp;lt;&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Rep&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">Period&lt;/span> &lt;span class="o">&amp;gt;&lt;/span>
+&lt;span class="kt">void&lt;/span> &lt;span class="n">sleep_for&lt;/span>&lt;span class="p">(&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">duration&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Rep&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Period&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span> &lt;span class="n">sleep_duration&lt;/span> &lt;span class="p">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>阻塞当前线程至少一个 &lt;code>sleep_duration&lt;/code> (可能会由于调度或者资源竞争产生延迟)&lt;/p>
+&lt;p>显然我们需要构造一个 &lt;code>duration&lt;/code> 对象来表示要阻塞的时间&lt;/p>
+&lt;h2 id="stdchronoduration">std::chrono::duration&lt;/h2>
+&lt;p>&lt;strong>header&lt;/strong>: &amp;lt;chrono&amp;gt;&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">template&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Rep&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="k">class&lt;/span> &lt;span class="nc">Period&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">ratio&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>
+&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">duration&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Rep&lt;/code> 是一个数值类型, 如: &lt;code>int&lt;/code> , &lt;code>double&lt;/code>&lt;/p>
+&lt;p>&lt;code>Period&lt;/code> 表示时间周期, 单位是秒, 默认是1秒 ( &lt;code>std::ratio&lt;/code> 类用来表示一个有理数, 将在后面讲解)&lt;/p>
+&lt;p>一个 &lt;code>duration&lt;/code> 对象内唯一的数据是一个 &lt;code>Rep&lt;/code> 类型的数, 用来表示时间&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">duration&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">tow_sec&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 一个表示2秒的duration对象
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">duration&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">double&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">ratio&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="mi">60&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">half_min&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">0.5&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 一个表示半分钟的duration对象
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">chrono&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">duration&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">ratio&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1000&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">five_hundred_milli&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">500&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 一个表示500毫秒的duration对象
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>C++11中预先定义好的常用类型&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Type&lt;/th>
+&lt;th>Definition&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>std::chrono::nanoseconds&lt;/code>&lt;/td>
+&lt;td>&lt;code>duration&amp;lt;/*signed integer type of at least 64 bits*/, std::nano&amp;gt;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>std::chrono::microseconds&lt;/code>&lt;/td>
+&lt;td>&lt;code>duration&amp;lt;/*signed integer type of at least 55 bits*/, std::micro&amp;gt;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>std::chrono::milliseconds&lt;/code>&lt;/td>
+&lt;td>&lt;code>duration&amp;lt;/*signed integer type of at least 45 bits*/, std::milli&amp;gt;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>std::chrono::seconds&lt;/code>&lt;/td>
+&lt;td>&lt;code>duration&amp;lt;/*signed integer type of at least 35 bits*/&amp;gt;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>std::chrono::minutes&lt;/code>&lt;/td>
+&lt;td>&lt;code>duration&amp;lt;/*signed integer type of at least 29 bits*/, std::ratio&amp;lt;60&amp;gt;&amp;gt;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>std::chrono::hours&lt;/code>&lt;/td>
+&lt;td>&lt;code>duration&amp;lt;/*signed integer type of at least 23 bits*/, std::ratio&amp;lt;3600&amp;gt;&amp;gt;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="c14">C++14&lt;/h3>
+&lt;p>C++14在标准库里添加了几个函数, 使得 &lt;code>duration&lt;/code> 的使用变得相当友好, 就像博客开头那样&lt;/p>
+&lt;p>Defined in inline namespace &lt;code>std::literals::chrono_literals&lt;/code>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Function&lt;/th>
+&lt;th>Introduction&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22h"target="_blank" rel="noopener noreferrer"> operator&amp;quot;&amp;ldquo;h&lt;/a>
+(C++14)&lt;/td>
+&lt;td>A &lt;strong>std::chrono::duration&lt;/strong> literal representing hours (function)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22min"target="_blank" rel="noopener noreferrer"> operator&amp;quot;&amp;ldquo;min&lt;/a>
+(C++14)&lt;/td>
+&lt;td>A &lt;strong>std::chrono::duration&lt;/strong> literal representing minutes (function)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22s"target="_blank" rel="noopener noreferrer"> operator&amp;quot;&amp;ldquo;s&lt;/a>
+(C++14)&lt;/td>
+&lt;td>A &lt;strong>std::chrono::duration&lt;/strong> literal representing seconds (function)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22ms"target="_blank" rel="noopener noreferrer"> operator&amp;quot;&amp;ldquo;ms&lt;/a>
+(C++14)&lt;/td>
+&lt;td>A &lt;strong>std::chrono::duration&lt;/strong> literal representing milliseconds (function)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22us"target="_blank" rel="noopener noreferrer"> operator&amp;quot;&amp;ldquo;us&lt;/a>
+(C++14)&lt;/td>
+&lt;td>A &lt;strong>std::chrono::duration&lt;/strong> literal representing microseconds (function)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22ns"target="_blank" rel="noopener noreferrer"> operator&amp;quot;&amp;ldquo;ns&lt;/a>
+(C++14)&lt;/td>
+&lt;td>A &lt;strong>std::chrono::duration&lt;/strong> literal representing nanoseconds (function)&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="stdratio">std::ratio&lt;/h2>
+&lt;p>&lt;strong>header&lt;/strong>: &amp;lt;ratio&amp;gt;&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">template&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">intmax_t&lt;/span> &lt;span class="n">Num&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">intmax_t&lt;/span> &lt;span class="n">Denom&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="nc">ratio&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>ratio&lt;/code> 以分数的形式来保存有理数, &lt;code>Num&lt;/code> 表示分子, &lt;code>Denom&lt;/code> 表示分母, 分母默认为1&lt;/p>
+&lt;p>&lt;code>ration&lt;/code> 定义了两个静态数据成员 &lt;code>num&lt;/code> 和 &lt;code>den&lt;/code> 来保存分子和分母, 可以通过 &lt;code>对象名::num&lt;/code> 和 &lt;code>对象名::den&lt;/code> 直接获取相应数据&lt;/p>
+&lt;p>从模板声明可以看出来, 不同有理数的类型并不一样, 直接重载算术运算符没有什么意义, 要对有理数进行运算需要用 &lt;code>&amp;lt;ratio&amp;gt;&lt;/code> 头文件里定义的类&lt;/p>
+&lt;p>下面是c++官方文档给出的将两个有理数相加的 Example:&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;ratio&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="k">typedef&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">ratio&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">two_third&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">typedef&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">ratio&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">6&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">one_sixth&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">typedef&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">ratio_add&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">two_third&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">one_sixth&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">sum&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;2/3 + 1/6 = &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">sum&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">num&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="sc">&amp;#39;/&amp;#39;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">sum&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">den&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="sc">&amp;#39;\n&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>output:&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="mi">2&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">3&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">6&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">6&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
+&lt;p>参考:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a href="https://en.cppreference.com/w/"target="_blank" rel="noopener noreferrer">C++官方文档&lt;/a>
+&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://www.cnblogs.com/jwk000/p/3560086.html"target="_blank" rel="noopener noreferrer">博客园 - C++11 std::chrono库详解&lt;/a>
+&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>QML实现图片圆角</title><link>https://geekgo.tech/posts/image-rounded-corners-in-qml/</link><pubDate>Sat, 04 Jul 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/image-rounded-corners-in-qml/</guid><description>&lt;p>QML中的 &lt;code>Image&lt;/code> 类型没有 &lt;code>radius&lt;/code> 属性，不像 &lt;code>Rectangle&lt;/code> 可以自定义圆角，借助 &lt;code>OpacityMask&lt;/code> （需要导入 &lt;code>QtGraphicalEffects&lt;/code> ）把他们结合到一起即可实现图片圆角&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-js" data-lang="js">&lt;span class="kr">import&lt;/span> &lt;span class="nx">QtQuick&lt;/span> &lt;span class="mf">2.15&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">QtQuick&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Controls&lt;/span> &lt;span class="mf">2.15&lt;/span>
+&lt;span class="kr">import&lt;/span> &lt;span class="nx">QtGraphicalEffects&lt;/span> &lt;span class="mf">1.15&lt;/span>
+&lt;span class="nx">ApplicationWindow&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nb">window&lt;/span>
+&lt;span class="nx">visible&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;span class="nx">width&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">640&lt;/span>
+&lt;span class="nx">height&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">480&lt;/span>
+&lt;span class="nx">title&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;rouned image&amp;#34;&lt;/span>
+&lt;span class="nx">Image&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">id&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">img&lt;/span>
+&lt;span class="nx">anchors&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">centerIn&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">parent&lt;/span>
+&lt;span class="nx">width&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">200&lt;/span>
+&lt;span class="nx">height&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">200&lt;/span>
+&lt;span class="nx">source&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;qrc:/avatar.png&amp;#34;&lt;/span>
+&lt;span class="nx">layer&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">enabled&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">true&lt;/span>
+&lt;span class="nx">layer&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">effect&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">OpacityMask&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">maskSource&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">Rectangle&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">width&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">img&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">width&lt;/span>
+&lt;span class="nx">height&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">img&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">height&lt;/span>
+&lt;span class="nx">radius&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">50&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>效果：&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/Image-rounded-corners-in-QML-1.png"
+alt/>&lt;/p>
+&lt;hr>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://stackoverflow.com/questions/6090740/image-rounded-corners-in-qml"target="_blank" rel="noopener noreferrer">stack overflow - Image rounded corners in QML&lt;/a>
+&lt;/li>
+&lt;/ul></description></item><item><title>Div+CSS实现文本居中左对齐</title><link>https://geekgo.tech/posts/center-block-but-align-contents-to-the-left/</link><pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/center-block-but-align-contents-to-the-left/</guid><description>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;text-align: center;&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">div&lt;/span> &lt;span class="na">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;display: inline-block; text-align: left;&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>学院：&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>信息科学与工程&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>专业：&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>软件工程&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>班级：&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>软件-3班&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>姓名：&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">b&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>张三&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">u&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">p&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">div&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>效果：&lt;/p>
+&lt;div style="text-align: center;">
+&lt;div style="display: inline-block; text-align: left;">
+&lt;p>&lt;b>学院：&lt;/b>&lt;u>信息科学与工程&lt;/u>&lt;/p>
+&lt;p>&lt;b>专业：&lt;/b>&lt;u>软件工程&lt;/u>&lt;/p>
+&lt;p>&lt;b>班级：&lt;/b>&lt;u>软件-3班&lt;/u>&lt;/p>
+&lt;p>&lt;b>姓名：&lt;/b>&lt;u>张三&lt;/u>&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;hr>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://stackoverflow.com/questions/1269589/css-center-block-but-align-contents-to-the-left"target="_blank" rel="noopener noreferrer">stack overflow - CSS: Center block, but align contents to the left&lt;/a>
+&lt;/li>
+&lt;/ul></description></item><item><title>使用STL生成随机数</title><link>https://geekgo.tech/posts/generate-random-number-using-stl/</link><pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/generate-random-number-using-stl/</guid><description>&lt;h2 id="随机数种子">随机数种子&lt;/h2>
+&lt;p>使用随机数引擎生成（伪）随机数前，我们通常需要传入一个种子以确保程序每次运行能生成不同的随机数&lt;/p>
+&lt;p>&lt;code>random_device&lt;/code> 类可以使用系统提供的数据源，并返回一个&lt;strong>真随机数&lt;/strong>（根据实现，如果数据源不可用也可能生成伪随机数），取值范围是[std::random_device::min() , std::random_device::max()]&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;random&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Max: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">random_device&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Min: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">random_device&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">random_device&lt;/span> &lt;span class="n">rd&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">rd&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出：&lt;/p>
+&lt;pre>&lt;code>Max: 4294967295
 Min: 0
 2767121154
 1691292331
@@ -326,28 +253,26 @@ Min: 0
 213760575
 301031565
 973228337
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;为什么不直接使用random_device生成的随机数&#34;&gt;为什么不直接使用random_device生成的随机数&lt;/h3&gt;
-&lt;p&gt;生成一个真随机数会急剧消耗系统采集的熵，采集速度远远不及实际的使用速度，熵小了，生成的数就不那么随机了&lt;/p&gt;
-&lt;h2 id=&#34;随机数引擎&#34;&gt;随机数引擎&lt;/h2&gt;
-&lt;p&gt;使用默认随机数引擎&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;random&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Max: &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;default_random_engine&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Min: &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;default_random_engine&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;random_device&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;default_random_engine&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Max: 2147483646
+&lt;/code>&lt;/pre>&lt;h3 id="为什么不直接使用random_device生成的随机数">为什么不直接使用random_device生成的随机数&lt;/h3>
+&lt;p>生成一个真随机数会急剧消耗系统采集的熵，采集速度远远不及实际的使用速度，熵小了，生成的数就不那么随机了&lt;/p>
+&lt;h2 id="随机数引擎">随机数引擎&lt;/h2>
+&lt;p>使用默认随机数引擎&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;random&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Max: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">default_random_engine&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">max&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;Min: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">default_random_engine&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">min&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">random_device&lt;/span> &lt;span class="n">rd&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">default_random_engine&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">rd&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出：&lt;/p>
+&lt;pre>&lt;code>Max: 2147483646
 Min: 1
 1723848096
 1013067795
@@ -357,385 +282,330 @@ Min: 1
 1769844091
 973642840
 189821740
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其他引擎可以参看参考手册https://devdocs.io/cpp/header/random&lt;/p&gt;
-&lt;h2 id=&#34;使用分布类&#34;&gt;使用分布类&lt;/h2&gt;
-&lt;p&gt;有时候我们可能对随机数有额外要求，比如取值范围，比如负数，比如浮点数……&lt;/p&gt;
-&lt;p&gt;当然我们可以自己对引擎生成的随机数做额外处理，但更简单可靠的方法是使用STL的分布类&lt;/p&gt;
-&lt;h3 id=&#34;离散均匀分布&#34;&gt;离散均匀分布&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;random&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;random_device&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;default_random_engine&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;uniform_int_distribution&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;//返回值范围为[-5, 5]
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;5 -1 -1 3 5 -4 4 -5 
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;连续均匀分布&#34;&gt;连续均匀分布&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;random&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;random_device&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;default_random_engine&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;//返回值范围为[0, 214)
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;uniform_real_distribution&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;214.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; 
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;68.0202 10.1525 17.0463 142.749 40.447 57.8053 58.8224 153.853 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;STL中还有正态分布，泊松分布等，我平常用的比较少不再赘述&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;《C++标准模板库编程实战》 [美] Ivor Horton&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/egmkang/archive/2012/09/06/2673253.html&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;博客园 - C++11带来的随机数生成器&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>c&#43;&#43;中&#43;&#43;i和i&#43;&#43;的区别</title>
-      <link>https://geekgo.tech/posts/the-difference-between-&#43;&#43;i-and-i&#43;&#43;-in-cpp/</link>
-      <pubDate>Sat, 06 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/the-difference-between-&#43;&#43;i-and-i&#43;&#43;-in-cpp/</guid>
-      <description>&lt;h2 id=&#34;1-计算顺序不同&#34;&gt;1. 计算顺序不同&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;i++&lt;/code&gt; 返回 &lt;code&gt;i&lt;/code&gt; 本身，然后将 &lt;code&gt;i&lt;/code&gt;  加一&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;++i&lt;/code&gt; 将 &lt;code&gt;i&lt;/code&gt;  加一，然后返回 &lt;code&gt;i&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;0 1
+&lt;/code>&lt;/pre>&lt;p>其他引擎可以参看参考手册https://devdocs.io/cpp/header/random&lt;/p>
+&lt;h2 id="使用分布类">使用分布类&lt;/h2>
+&lt;p>有时候我们可能对随机数有额外要求，比如取值范围，比如负数，比如浮点数……&lt;/p>
+&lt;p>当然我们可以自己对引擎生成的随机数做额外处理，但更简单可靠的方法是使用STL的分布类&lt;/p>
+&lt;h3 id="离散均匀分布">离散均匀分布&lt;/h3>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;random&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">random_device&lt;/span> &lt;span class="n">rd&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">default_random_engine&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">rd&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="n">uniform_int_distribution&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;&lt;/span> &lt;span class="n">dist&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">//返回值范围为[-5, 5]
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">dist&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">e&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出：&lt;/p>
+&lt;pre>&lt;code>5 -1 -1 3 5 -4 4 -5
+&lt;/code>&lt;/pre>&lt;h3 id="连续均匀分布">连续均匀分布&lt;/h3>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;random&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">random_device&lt;/span> &lt;span class="n">rd&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">default_random_engine&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">rd&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;span class="c1">//返回值范围为[0, 214)
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">uniform_real_distribution&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;&lt;/span> &lt;span class="n">dist&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">0.0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">214.0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">dist&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">e&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出：&lt;/p>
+&lt;pre>&lt;code>68.0202 10.1525 17.0463 142.749 40.447 57.8053 58.8224 153.853
+&lt;/code>&lt;/pre>&lt;p>STL中还有正态分布，泊松分布等，我平常用的比较少不再赘述&lt;/p>
+&lt;hr>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>《C++标准模板库编程实战》 [美] Ivor Horton&lt;/li>
+&lt;li>&lt;a href="https://www.cnblogs.com/egmkang/archive/2012/09/06/2673253.html"target="_blank" rel="noopener noreferrer">博客园 - C++11带来的随机数生成器&lt;/a>
+&lt;/li>
+&lt;/ul></description></item><item><title>c++中++i和i++的区别</title><link>https://geekgo.tech/posts/the-difference-between-++i-and-i++-in-cpp/</link><pubDate>Sat, 06 Jun 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/the-difference-between-++i-and-i++-in-cpp/</guid><description>&lt;h2 id="1-计算顺序不同">1. 计算顺序不同&lt;/h2>
+&lt;p>&lt;code>i++&lt;/code> 返回 &lt;code>i&lt;/code> 本身，然后将 &lt;code>i&lt;/code> 加一&lt;/p>
+&lt;p>&lt;code>++i&lt;/code> 将 &lt;code>i&lt;/code> 加一，然后返回 &lt;code>i&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34; &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34; &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>output：&lt;/p>
+&lt;pre>&lt;code>0 1
 2 2
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-返回值性质不同&#34;&gt;2. 返回值性质不同&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;i++&lt;/code&gt; 返回右值，&lt;code&gt;++i&lt;/code&gt; 返回左值（&lt;a href=&#34;https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;百度百科关于左值和右值的词条&lt;/a&gt;
-）&lt;/p&gt;
-&lt;p&gt;所以 &lt;code&gt;i++ = 3&lt;/code&gt; 编译器会报错， &lt;code&gt;++i = 3&lt;/code&gt; 则没有问题&lt;/p&gt;
-&lt;h2 id=&#34;3-运算符重载和效率差别&#34;&gt;3. 运算符重载和效率差别&lt;/h2&gt;
-&lt;p&gt;我们定义一个简单（简陋）的类，包含保存坐标x和y，并且重载前置和后置递增运算符&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Coordinate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
- &lt;span class=&#34;k&#34;&gt;private&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
- &lt;span class=&#34;k&#34;&gt;public&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;//构造函数
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;explicit&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Coordinate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;){};&lt;/span&gt;
-    
-    &lt;span class=&#34;c1&#34;&gt;//打印x和y
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;printXY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;,&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    
-    &lt;span class=&#34;c1&#34;&gt;//重载前置递增
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;Coordinate&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;operator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    
-    &lt;span class=&#34;c1&#34;&gt;//重载后置递增
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;Coordinate&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;operator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;Coordinate&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;old&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;old&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;对比前置和后置递增的实现，可以看到为了实现后置递增的语义，我们需要一个额外的变量（old）保存对象原本的值，也就是说对于 &lt;code&gt;Coordinate&lt;/code&gt; 类的一个对象 &lt;code&gt;co&lt;/code&gt;  来说，理论上 &lt;code&gt;++co&lt;/code&gt; 的效率要高于 &lt;code&gt;co++&lt;/code&gt; 。其实对于C++内置类型来说这一点也是一样的，但现代编译器都会做优化，因此对于整型 &lt;code&gt;i&lt;/code&gt; 来说 &lt;code&gt;++i&lt;/code&gt; 和 &lt;code&gt;i++&lt;/code&gt;效率上很可能没什么区别&lt;/p&gt;
-&lt;p&gt;测试一下刚才写的类：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;argv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;Coordinate&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;co1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;co2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;co2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;co1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;co2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;printXY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;co1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;printXY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cout&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;endl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;co2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;co1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;co2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;printXY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;co1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;printXY&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;output：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1,1
+&lt;/code>&lt;/pre>&lt;h2 id="2-返回值性质不同">2. 返回值性质不同&lt;/h2>
+&lt;p>&lt;code>i++&lt;/code> 返回右值，&lt;code>++i&lt;/code> 返回左值（&lt;a href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC"target="_blank" rel="noopener noreferrer">百度百科关于左值和右值的词条&lt;/a>
+）&lt;/p>
+&lt;p>所以 &lt;code>i++ = 3&lt;/code> 编译器会报错， &lt;code>++i = 3&lt;/code> 则没有问题&lt;/p>
+&lt;h2 id="3-运算符重载和效率差别">3. 运算符重载和效率差别&lt;/h2>
+&lt;p>我们定义一个简单（简陋）的类，包含保存坐标x和y，并且重载前置和后置递增运算符&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="k">class&lt;/span> &lt;span class="nc">Coordinate&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">private&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="n">x_&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="n">y_&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;span class="c1">//构造函数
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">explicit&lt;/span> &lt;span class="n">Coordinate&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">y&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="n">x_&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">y_&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">){};&lt;/span>
+&lt;span class="c1">//打印x和y
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">printXY&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="k">const&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">x_&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;,&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">y_&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">//重载前置递增
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">Coordinate&lt;/span> &lt;span class="k">operator&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">x_&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">y_&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="c1">//重载后置递增
+&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">Coordinate&lt;/span> &lt;span class="k">operator&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">Coordinate&lt;/span> &lt;span class="n">old&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">x_&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">y_&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">old&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">};&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>对比前置和后置递增的实现，可以看到为了实现后置递增的语义，我们需要一个额外的变量（old）保存对象原本的值，也就是说对于 &lt;code>Coordinate&lt;/code> 类的一个对象 &lt;code>co&lt;/code> 来说，理论上 &lt;code>++co&lt;/code> 的效率要高于 &lt;code>co++&lt;/code> 。其实对于C++内置类型来说这一点也是一样的，但现代编译器都会做优化，因此对于整型 &lt;code>i&lt;/code> 来说 &lt;code>++i&lt;/code> 和 &lt;code>i++&lt;/code>效率上很可能没什么区别&lt;/p>
+&lt;p>测试一下刚才写的类：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">argc&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="o">**&lt;/span>&lt;span class="n">argv&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="n">Coordinate&lt;/span> &lt;span class="n">co1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">co2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">co2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">co1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">co2&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">printXY&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">co1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">printXY&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">co2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">co1&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">co2&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">printXY&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">co1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">printXY&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>output：&lt;/p>
+&lt;pre>&lt;code>1,1
 1,1
-
 1,1
 2,2
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.zhihu.com/question/19811087/answer/80210083&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;在程序开发中，++i 与 i++的区别在哪里？ - 叶王的回答 - 知乎&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;《C++ Primer （第5版）》&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>非递归遍历二叉树</title>
-      <link>https://geekgo.tech/posts/non-recursive-traversal-of-binary-tree/</link>
-      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/non-recursive-traversal-of-binary-tree/</guid>
-      <description>&lt;p&gt;二叉树的非递归遍历基于栈， 代码风格不像递归遍历那么简洁统一，不太好记，聊以备忘&lt;/p&gt;
-&lt;p&gt;代码来自 &lt;a href=&#34;https://www.jianshu.com/p/49c8cfd07410&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;这篇文章&lt;/a&gt;
-，作者在文章中统一了三种非递归遍历的风格，对于前序和中序遍历我还是更喜欢传统的写法，后序遍历采用了文章作者的写法&lt;/p&gt;
-&lt;h2 id=&#34;非递归前序遍历&#34;&gt;非递归前序遍历&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//非递归前序遍历
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;preorderTraversal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;nullptr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;empty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;nullptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push_back&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;val&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;empty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;非递归中序遍历&#34;&gt;非递归中序遍历&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//非递归中序遍历
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;inorderTraversal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;nullptr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;empty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;nullptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;empty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push_back&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;val&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;非递归后序遍历&#34;&gt;非递归后序遍历&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//非递归后序遍历
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;postorderTraversalNew&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pair&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TreeNode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;make_pair&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-    &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;visited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;empty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;first&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;visited&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;second&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;nullptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;k&#34;&gt;continue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;visited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push_back&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;val&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;make_pair&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;make_pair&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;push&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;make_pair&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
-        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>SUID、SGID 和 SBIT</title>
-      <link>https://geekgo.tech/posts/suid-sgid-and-sbit/</link>
-      <pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/suid-sgid-and-sbit/</guid>
-      <description>&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:left&#34;&gt;&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;SUID&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;SGID&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;SBIT&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left&#34;&gt;全称&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;set UID&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;set GID&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;Sticky Bit&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left&#34;&gt;解释&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;s标志出现在文件拥有者的x权限位置上 ：-rw&lt;strong&gt;s&lt;/strong&gt;r-xr-x&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;s标志出现在文件群组的x权限位置：-rwxr-&lt;strong&gt;s&lt;/strong&gt;r-x&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;t标志出现在其他人的x权限位置：drwxr-sr-&lt;strong&gt;t&lt;/strong&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left&#34;&gt;添加命令&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;chmod a+s file&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;chmod g+s file_or_dir&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;chmod o+t dir&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left&#34;&gt;有效对象&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;二进制可执行文件&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;二进制可执行文件，文件夹&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;文件夹&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left&#34;&gt;效果&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;文件执行者在该程序运行期间将获得程序拥有者的权限&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;strong&gt;对于文件&lt;/strong&gt;：文件执行者在该程序运行期间将获得程序所在群组的权限； &lt;strong&gt;对于文件夹&lt;/strong&gt;：使用者在该文件夹下时，有效群组将变成该文件夹的群组&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;当使用者在该文件夹下创建文件或文件夹时，仅有自己与 root 才有权力删除该文件&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;这三个权限都是建立在可执行权限之上，当可执行标志位为空时设置，如果设置了SUID、SGID和SBIT，会显示为大写：&lt;code&gt;rwSr-Sr-T&lt;/code&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;《鸟哥的Linux私房菜——基础学习篇（第四版）》&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>将windows文本文件转换为linux格式</title>
-      <link>https://geekgo.tech/posts/convert-dos-file-to-unix-format/</link>
-      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://geekgo.tech/posts/convert-dos-file-to-unix-format/</guid>
-      <description>&lt;p&gt;中文环境下，在Windows和Linux下创建的文本文件主要区别有两个&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Windows行尾为 &lt;code&gt;\r\n&lt;/code&gt; ，Linux行尾为 &lt;code&gt;\n&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Windows下中文使用GBK编码，Linux下一般是UTF-8&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;第一点可能导致不能识别换行，所有文本挤在一行， 但大部分文本编辑器都能够自动判断和处理（偏偏Windows自带的记事本不行）&lt;/p&gt;
-&lt;p&gt;第二点会导致中文乱码，虽然GBK正逐渐成为历史，但就我自己的体验来看，中文互联网上依旧存在大量GBK编码的文本文件&lt;/p&gt;
-&lt;h2 id=&#34;cr和lf&#34;&gt;CR和LF&lt;/h2&gt;
-&lt;p&gt;即“回车”（carriage return）和“换行”（line feed）&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;在计算机还没有出现之前，有一种叫做电传打字机（Teletype Model 33）的玩意，每秒钟可以打10个字符。但是它有一个问题，就是打完一行换行的时候，要用去0.2秒，正好可以打两个字符。要是在
+&lt;/code>&lt;/pre>&lt;hr>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.zhihu.com/question/19811087/answer/80210083"target="_blank" rel="noopener noreferrer">在程序开发中，++i 与 i++的区别在哪里？ - 叶王的回答 - 知乎&lt;/a>
+&lt;/li>
+&lt;li>《C++ Primer （第5版）》&lt;/li>
+&lt;/ul></description></item><item><title>非递归遍历二叉树</title><link>https://geekgo.tech/posts/non-recursive-traversal-of-binary-tree/</link><pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/non-recursive-traversal-of-binary-tree/</guid><description>&lt;p>二叉树的非递归遍历基于栈， 代码风格不像递归遍历那么简洁统一，不太好记，聊以备忘&lt;/p>
+&lt;p>代码来自 &lt;a href="https://www.jianshu.com/p/49c8cfd07410"target="_blank" rel="noopener noreferrer">这篇文章&lt;/a>
+，作者在文章中统一了三种非递归遍历的风格，对于前序和中序遍历我还是更喜欢传统的写法，后序遍历采用了文章作者的写法&lt;/p>
+&lt;h2 id="非递归前序遍历">非递归前序遍历&lt;/h2>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="c1">//非递归前序遍历
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kt">void&lt;/span> &lt;span class="nf">preorderTraversal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">vector&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">stack&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&amp;gt;&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">empty&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push_back&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">left&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">empty&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">top&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">pop&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">right&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="非递归中序遍历">非递归中序遍历&lt;/h2>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="c1">//非递归中序遍历
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kt">void&lt;/span> &lt;span class="nf">inorderTraversal&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">vector&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">stack&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&amp;gt;&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">empty&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">left&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">empty&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">top&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push_back&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">pop&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="n">p&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">right&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="非递归后序遍历">非递归后序遍历&lt;/h2>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="c1">//非递归后序遍历
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kt">void&lt;/span> &lt;span class="nf">postorderTraversalNew&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">vector&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">stack&lt;/span>&lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">pair&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">bool&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">make_pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">false&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="kt">bool&lt;/span> &lt;span class="n">visited&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">while&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">empty&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">top&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">first&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">visited&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">top&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="n">second&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">pop&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">root&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="k">continue&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">visited&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">path&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push_back&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">val&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="k">else&lt;/span>
+&lt;span class="p">{&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">make_pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">true&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">make_pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">right&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">false&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="n">s&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">make_pair&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">left&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">false&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>SUID、SGID 和 SBIT</title><link>https://geekgo.tech/posts/suid-sgid-and-sbit/</link><pubDate>Sat, 16 May 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/suid-sgid-and-sbit/</guid><description>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">&lt;/th>
+&lt;th style="text-align:center">SUID&lt;/th>
+&lt;th style="text-align:center">SGID&lt;/th>
+&lt;th style="text-align:center">SBIT&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">全称&lt;/td>
+&lt;td style="text-align:center">set UID&lt;/td>
+&lt;td style="text-align:center">set GID&lt;/td>
+&lt;td style="text-align:center">Sticky Bit&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">解释&lt;/td>
+&lt;td style="text-align:center">s标志出现在文件拥有者的x权限位置上 ：-rw&lt;strong>s&lt;/strong>r-xr-x&lt;/td>
+&lt;td style="text-align:center">s标志出现在文件群组的x权限位置：-rwxr-&lt;strong>s&lt;/strong>r-x&lt;/td>
+&lt;td style="text-align:center">t标志出现在其他人的x权限位置：drwxr-sr-&lt;strong>t&lt;/strong>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">添加命令&lt;/td>
+&lt;td style="text-align:center">&lt;code>chmod a+s file&lt;/code>&lt;/td>
+&lt;td style="text-align:center">&lt;code>chmod g+s file_or_dir&lt;/code>&lt;/td>
+&lt;td style="text-align:center">&lt;code>chmod o+t dir&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">有效对象&lt;/td>
+&lt;td style="text-align:center">二进制可执行文件&lt;/td>
+&lt;td style="text-align:center">二进制可执行文件，文件夹&lt;/td>
+&lt;td style="text-align:center">文件夹&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">效果&lt;/td>
+&lt;td style="text-align:center">文件执行者在该程序运行期间将获得程序拥有者的权限&lt;/td>
+&lt;td style="text-align:center">&lt;strong>对于文件&lt;/strong>：文件执行者在该程序运行期间将获得程序所在群组的权限； &lt;strong>对于文件夹&lt;/strong>：使用者在该文件夹下时，有效群组将变成该文件夹的群组&lt;/td>
+&lt;td style="text-align:center">当使用者在该文件夹下创建文件或文件夹时，仅有自己与 root 才有权力删除该文件&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>这三个权限都是建立在可执行权限之上，当可执行标志位为空时设置，如果设置了SUID、SGID和SBIT，会显示为大写：&lt;code>rwSr-Sr-T&lt;/code>&lt;/p>
+&lt;hr>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>《鸟哥的Linux私房菜——基础学习篇（第四版）》&lt;/li>
+&lt;/ul></description></item><item><title>将windows文本文件转换为linux格式</title><link>https://geekgo.tech/posts/convert-dos-file-to-unix-format/</link><pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate><guid>https://geekgo.tech/posts/convert-dos-file-to-unix-format/</guid><description>&lt;p>中文环境下，在Windows和Linux下创建的文本文件主要区别有两个&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Windows行尾为 &lt;code>\r\n&lt;/code> ，Linux行尾为 &lt;code>\n&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Windows下中文使用GBK编码，Linux下一般是UTF-8&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>第一点可能导致不能识别换行，所有文本挤在一行， 但大部分文本编辑器都能够自动判断和处理（偏偏Windows自带的记事本不行）&lt;/p>
+&lt;p>第二点会导致中文乱码，虽然GBK正逐渐成为历史，但就我自己的体验来看，中文互联网上依旧存在大量GBK编码的文本文件&lt;/p>
+&lt;h2 id="cr和lf">CR和LF&lt;/h2>
+&lt;p>即“回车”（carriage return）和“换行”（line feed）&lt;/p>
+&lt;blockquote>
+&lt;p>在计算机还没有出现之前，有一种叫做电传打字机（Teletype Model 33）的玩意，每秒钟可以打10个字符。但是它有一个问题，就是打完一行换行的时候，要用去0.2秒，正好可以打两个字符。要是在
 这0.2秒里面，又有新的字符传过来，那么这个字符将丢失。
 于是，研制人员想了个办法解决这个问题，就是在每行后面加两个表示结束的字符。一个叫做“回车”，告诉打字机把打印头定位在左边界；另一个叫做“换行”，告诉打字机把纸向下移一行。
-这就是“换行”和“回车”的来历，从它们的英语名字上也可以看出一二。&lt;/p&gt;
-&lt;p&gt;后来，计算机发明了，这两个概念也就被般到了计算机上。那时，存储器很贵，一些科学家认为在每行结尾加两个字符太浪费了，加一个就可以。于是，就出现了分歧。
-Unix/Linux 系统里，每行结尾只有“&amp;lt;换行&amp;gt;”，即“\n”；Windows系统里面，每行结尾是“  &amp;lt;回车&amp;gt;&amp;lt;换行&amp;gt;”，即“\r\n”；Mac系统里，每行结尾是“&amp;lt;回车&amp;gt;”，即“\r”（现在已改成跟Unix/Linux一样的&amp;quot;\n&amp;quot;）。&lt;/p&gt;
-&lt;p&gt;一个直接后果是，Unix/Linux/Mac系统下的文件在Windows里打开的话，会出现换行丢失，整个文本会乱成一团。（类似UltraEdit 这种编辑器可以正确识别）； 而反过来就会出现^M的符号（这是Unix/Linux  等系统下规定的特殊标记，占一个字符大小，不是^和M的组合，打印不出来的，可以通过ctrl+V, ctrl+M 输入）。Unix/Linux  下很多文本编辑器（命令行）会在显示这个标记之后，补上一个自己的换行符，以避免内容混乱（只是用于显示，补充的换行符不会写入文件，有专门的命令将Windows换行符替换为Unix/Linux 换行符）。 Unix/Linux 系统下的换行符在Windows系统的文本编辑器中会被忽略，整个文本会乱成一团。
+这就是“换行”和“回车”的来历，从它们的英语名字上也可以看出一二。&lt;/p>
+&lt;p>后来，计算机发明了，这两个概念也就被般到了计算机上。那时，存储器很贵，一些科学家认为在每行结尾加两个字符太浪费了，加一个就可以。于是，就出现了分歧。
+Unix/Linux 系统里，每行结尾只有“&amp;lt;换行&amp;gt;”，即“\n”；Windows系统里面，每行结尾是“ &amp;lt;回车&amp;gt;&amp;lt;换行&amp;gt;”，即“\r\n”；Mac系统里，每行结尾是“&amp;lt;回车&amp;gt;”，即“\r”（现在已改成跟Unix/Linux一样的&amp;quot;\n&amp;quot;）。&lt;/p>
+&lt;p>一个直接后果是，Unix/Linux/Mac系统下的文件在Windows里打开的话，会出现换行丢失，整个文本会乱成一团。（类似UltraEdit 这种编辑器可以正确识别）； 而反过来就会出现^M的符号（这是Unix/Linux 等系统下规定的特殊标记，占一个字符大小，不是^和M的组合，打印不出来的，可以通过ctrl+V, ctrl+M 输入）。Unix/Linux 下很多文本编辑器（命令行）会在显示这个标记之后，补上一个自己的换行符，以避免内容混乱（只是用于显示，补充的换行符不会写入文件，有专门的命令将Windows换行符替换为Unix/Linux 换行符）。 Unix/Linux 系统下的换行符在Windows系统的文本编辑器中会被忽略，整个文本会乱成一团。
 Windows 的换行是\r\n，十六进制数值是：0D0A。
-Unix/Linux/OS X 的换行是\n，十六进制数值是：0A。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;更多相关讨论参考&lt;a href=&#34;https://www.zhihu.com/question/46542168&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;这里&lt;/a&gt;
-&lt;/p&gt;
-&lt;h2 id=&#34;文件名&#34;&gt;文件名&lt;/h2&gt;
-&lt;p&gt;一些文件可能文件名也会乱码，使用convmv转换文件名编码&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ convmv -f GBK -t UTF-8 --notest file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果不指定 &lt;code&gt;--notest&lt;/code&gt; 则只会显示转换后的文件名但不会产生实际的修改&lt;/p&gt;
-&lt;h2 id=&#34;查看编码&#34;&gt;查看编码&lt;/h2&gt;
-&lt;h3 id=&#34;file&#34;&gt;file&lt;/h3&gt;
-&lt;p&gt;file可以查看文件类型、编码和换行符，但对于GBK编码中英文混合的情况的识别似乎不太准确&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ file *.php
-post.php:  HTML document, UTF-8 Unicode text
-sort.php:  PHP script, ISO-8859 text, with CRLF line terminators
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;enca&#34;&gt;enca&lt;/h3&gt;
-&lt;p&gt;相比之下，enca可以指定语言，识别效果比较好&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ enca -L zh *.php
-post.php: Universal transformation format &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt; bits&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; UTF-8
-sort.php: Simplified Chinese National Standard&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; GB2312
-  CRLF line terminators
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;显示enca支持的语言&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ enca --list languages
+Unix/Linux/OS X 的换行是\n，十六进制数值是：0A。&lt;/p>
+&lt;/blockquote>
+&lt;p>更多相关讨论参考&lt;a href="https://www.zhihu.com/question/46542168"target="_blank" rel="noopener noreferrer">这里&lt;/a>
+&lt;/p>
+&lt;h2 id="文件名">文件名&lt;/h2>
+&lt;p>一些文件可能文件名也会乱码，使用convmv转换文件名编码&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ convmv -f GBK -t UTF-8 --notest file
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果不指定 &lt;code>--notest&lt;/code> 则只会显示转换后的文件名但不会产生实际的修改&lt;/p>
+&lt;h2 id="查看编码">查看编码&lt;/h2>
+&lt;h3 id="file">file&lt;/h3>
+&lt;p>file可以查看文件类型、编码和换行符，但对于GBK编码中英文混合的情况的识别似乎不太准确&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ file *.php
+post.php: HTML document, UTF-8 Unicode text
+sort.php: PHP script, ISO-8859 text, with CRLF line terminators
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="enca">enca&lt;/h3>
+&lt;p>相比之下，enca可以指定语言，识别效果比较好&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ enca -L zh *.php
+post.php: Universal transformation format &lt;span class="m">8&lt;/span> bits&lt;span class="p">;&lt;/span> UTF-8
+sort.php: Simplified Chinese National Standard&lt;span class="p">;&lt;/span> GB2312
+CRLF line terminators
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>显示enca支持的语言&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ enca --list languages
 belarusian: CP1251 IBM866 ISO-8859-5 KOI8-UNI maccyr IBM855 KOI8-U
- bulgarian: CP1251 ISO-8859-5 IBM855 maccyr ECMA-113
-     czech: ISO-8859-2 CP1250 IBM852 KEYBCS2 macce KOI-8_CS_2 CORK
-  estonian: ISO-8859-4 CP1257 IBM775 ISO-8859-13 macce baltic
-  croatian: CP1250 ISO-8859-2 IBM852 macce CORK
- hungarian: ISO-8859-2 CP1250 IBM852 macce CORK
+bulgarian: CP1251 ISO-8859-5 IBM855 maccyr ECMA-113
+czech: ISO-8859-2 CP1250 IBM852 KEYBCS2 macce KOI-8_CS_2 CORK
+estonian: ISO-8859-4 CP1257 IBM775 ISO-8859-13 macce baltic
+croatian: CP1250 ISO-8859-2 IBM852 macce CORK
+hungarian: ISO-8859-2 CP1250 IBM852 macce CORK
 lithuanian: CP1257 ISO-8859-4 IBM775 ISO-8859-13 macce baltic
-   latvian: CP1257 ISO-8859-4 IBM775 ISO-8859-13 macce baltic
-    polish: ISO-8859-2 CP1250 IBM852 macce ISO-8859-13 ISO-8859-16 baltic CORK
-   russian: KOI8-R CP1251 ISO-8859-5 IBM866 maccyr
-    slovak: CP1250 ISO-8859-2 IBM852 KEYBCS2 macce KOI-8_CS_2 CORK
-   slovene: ISO-8859-2 CP1250 IBM852 macce CORK
- ukrainian: CP1251 IBM855 ISO-8859-5 CP1125 KOI8-U maccyr
-   chinese: GBK BIG5 HZ
-      none:
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;enca也能转换文件编码并且修改换行符&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ enca -L zh -x UTF-8 &amp;lt; origin_file &amp;gt; new_file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;iconv和awk&#34;&gt;iconv和awk&lt;/h2&gt;
-&lt;p&gt;如果你不想安装额外软件，也可以使用大多数发行版都会默认安装的GNU工具&lt;/p&gt;
-&lt;p&gt;用iconv转换文件编码&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ iconv -f GBK -t UTF-8 -o new_file origin_file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用awk修改换行符&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;sub(&amp;#34;\r$&amp;#34;, &amp;#34;&amp;#34;)&amp;#39;&lt;/span&gt; origin_file &amp;gt; new_file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;也可以反过来将Unix格式转换为Wiondos格式&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;sub(&amp;#34;$&amp;#34;, &amp;#34;\r&amp;#34;)&amp;#39;&lt;/span&gt; origin_file &amp;gt; new_file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;vim&#34;&gt;vim&lt;/h2&gt;
-&lt;p&gt;vim也支持文件编码和换行符的修改&lt;/p&gt;
-&lt;p&gt;先用vim打开要修改的文件&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ vim file
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果你的vim没有配置好 &lt;code&gt;fileencodings&lt;/code&gt; 可能会看到中文乱码，此时你可以&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;enc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;gbk&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;现在你应该可以看到正常显示的文本&lt;/p&gt;
-&lt;p&gt;然后修改文件编码和换行符&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;：&lt;span class=&#34;nx&#34;&gt;set&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fileencoding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;utf8&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;fileformat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;unix&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;保存文件&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;：&lt;span class=&#34;nx&#34;&gt;w&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;更多细节可以参考vim的用户手册&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;：h usr_23.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/Localization/Simplified_Chinese_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29#%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Archwiki - Localization/Simplified Chinese&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/46542168&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;知乎 - Unix/Linux/Mac 与 Windows 的换行符不统一的原因/目的是什么？&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.maketecheasier.com/convert-files-from-linux-format-windows/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;maketecheasier - How To Convert Files from Linux/Unix Format to Windows and Vice Versa&lt;/a&gt;
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+latvian: CP1257 ISO-8859-4 IBM775 ISO-8859-13 macce baltic
+polish: ISO-8859-2 CP1250 IBM852 macce ISO-8859-13 ISO-8859-16 baltic CORK
+russian: KOI8-R CP1251 ISO-8859-5 IBM866 maccyr
+slovak: CP1250 ISO-8859-2 IBM852 KEYBCS2 macce KOI-8_CS_2 CORK
+slovene: ISO-8859-2 CP1250 IBM852 macce CORK
+ukrainian: CP1251 IBM855 ISO-8859-5 CP1125 KOI8-U maccyr
+chinese: GBK BIG5 HZ
+none:
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>enca也能转换文件编码并且修改换行符&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ enca -L zh -x UTF-8 &amp;lt; origin_file &amp;gt; new_file
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="iconv和awk">iconv和awk&lt;/h2>
+&lt;p>如果你不想安装额外软件，也可以使用大多数发行版都会默认安装的GNU工具&lt;/p>
+&lt;p>用iconv转换文件编码&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ iconv -f GBK -t UTF-8 -o new_file origin_file
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>用awk修改换行符&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ awk &lt;span class="s1">&amp;#39;sub(&amp;#34;\r$&amp;#34;, &amp;#34;&amp;#34;)&amp;#39;&lt;/span> origin_file &amp;gt; new_file
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>也可以反过来将Unix格式转换为Wiondos格式&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ awk &lt;span class="s1">&amp;#39;sub(&amp;#34;$&amp;#34;, &amp;#34;\r&amp;#34;)&amp;#39;&lt;/span> origin_file &amp;gt; new_file
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="vim">vim&lt;/h2>
+&lt;p>vim也支持文件编码和换行符的修改&lt;/p>
+&lt;p>先用vim打开要修改的文件&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-shell" data-lang="shell">$ vim file
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果你的vim没有配置好 &lt;code>fileencodings&lt;/code> 可能会看到中文乱码，此时你可以&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vim" data-lang="vim">&lt;span class="p">:&lt;/span>&lt;span class="nx">e&lt;/span> &lt;span class="p">++&lt;/span>&lt;span class="nx">enc&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="nx">gbk&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>现在你应该可以看到正常显示的文本&lt;/p>
+&lt;p>然后修改文件编码和换行符&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vim" data-lang="vim">：&lt;span class="nx">set&lt;/span> &lt;span class="nx">fileencoding&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="nx">utf8&lt;/span> &lt;span class="nx">fileformat&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="nx">unix&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>保存文件&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-vim" data-lang="vim">：&lt;span class="nx">w&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>更多细节可以参考vim的用户手册&lt;/p>
+&lt;pre>&lt;code>：h usr_23.txt
+&lt;/code>&lt;/pre>&lt;hr>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a href="https://wiki.archlinux.org/index.php/Localization/Simplified_Chinese_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29#%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81"target="_blank" rel="noopener noreferrer">Archwiki - Localization/Simplified Chinese&lt;/a>
+&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://www.zhihu.com/question/46542168"target="_blank" rel="noopener noreferrer">知乎 - Unix/Linux/Mac 与 Windows 的换行符不统一的原因/目的是什么？&lt;/a>
+&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://www.maketecheasier.com/convert-files-from-linux-format-windows/"target="_blank" rel="noopener noreferrer">maketecheasier - How To Convert Files from Linux/Unix Format to Windows and Vice Versa&lt;/a>
+&lt;/p>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,70 +1,28 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>关于&#34;sudo cd&#34;的讨论&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="关于&#34;sudo cd&#34;的讨论" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">关于"sudo cd"的讨论</h1><p class="article date">Sunday, December 1, 2019</p></section><article class="article markdown-body"><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~ $ sudo <span class="nb">cd</span> somedir
-sudo: cd: <span class="nb">command</span> not found
-</code></pre></div><p><code>sudo</code> 会在环境变量（$PATH）中搜索 <code>cd</code> , 找到后以root身份执行, 没找到则输出错误信息”command not found“。</p>
-<p>因为 <code>cd</code> 是shell内建命令(built-in command), 并不像其他大多数命令或程序那样以文件形式包含在环境变量中, 所以切换目录时遇到”<em>Permission denied</em>“的情况正确的做法是先以root身份新建一个shell, 然后再切换目录, 完成工作后 <code>exit</code> 或 <code>Ctrl-D</code> 退回原shell</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">~ $ sudo -s
-~ $ <span class="nb">cd</span> somedir
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>关于"sudo cd"的讨论&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="关于&#34;sudo cd&#34;的讨论"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">关于"sudo cd"的讨论</h1><p class="article date">Sunday, December 1, 2019</p></section><article class="article markdown-body"><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>~ $ sudo <span class=nb>cd</span> somedir
+sudo: cd: <span class=nb>command</span> not found
+</code></pre></div><p><code>sudo</code> 会在环境变量（$PATH）中搜索 <code>cd</code> , 找到后以root身份执行, 没找到则输出错误信息”command not found“。</p><p>因为 <code>cd</code> 是shell内建命令(built-in command), 并不像其他大多数命令或程序那样以文件形式包含在环境变量中, 所以切换目录时遇到”<em>Permission denied</em>“的情况正确的做法是先以root身份新建一个shell, 然后再切换目录, 完成工作后 <code>exit</code> 或 <code>Ctrl-D</code> 退回原shell</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>~ $ sudo -s
+~ $ <span class=nb>cd</span> somedir
 ...do some work
-~ $ <span class="nb">exit</span>
-</code></pre></div><h2 id="补充知识">补充知识</h2>
-<p>判断命令类型可以使用 <code>type</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">~ $ <span class="nb">type</span> <span class="nb">cd</span>
-<span class="nb">cd</span> is a shell <span class="nb">builtin</span>
+~ $ <span class=nb>exit</span>
+</code></pre></div><h2 id=补充知识>补充知识</h2><p>判断命令类型可以使用 <code>type</code></p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>~ $ <span class=nb>type</span> <span class=nb>cd</span>
+<span class=nb>cd</span> is a shell <span class=nb>builtin</span>
 
-~ $ <span class="nb">type</span> find
+~ $ <span class=nb>type</span> find
 find is /usr/bin/find
 
-~ $ <span class="nb">type</span> ll
-ll is aliased to <span class="sb">`</span>ls -lh<span class="err">&#39;</span>
-</code></pre></div><p><code>type</code> 本身也是shell内建命令</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">~ $ <span class="nb">type</span> <span class="nb">type</span>
-<span class="nb">type</span> is a shell <span class="nb">builtin</span>
-</code></pre></div><p>列出所有shell内建命令</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">~ $ <span class="nb">compgen</span> -b <span class="p">|</span> column 
-</code></pre></div><h2 id="为什么不把cd设计成外部命令来避免command-not-found">为什么不把”cd“设计成外部命令来避免“command not found&quot;？</h2>
-<p>所谓的外部命令（external command）实际上是一个个独立程序（可以由任何编程语言编写），存放在环境变量所指定的目录中。shell执行这些程序时先创建一个子进程，在子进程内执行程序，执行完毕后退回原shell进程。由于子进程的环境与父进程shell的环境是互相独立的，在子进程内对环境修改父进程是感受不到的，如果 <code>cd</code> 作为外部命令执行，在子进程内改变了当前工作目录，退回原shell后又会回到原来的目录，这个过程相当相当迅速，对使用者来说仅仅是执行了一条指令并且<strong>看起来什么都没发生</strong>。整个过程可以用下面几条命令模拟：</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">~ $ bash		<span class="c1">#创建一个子进程，该进程也是一个shell，所以可以执行”cd“</span>
-~ $ <span class="nb">cd</span> /tmp		<span class="c1">#进入&#34;/tmp&#34;</span>
-tmp $ <span class="nb">exit</span>		<span class="c1">#当前目录为“/tmp”, exit结束子进程，退回原shell</span>
-~ $ <span class="nb">pwd</span>			<span class="c1">#在原shell执行”pwd“查看当前目录是否改变</span>
-</code></pre></div><h2 id="例外上述都是放屁">例外——上述都是放屁</h2>
-<p>实际上上面所讲并不十分准确，先来看看下面两条命令的执行结果</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">~ $ <span class="nb">type</span> <span class="nb">pwd</span>
-<span class="nb">pwd</span> is a shell <span class="nb">builtin</span>
+~ $ <span class=nb>type</span> ll
+ll is aliased to <span class=sb>`</span>ls -lh<span class=err>&#39;</span>
+</code></pre></div><p><code>type</code> 本身也是shell内建命令</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>~ $ <span class=nb>type</span> <span class=nb>type</span>
+<span class=nb>type</span> is a shell <span class=nb>builtin</span>
+</code></pre></div><p>列出所有shell内建命令</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>~ $ <span class=nb>compgen</span> -b <span class=p>|</span> column 
+</code></pre></div><h2 id=为什么不把cd设计成外部命令来避免command-not-found>为什么不把”cd“设计成外部命令来避免“command not found"？</h2><p>所谓的外部命令（external command）实际上是一个个独立程序（可以由任何编程语言编写），存放在环境变量所指定的目录中。shell执行这些程序时先创建一个子进程，在子进程内执行程序，执行完毕后退回原shell进程。由于子进程的环境与父进程shell的环境是互相独立的，在子进程内对环境修改父进程是感受不到的，如果 <code>cd</code> 作为外部命令执行，在子进程内改变了当前工作目录，退回原shell后又会回到原来的目录，这个过程相当相当迅速，对使用者来说仅仅是执行了一条指令并且<strong>看起来什么都没发生</strong>。整个过程可以用下面几条命令模拟：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>~ $ bash		<span class=c1>#创建一个子进程，该进程也是一个shell，所以可以执行”cd“</span>
+~ $ <span class=nb>cd</span> /tmp		<span class=c1>#进入&#34;/tmp&#34;</span>
+tmp $ <span class=nb>exit</span>		<span class=c1>#当前目录为“/tmp”, exit结束子进程，退回原shell</span>
+~ $ <span class=nb>pwd</span>			<span class=c1>#在原shell执行”pwd“查看当前目录是否改变</span>
+</code></pre></div><h2 id=例外上述都是放屁>例外——上述都是放屁</h2><p>实际上上面所讲并不十分准确，先来看看下面两条命令的执行结果</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>~ $ <span class=nb>type</span> <span class=nb>pwd</span>
+<span class=nb>pwd</span> is a shell <span class=nb>builtin</span>
 
-~ $ which <span class="nb">pwd</span>
+~ $ which <span class=nb>pwd</span>
 /usr/bin/pwd
-</code></pre></div><p>可以看到 <code>pwd</code> 是shell内建命令，但又有文件形式存在的独立程序。这种与内建命令<strong>同名且实际运行结果相同</strong>的外部命令存在的意义我不是很清楚，在网上看到的说法是</p>
-<blockquote>
-<p>It serves primarily as making sure the POSIX tool-chest is available both inside and outside a shell .</p>
-</blockquote>
-<p><em>翻译：确保POSIX工具箱在shell内外都可用。</em></p>
-<p>以及</p>
-<blockquote>
-<p>for the observation about side effects and error messages.</p>
-</blockquote>
-<p><em>翻译：用于观察副作用和错误信息。</em></p>
-<p>所谓”副作用“是指执行该命令所造成的一些其他影响，比如 <code>touch</code> 命令实际上是用来改变文件时间戳（timestamps）的，执行 <code>touch filename</code> 时如果 <code>filename</code> 不存在，创建空文件 <code>filename</code> 即是该命令的一个副作用。</p>
-<p><strong>甚至在一些Linux发行版（distribution）中， <code>cd</code> 也有对应的外部命令</strong>，比如我安装在服务器上的 <code>Centos7</code> ，执行 <code>sudo cd /root</code> 不会报错， 也不会改变当前工作目录。</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/b2-1.gif"
-        alt/></p>
-<hr>
-<p>参考： <a href="https://unix.stackexchange.com/questions/50058/what-is-the-point-of-the-cd-external-command"target="_blank" rel="noopener noreferrer">https://unix.stackexchange.com/questions/50058/what-is-the-point-of-the-cd-external-command</a>
-</p>
-</article><section class="article labels"><a class="tag" href=/tags/linux/>linux</a></section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/bre-and-ere/"><span class="iconfont icon-article"></span>基本正则表达式（BRE）和扩展正则表达式（ERE）</a></p><p><a class="link" href="/posts/how-to-ask/"><span class="iconfont icon-article"></span>转载：提问的智慧(How To Ask Questions The Smart Way)</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+</code></pre></div><p>可以看到 <code>pwd</code> 是shell内建命令，但又有文件形式存在的独立程序。这种与内建命令<strong>同名且实际运行结果相同</strong>的外部命令存在的意义我不是很清楚，在网上看到的说法是</p><blockquote><p>It serves primarily as making sure the POSIX tool-chest is available both inside and outside a shell .</p></blockquote><p><em>翻译：确保POSIX工具箱在shell内外都可用。</em></p><p>以及</p><blockquote><p>for the observation about side effects and error messages.</p></blockquote><p><em>翻译：用于观察副作用和错误信息。</em></p><p>所谓”副作用“是指执行该命令所造成的一些其他影响，比如 <code>touch</code> 命令实际上是用来改变文件时间戳（timestamps）的，执行 <code>touch filename</code> 时如果 <code>filename</code> 不存在，创建空文件 <code>filename</code> 即是该命令的一个副作用。</p><p><strong>甚至在一些Linux发行版（distribution）中， <code>cd</code> 也有对应的外部命令</strong>，比如我安装在服务器上的 <code>Centos7</code> ，执行 <code>sudo cd /root</code> 不会报错， 也不会改变当前工作目录。</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/b2-1.gif alt></p><hr><p>参考： <a href=https://unix.stackexchange.com/questions/50058/what-is-the-point-of-the-cd-external-command target=_blank rel="noopener noreferrer">https://unix.stackexchange.com/questions/50058/what-is-the-point-of-the-cd-external-command</a></p></article><section class="article labels"><a class=tag href=/tags/linux/>linux</a></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/bre-and-ere/><span class="iconfont icon-article"></span>基本正则表达式（BRE）和扩展正则表达式（ERE）</a></p><p><a class=link href=/posts/how-to-ask/><span class="iconfont icon-article"></span>转载：提问的智慧(How To Ask Questions The Smart Way)</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

@@ -1,90 +1,70 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>非递归遍历二叉树&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="非递归遍历二叉树" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">非递归遍历二叉树</h1><p class="article date">Saturday, May 23, 2020</p></section><article class="article markdown-body"><p>二叉树的非递归遍历基于栈， 代码风格不像递归遍历那么简洁统一，不太好记，聊以备忘</p>
-<p>代码来自 <a href="https://www.jianshu.com/p/49c8cfd07410"target="_blank" rel="noopener noreferrer">这篇文章</a>
-，作者在文章中统一了三种非递归遍历的风格，对于前序和中序遍历我还是更喜欢传统的写法，后序遍历采用了文章作者的写法</p>
-<h2 id="非递归前序遍历">非递归前序遍历</h2>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">//非递归前序遍历
-</span><span class="c1"></span><span class="kt">void</span> <span class="nf">preorderTraversal</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span> <span class="o">*&gt;</span> <span class="n">s</span><span class="p">;</span>
-    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="k">while</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">);</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-        <span class="p">{</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="非递归中序遍历">非递归中序遍历</h2>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">//非递归中序遍历
-</span><span class="c1"></span><span class="kt">void</span> <span class="nf">inorderTraversal</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">stack</span><span class="o">&lt;</span><span class="n">TreeNode</span> <span class="o">*&gt;</span> <span class="n">s</span><span class="p">;</span>
-    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="k">while</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-        <span class="p">{</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
-            <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">);</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="非递归后序遍历">非递归后序遍历</h2>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="c1">//非递归后序遍历
-</span><span class="c1"></span><span class="kt">void</span> <span class="nf">postorderTraversalNew</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">stack</span><span class="o">&lt;</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">TreeNode</span> <span class="o">*</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">s</span><span class="p">;</span>
-    <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">false</span><span class="p">));</span>
-    <span class="kt">bool</span> <span class="n">visited</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">s</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-    <span class="p">{</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">first</span><span class="p">;</span>
-        <span class="n">visited</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">second</span><span class="p">;</span>
-        <span class="n">s</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
-            <span class="k">continue</span><span class="p">;</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">visited</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">true</span><span class="p">));</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="nb">false</span><span class="p">));</span>
-            <span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="nb">false</span><span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></article><section class="article labels"><a class="tag" href=/tags/algorithm/>algorithm</a></section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/the-difference-between-&#43;&#43;i-and-i&#43;&#43;-in-cpp/"><span class="iconfont icon-article"></span>c++中++i和i++的区别</a></p><p><a class="link" href="/posts/suid-sgid-and-sbit/"><span class="iconfont icon-article"></span>SUID、SGID 和 SBIT</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>非递归遍历二叉树&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="非递归遍历二叉树"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">非递归遍历二叉树</h1><p class="article date">Saturday, May 23, 2020</p></section><article class="article markdown-body"><p>二叉树的非递归遍历基于栈， 代码风格不像递归遍历那么简洁统一，不太好记，聊以备忘</p><p>代码来自 <a href=https://www.jianshu.com/p/49c8cfd07410 target=_blank rel="noopener noreferrer">这篇文章</a>
+，作者在文章中统一了三种非递归遍历的风格，对于前序和中序遍历我还是更喜欢传统的写法，后序遍历采用了文章作者的写法</p><h2 id=非递归前序遍历>非递归前序遍历</h2><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=c1>//非递归前序遍历
+</span><span class=c1></span><span class=kt>void</span> <span class=nf>preorderTraversal</span><span class=p>(</span><span class=n>TreeNode</span> <span class=o>*</span><span class=n>root</span><span class=p>,</span> <span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>path</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>stack</span><span class=o>&lt;</span><span class=n>TreeNode</span> <span class=o>*&gt;</span> <span class=n>s</span><span class=p>;</span>
+    <span class=n>TreeNode</span> <span class=o>*</span><span class=n>p</span> <span class=o>=</span> <span class=n>root</span><span class=p>;</span>
+    <span class=k>while</span><span class=p>(</span><span class=n>p</span> <span class=o>!=</span> <span class=k>nullptr</span> <span class=o>||</span> <span class=o>!</span><span class=n>s</span><span class=p>.</span><span class=n>empty</span><span class=p>())</span>
+    <span class=p>{</span>
+        <span class=k>while</span><span class=p>(</span><span class=n>p</span> <span class=o>!=</span> <span class=k>nullptr</span><span class=p>)</span>
+        <span class=p>{</span>
+            <span class=n>path</span><span class=p>.</span><span class=n>push_back</span><span class=p>(</span><span class=n>p</span><span class=o>-&gt;</span><span class=n>val</span><span class=p>);</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=n>p</span><span class=p>);</span>
+            <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>;</span>
+        <span class=p>}</span>
+        <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>s</span><span class=p>.</span><span class=n>empty</span><span class=p>())</span>
+        <span class=p>{</span>
+            <span class=n>p</span> <span class=o>=</span> <span class=n>s</span><span class=p>.</span><span class=n>top</span><span class=p>();</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>pop</span><span class=p>();</span>
+            <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>;</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=非递归中序遍历>非递归中序遍历</h2><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=c1>//非递归中序遍历
+</span><span class=c1></span><span class=kt>void</span> <span class=nf>inorderTraversal</span><span class=p>(</span><span class=n>TreeNode</span> <span class=o>*</span><span class=n>root</span><span class=p>,</span> <span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>path</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>stack</span><span class=o>&lt;</span><span class=n>TreeNode</span> <span class=o>*&gt;</span> <span class=n>s</span><span class=p>;</span>
+    <span class=n>TreeNode</span> <span class=o>*</span><span class=n>p</span> <span class=o>=</span> <span class=n>root</span><span class=p>;</span>
+    <span class=k>while</span><span class=p>(</span><span class=n>p</span> <span class=o>!=</span> <span class=k>nullptr</span> <span class=o>||</span> <span class=o>!</span><span class=n>s</span><span class=p>.</span><span class=n>empty</span><span class=p>())</span>
+    <span class=p>{</span>
+        <span class=k>while</span><span class=p>(</span><span class=n>p</span> <span class=o>!=</span> <span class=k>nullptr</span><span class=p>)</span>
+        <span class=p>{</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=n>p</span><span class=p>);</span>
+            <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>;</span>
+        <span class=p>}</span>
+        <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>s</span><span class=p>.</span><span class=n>empty</span><span class=p>())</span>
+        <span class=p>{</span>
+            <span class=n>p</span> <span class=o>=</span> <span class=n>s</span><span class=p>.</span><span class=n>top</span><span class=p>();</span>
+            <span class=n>path</span><span class=p>.</span><span class=n>push_back</span><span class=p>(</span><span class=n>p</span><span class=o>-&gt;</span><span class=n>val</span><span class=p>);</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>pop</span><span class=p>();</span>
+            <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>;</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><h2 id=非递归后序遍历>非递归后序遍历</h2><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=c1>//非递归后序遍历
+</span><span class=c1></span><span class=kt>void</span> <span class=nf>postorderTraversalNew</span><span class=p>(</span><span class=n>TreeNode</span> <span class=o>*</span><span class=n>root</span><span class=p>,</span> <span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>path</span><span class=p>)</span>
+<span class=p>{</span>
+    <span class=n>stack</span><span class=o>&lt;</span> <span class=n>pair</span><span class=o>&lt;</span><span class=n>TreeNode</span> <span class=o>*</span><span class=p>,</span> <span class=kt>bool</span><span class=o>&gt;</span> <span class=o>&gt;</span> <span class=n>s</span><span class=p>;</span>
+    <span class=n>s</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=n>make_pair</span><span class=p>(</span><span class=n>root</span><span class=p>,</span> <span class=nb>false</span><span class=p>));</span>
+    <span class=kt>bool</span> <span class=n>visited</span><span class=p>;</span>
+    <span class=k>while</span><span class=p>(</span><span class=o>!</span><span class=n>s</span><span class=p>.</span><span class=n>empty</span><span class=p>())</span>
+    <span class=p>{</span>
+        <span class=n>root</span> <span class=o>=</span> <span class=n>s</span><span class=p>.</span><span class=n>top</span><span class=p>().</span><span class=n>first</span><span class=p>;</span>
+        <span class=n>visited</span> <span class=o>=</span> <span class=n>s</span><span class=p>.</span><span class=n>top</span><span class=p>().</span><span class=n>second</span><span class=p>;</span>
+        <span class=n>s</span><span class=p>.</span><span class=n>pop</span><span class=p>();</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>root</span> <span class=o>==</span> <span class=k>nullptr</span><span class=p>)</span>
+            <span class=k>continue</span><span class=p>;</span>
+        <span class=k>if</span><span class=p>(</span><span class=n>visited</span><span class=p>)</span>
+        <span class=p>{</span>
+            <span class=n>path</span><span class=p>.</span><span class=n>push_back</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>val</span><span class=p>);</span>
+        <span class=p>}</span>
+        <span class=k>else</span>
+        <span class=p>{</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=n>make_pair</span><span class=p>(</span><span class=n>root</span><span class=p>,</span> <span class=nb>true</span><span class=p>));</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=n>make_pair</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>,</span> <span class=nb>false</span><span class=p>));</span>
+            <span class=n>s</span><span class=p>.</span><span class=n>push</span><span class=p>(</span><span class=n>make_pair</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>,</span> <span class=nb>false</span><span class=p>));</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div></article><section class="article labels"><a class=tag href=/tags/algorithm/>algorithm</a></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/the-difference-between-++i-and-i++-in-cpp/><span class="iconfont icon-article"></span>c++中++i和i++的区别</a></p><p><a class=link href=/posts/suid-sgid-and-sbit/><span class="iconfont icon-article"></span>SUID、SGID 和 SBIT</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>
