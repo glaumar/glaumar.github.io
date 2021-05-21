@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>基本正则表达式（BRE）和扩展正则表达式（ERE）&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="基本正则表达式（BRE）和扩展正则表达式（ERE）" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">基本正则表达式（BRE）和扩展正则表达式（ERE）</h1><p class="article date">Sunday, December 8, 2019</p></section><article class="article markdown-body"><blockquote>
+<p>最初的正则表达式出现于<a href="https://zh.wikipedia.org/wiki/%e7%90%86%e8%ab%96%e8%a8%88%e7%ae%97%e6%a9%9f%e7%a7%91%e5%ad%b8"target="_blank" rel="noopener noreferrer">理论计算机科学</a>
+的<a href="https://zh.wikipedia.org/wiki/%e8%87%aa%e5%8a%a8%e6%8e%a7%e5%88%b6"target="_blank" rel="noopener noreferrer">自动控制</a>
+理论和<a href="https://zh.wikipedia.org/wiki/%e5%bd%a2%e5%bc%8f%e5%8c%96%e8%af%ad%e8%a8%80"target="_blank" rel="noopener noreferrer">形式化语言</a>
+理论中。在这些领域中有对计算（自动控制）的模型和对<a href="https://zh.wikipedia.org/wiki/%e5%bd%a2%e5%bc%8f%e5%8c%96%e8%af%ad%e8%a8%80"target="_blank" rel="noopener noreferrer">形式化语言</a>
+描述与分类的研究。</p>
+<p>1940年，<a href="https://zh.wikipedia.org/wiki/%e6%b2%83%e4%bc%a6%c2%b7%e9%ba%a6%e5%8d%a1%e6%b4%9b%e5%85%8b"target="_blank" rel="noopener noreferrer">沃伦·麦卡洛克</a>
+与<a href="https://zh.wikipedia.org/w/index.php?title=Walter_Pitts&amp;action=edit&amp;redlink=1"target="_blank" rel="noopener noreferrer">Walter Pitts</a>
+将<a href="https://zh.wikipedia.org/wiki/%e7%a5%9e%e7%bb%8f%e7%b3%bb%e7%bb%9f"target="_blank" rel="noopener noreferrer">神经系统</a>
+中的神经元描述成小而简单的自动控制元。</p>
+<p>1950年代，数学家<a href="https://zh.wikipedia.org/wiki/%e6%96%af%e8%92%82%e8%8a%ac%c2%b7%e7%a7%91%e5%b0%94%c2%b7%e5%85%8b%e8%8e%b1%e5%b0%bc"target="_blank" rel="noopener noreferrer">斯蒂芬·科尔·克莱尼</a>
+利用称之为「正则集合」的数学符号来描述此模型。<a href="https://zh.wikipedia.org/wiki/%e8%82%af%c2%b7%e6%b1%a4%e6%99%ae%e9%80%8a"target="_blank" rel="noopener noreferrer">肯·汤普逊</a>
+将此符号系统引入编辑器<a href="https://zh.wikipedia.org/w/index.php?title=QED_%28%e6%96%87%e5%ad%97%e7%b7%a8%e8%bc%af%e5%99%a8%29&amp;action=edit&amp;redlink=1"target="_blank" rel="noopener noreferrer">QED</a>
+，随后是<a href="https://zh.wikipedia.org/wiki/Unix"target="_blank" rel="noopener noreferrer">Unix</a>
+上的编辑器<a href="https://zh.wikipedia.org/w/index.php?title=Ed_%28%e6%96%87%e5%ad%97%e7%b7%a8%e8%bc%af%e5%99%a8%29&amp;action=edit&amp;redlink=1"target="_blank" rel="noopener noreferrer">ed</a>
+，并最终引入<a href="https://zh.wikipedia.org/wiki/Grep"target="_blank" rel="noopener noreferrer">grep</a>
+。自此以后，正則表达式被广泛地应用于各种Unix或<a href="https://zh.wikipedia.org/wiki/%e7%b1%bbUnix"target="_blank" rel="noopener noreferrer">类Unix</a>
+系统的工具中。正则表达式的POSIX规范，分为基本型正则表达式（Basic Regular Expression，BRE）和扩展型正则表达式（Extended Regular Express，ERE）两大流派。在兼容POSIX的UNIX系统上，grep和egrep之类的工具都遵循POSIX规范，一些数据库系统中的正则表达式也符合POSIX规范。grep、vi、sed都属于BRE，是历史最早的正则表达式，因此元字符必须转譯之后才具有特殊含义。egrep、awk则属于ERE，元字符不用转譯 。 —— <a href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"target="_blank" rel="noopener noreferrer">维基百科</a>
+</p>
+</blockquote>
+<p>BRE 和 ERE 是 POSIX 标准中定义的两种不同风格的正则表达式, 也是比较早的正则表达式，只支持一些比较基础功能，没有贪婪匹配（ <code>.*</code> ）和非贪婪匹配（ <code>.*?</code> ）的区别（具体效果要看具体的实现，GNU的实现中均表现为贪婪匹配，另外一些实现中 <code>.*?</code> 可能导致语法错误），更不支持正、逆向巡视等后来的高级语法。</p>
+<h2 id="bre语法">BRE语法</h2>
+<p><code>.</code> 匹配单个任意字符, 匹配 <code>.</code> 本身使用 <code>\.</code></p>
+<p><code>*</code> 前面的字符或模式重复任意次（$$ x\geq0 $$），匹配 <code>*</code> 本身使用 <code>\*</code></p>
+<p><code>\{m\}</code> 前面的字符或模式重复m次（$$x=m$$）</p>
+<p><code>\{m,n\}</code> 前面的字符或模式重复m到n次（$$m\leq x \leq n$$）</p>
+<p><code>\{m,\}</code> 前面的字符或模式重复m次及以上（$$x\geq m$$）</p>
+<p><code>\(regexp\)</code> 分组，将 <code>\(</code> 和 <code>\)</code>  之间的内容视为一个整体，有两个作用</p>
+<ol>
+<li>配合前面的 <code>*</code> <code>\{m,n\}</code> 等量词使用，例如： <code>ab\{2\}</code> 匹配“abb”, 而 <code>\(ab\)\{2\}</code> 匹配“abab”</li>
+<li>向后引用（back references），使用 <code>\1</code> ~ <code>\9</code> 来引用第1~9个分组匹配的内容，例如： <code>\(ab*\)\1</code> 可以匹配“abab”，也能匹配“abbbabbb”</li>
+</ol>
+<p><code>^</code> 放在正则表达式开头则匹配行首，其他位置匹配 <code>^</code> 本身</p>
+<p><code>$</code> 放在正则表达式末尾则匹配行尾，其他位置匹配 <code>$</code> 本身</p>
+<p><code>[list]</code> 自定义字符集，可以匹配 <code>[</code> 和 <code>]</code> 之间出现的任意字符，例如： <code>a[bcd]</code> 可以匹配”ab&quot;，“ac”或“ad”。且支持使用<em>char1-char2</em>这种省略写法，例如： <code>[0-9]*</code> 可以匹配”1234567890“ ， <code>[a-c]*</code> 可以匹配“cabba”</p>
+<p><code>[^list]</code> 同上，但匹配所有没有出现在 <code>[</code> 和 <code>]</code> 之间的其他字符</p>
+<p>另外其他风格的正则表达式中有诸如 <code>\d</code> <code>\w</code>  <code>\s</code> 等速记符号（shorthand）表示一些常用字符集，BER和ERE均不支持这种写法，取而代之的是POSIX标准中定义的字符集：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">POSIX</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">ASCII</th>
+<th>Shorthand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">[:alnum:]</td>
+<td style="text-align:left">数字和字母</td>
+<td style="text-align:left">[a-zA-Z0-9]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:alpha:]</td>
+<td style="text-align:left">字母</td>
+<td style="text-align:left">[a-zA-Z]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:ascii:]</td>
+<td style="text-align:left">ASCII字符</td>
+<td style="text-align:left">[\x00-\x7F]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:blank:]</td>
+<td style="text-align:left">空格和 <code>Tab</code></td>
+<td style="text-align:left">[ \t]</td>
+<td>\h</td>
+</tr>
+<tr>
+<td style="text-align:left">[:cntrl:]</td>
+<td style="text-align:left">控制字符</td>
+<td style="text-align:left">[\x00-\x1F\x7F]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:digit:]</td>
+<td style="text-align:left">数字</td>
+<td style="text-align:left">[0-9]</td>
+<td>\d</td>
+</tr>
+<tr>
+<td style="text-align:left">[:graph:]</td>
+<td style="text-align:left">可视字符</td>
+<td style="text-align:left">[\x21-\x7E]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:lower:]</td>
+<td style="text-align:left">小写字母</td>
+<td style="text-align:left">[a-z]</td>
+<td>\l</td>
+</tr>
+<tr>
+<td style="text-align:left">[:print:]</td>
+<td style="text-align:left">可打印字符</td>
+<td style="text-align:left">[\x20-\x7E]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:punct:]</td>
+<td style="text-align:left">标点符号</td>
+<td style="text-align:left">[!&quot;#$%&amp;'()*+, -./:;&lt;=&gt;?@[ \]^_‘{|}~]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">[:space:]</td>
+<td style="text-align:left">所有空白字符</td>
+<td style="text-align:left">[ \t\r\n\v\f]</td>
+<td>\s</td>
+</tr>
+<tr>
+<td style="text-align:left">[:upper:]</td>
+<td style="text-align:left">大写字母</td>
+<td style="text-align:left">[A-Z]</td>
+<td>\u</td>
+</tr>
+<tr>
+<td style="text-align:left">[:word:]</td>
+<td style="text-align:left">单词</td>
+<td style="text-align:left">[A-Za-z0-9_]</td>
+<td>\w</td>
+</tr>
+<tr>
+<td style="text-align:left">[:xdigit:]</td>
+<td style="text-align:left">十六进制数</td>
+<td style="text-align:left">[A-Fa-f0-9]</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong><code>[</code> 和 <code>]</code> 也是该字符集名称的一部分，即在使用中和 <code>[0-9]</code> 等价的是 <code>[[:digit:]]</code> 而不是 <code>[:digit:]</code></p>
+<h2 id="ere语法">ERE语法</h2>
+<p>ERE和BRE的最显著的区别是<strong>ERE中所有元字符（metacharacters）均不需要使用 <code>\</code> 进行转义</strong>，即用 <code>{m,n}</code> 替代 <code>\{m,n\}</code> , <code>(regexp)</code> 替代 <code>\(regexp\)</code> （当然分组向后引用依旧是 <code>\1</code> ~ <code>\9</code>）。此外ERE还在BRE基础上增加了以下语法：</p>
+<p><code>?</code>  前面的字符或模式重复0或1次（$$0 \leq x \leq 1$$）</p>
+<p><code>+</code> 前面的字符或模式重复1次及以上（$$x\geq 1$$）</p>
+<p><code>regexp1|regexp2</code> 匹配 <code>regexp1</code> 或 <code>regexp2</code></p>
+<h2 id="gnu扩展的bre">GNU扩展的BRE</h2>
+<p>实际上现代Linux发行版中使用的 <code>grep</code> <code>sed</code> <code>awk</code> 等工具均由GNU提供，GNU在实现时对BRE进行了扩展，增加了 <code>\?</code> <code>\+</code>  <code>\|</code> 使得BRE和ERE的区别仅剩<strong>元字符是否需要转义</strong>。个人认为BRE现在存在的主要意义还是向下兼容，避免修改已经投入使用的正则表达式。</p>
+<hr>
+<p>参考：</p>
+<ul>
+<li><a href="https://www.regular-expressions.info/posix.html"target="_blank" rel="noopener noreferrer">https://www.regular-expressions.info/posix.html</a>
+</li>
+<li><a href="https://www.regular-expressions.info/posixbrackets.html"target="_blank" rel="noopener noreferrer">https://www.regular-expressions.info/posixbrackets.html</a>
+</li>
+<li><a href="https://www.gnu.org/software/sed/manual/html_node/BRE-syntax.html#BRE-syntax"target="_blank" rel="noopener noreferrer">https://www.gnu.org/software/sed/manual/html_node/BRE-syntax.html#BRE-syntax</a>
+</li>
+</ul>
+</article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/glob-patterns/"><span class="iconfont icon-article"></span>Bash中的模式匹配”glob patterns“和”extglob“</a></p><p><a class="link" href="/posts/sudo-cd/"><span class="iconfont icon-article"></span>关于"sudo cd"的讨论</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a>
+<a href='https://ipv6-test.com/validate.php?url=referer'
+  ><img src='https://ipv6-test.com/button-ipv6-80x15.png' 
+        alt='ipv6 ready' title='ipv6 ready' border='0' 
+/></a>
+</p></div>
+</section></body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>将windows文本文件转换为linux格式&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="将windows文本文件转换为linux格式" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">将windows文本文件转换为linux格式</h1><p class="article date">Wednesday, May 6, 2020</p></section><article class="article markdown-body"><p>中文环境下，在Windows和Linux下创建的文本文件主要区别有两个</p>
+<ul>
+<li>
+<p>Windows行尾为 <code>\r\n</code> ，Linux行尾为 <code>\n</code></p>
+</li>
+<li>
+<p>Windows下中文使用GBK编码，Linux下一般是UTF-8</p>
+</li>
+</ul>
+<p>第一点可能导致不能识别换行，所有文本挤在一行， 但大部分文本编辑器都能够自动判断和处理（偏偏Windows自带的记事本不行）</p>
+<p>第二点会导致中文乱码，虽然GBK正逐渐成为历史，但就我自己的体验来看，中文互联网上依旧存在大量GBK编码的文本文件</p>
+<h2 id="cr和lf">CR和LF</h2>
+<p>即“回车”（carriage return）和“换行”（line feed）</p>
+<blockquote>
+<p>在计算机还没有出现之前，有一种叫做电传打字机（Teletype Model 33）的玩意，每秒钟可以打10个字符。但是它有一个问题，就是打完一行换行的时候，要用去0.2秒，正好可以打两个字符。要是在
+这0.2秒里面，又有新的字符传过来，那么这个字符将丢失。
+于是，研制人员想了个办法解决这个问题，就是在每行后面加两个表示结束的字符。一个叫做“回车”，告诉打字机把打印头定位在左边界；另一个叫做“换行”，告诉打字机把纸向下移一行。
+这就是“换行”和“回车”的来历，从它们的英语名字上也可以看出一二。</p>
+<p>后来，计算机发明了，这两个概念也就被般到了计算机上。那时，存储器很贵，一些科学家认为在每行结尾加两个字符太浪费了，加一个就可以。于是，就出现了分歧。
+Unix/Linux 系统里，每行结尾只有“&lt;换行&gt;”，即“\n”；Windows系统里面，每行结尾是“  &lt;回车&gt;&lt;换行&gt;”，即“\r\n”；Mac系统里，每行结尾是“&lt;回车&gt;”，即“\r”（现在已改成跟Unix/Linux一样的&quot;\n&quot;）。</p>
+<p>一个直接后果是，Unix/Linux/Mac系统下的文件在Windows里打开的话，会出现换行丢失，整个文本会乱成一团。（类似UltraEdit 这种编辑器可以正确识别）； 而反过来就会出现^M的符号（这是Unix/Linux  等系统下规定的特殊标记，占一个字符大小，不是^和M的组合，打印不出来的，可以通过ctrl+V, ctrl+M 输入）。Unix/Linux  下很多文本编辑器（命令行）会在显示这个标记之后，补上一个自己的换行符，以避免内容混乱（只是用于显示，补充的换行符不会写入文件，有专门的命令将Windows换行符替换为Unix/Linux 换行符）。 Unix/Linux 系统下的换行符在Windows系统的文本编辑器中会被忽略，整个文本会乱成一团。
+Windows 的换行是\r\n，十六进制数值是：0D0A。
+Unix/Linux/OS X 的换行是\n，十六进制数值是：0A。</p>
+</blockquote>
+<p>更多相关讨论参考<a href="https://www.zhihu.com/question/46542168"target="_blank" rel="noopener noreferrer">这里</a>
+</p>
+<h2 id="文件名">文件名</h2>
+<p>一些文件可能文件名也会乱码，使用convmv转换文件名编码</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ convmv -f GBK -t UTF-8 --notest file
+</code></pre></div><p>如果不指定 <code>--notest</code> 则只会显示转换后的文件名但不会产生实际的修改</p>
+<h2 id="查看编码">查看编码</h2>
+<h3 id="file">file</h3>
+<p>file可以查看文件类型、编码和换行符，但对于GBK编码中英文混合的情况的识别似乎不太准确</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ file *.php
+post.php:  HTML document, UTF-8 Unicode text
+sort.php:  PHP script, ISO-8859 text, with CRLF line terminators
+</code></pre></div><h3 id="enca">enca</h3>
+<p>相比之下，enca可以指定语言，识别效果比较好</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ enca -L zh *.php
+post.php: Universal transformation format <span class="m">8</span> bits<span class="p">;</span> UTF-8
+sort.php: Simplified Chinese National Standard<span class="p">;</span> GB2312
+  CRLF line terminators
+</code></pre></div><p>显示enca支持的语言</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ enca --list languages
+belarusian: CP1251 IBM866 ISO-8859-5 KOI8-UNI maccyr IBM855 KOI8-U
+ bulgarian: CP1251 ISO-8859-5 IBM855 maccyr ECMA-113
+     czech: ISO-8859-2 CP1250 IBM852 KEYBCS2 macce KOI-8_CS_2 CORK
+  estonian: ISO-8859-4 CP1257 IBM775 ISO-8859-13 macce baltic
+  croatian: CP1250 ISO-8859-2 IBM852 macce CORK
+ hungarian: ISO-8859-2 CP1250 IBM852 macce CORK
+lithuanian: CP1257 ISO-8859-4 IBM775 ISO-8859-13 macce baltic
+   latvian: CP1257 ISO-8859-4 IBM775 ISO-8859-13 macce baltic
+    polish: ISO-8859-2 CP1250 IBM852 macce ISO-8859-13 ISO-8859-16 baltic CORK
+   russian: KOI8-R CP1251 ISO-8859-5 IBM866 maccyr
+    slovak: CP1250 ISO-8859-2 IBM852 KEYBCS2 macce KOI-8_CS_2 CORK
+   slovene: ISO-8859-2 CP1250 IBM852 macce CORK
+ ukrainian: CP1251 IBM855 ISO-8859-5 CP1125 KOI8-U maccyr
+   chinese: GBK BIG5 HZ
+      none:
+</code></pre></div><p>enca也能转换文件编码并且修改换行符</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ enca -L zh -x UTF-8 &lt; origin_file &gt; new_file
+</code></pre></div><h2 id="iconv和awk">iconv和awk</h2>
+<p>如果你不想安装额外软件，也可以使用大多数发行版都会默认安装的GNU工具</p>
+<p>用iconv转换文件编码</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ iconv -f GBK -t UTF-8 -o new_file origin_file
+</code></pre></div><p>用awk修改换行符</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ awk <span class="s1">&#39;sub(&#34;\r$&#34;, &#34;&#34;)&#39;</span> origin_file &gt; new_file
+</code></pre></div><p>也可以反过来将Unix格式转换为Wiondos格式</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ awk <span class="s1">&#39;sub(&#34;$&#34;, &#34;\r&#34;)&#39;</span> origin_file &gt; new_file
+</code></pre></div><h2 id="vim">vim</h2>
+<p>vim也支持文件编码和换行符的修改</p>
+<p>先用vim打开要修改的文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ vim file
+</code></pre></div><p>如果你的vim没有配置好 <code>fileencodings</code> 可能会看到中文乱码，此时你可以</p>
+<div class="highlight"><pre class="chroma"><code class="language-vim" data-lang="vim"><span class="p">:</span><span class="nx">e</span> <span class="p">++</span><span class="nx">enc</span><span class="p">=</span><span class="nx">gbk</span><span class="err">
+</span></code></pre></div><p>现在你应该可以看到正常显示的文本</p>
+<p>然后修改文件编码和换行符</p>
+<div class="highlight"><pre class="chroma"><code class="language-vim" data-lang="vim">：<span class="nx">set</span> <span class="nx">fileencoding</span><span class="p">=</span><span class="nx">utf8</span> <span class="nx">fileformat</span><span class="p">=</span><span class="nx">unix</span><span class="err">
+</span></code></pre></div><p>保存文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-vim" data-lang="vim">：<span class="nx">w</span><span class="err">
+</span></code></pre></div><p>更多细节可以参考vim的用户手册</p>
+<pre><code>：h usr_23.txt
+</code></pre><hr>
+<p>参考：</p>
+<ul>
+<li>
+<p><a href="https://wiki.archlinux.org/index.php/Localization/Simplified_Chinese_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29#%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%B1%E7%A0%81"target="_blank" rel="noopener noreferrer">Archwiki - Localization/Simplified Chinese</a>
+</p>
+</li>
+<li>
+<p><a href="https://www.zhihu.com/question/46542168"target="_blank" rel="noopener noreferrer">知乎 - Unix/Linux/Mac 与 Windows 的换行符不统一的原因/目的是什么？</a>
+</p>
+</li>
+<li>
+<p><a href="https://www.maketecheasier.com/convert-files-from-linux-format-windows/"target="_blank" rel="noopener noreferrer">maketecheasier - How To Convert Files from Linux/Unix Format to Windows and Vice Versa</a>
+</p>
+</li>
+</ul>
+</article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/suid-sgid-and-sbit/"><span class="iconfont icon-article"></span>SUID、SGID 和 SBIT</a></p><p><a class="link" href="/posts/lua-modulo-and-math_fmod/"><span class="iconfont icon-article"></span>C 和 Lua 取模运算的异同</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a>
+<a href='https://ipv6-test.com/validate.php?url=referer'
+  ><img src='https://ipv6-test.com/button-ipv6-80x15.png' 
+        alt='ipv6 ready' title='ipv6 ready' border='0' 
+/></a>
+</p></div>
+</section></body>
+
+</html>

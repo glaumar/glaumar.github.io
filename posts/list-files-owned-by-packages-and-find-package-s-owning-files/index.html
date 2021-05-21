@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Linux查询文件所属包和查看包所包含文件&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Linux查询文件所属包和查看包所包含文件" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Linux查询文件所属包和查看包所包含文件</h1><p class="article date">Thursday, March 5, 2020</p></section><article class="article markdown-body"><h2 id="debainubuntudeepin等使用deb包的发行版">Debain,Ubuntu,Deepin等使用deb包的发行版</h2>
+<p>根据文件名(命令名)查找包名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ dpkg -S &lt;file&gt; <span class="c1">#仅查询本地已安装的包</span>
+</code></pre></div><p>根据包名查看其所包含文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ dpkg -L &lt;package&gt; <span class="c1">#仅查询本地已安装的包</span>
+</code></pre></div><p>要查找未安装的包需要额外工具 <code>apt-file</code> (使用 <code>sudo apt install apt-file</code> 安装),使用前可以先更新本地缓存 <code>sudo apt update</code></p>
+<p>根据文件名(命令名)查找包名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt-file search &lt;file&gt;
+</code></pre></div><p>根据包名查看其所包含文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt-file list &lt;package&gt; 
+</code></pre></div><h2 id="rhelcentosfedora等使用rpm包的发行版">RHEL,Centos,Fedora等使用rpm包的发行版</h2>
+<p>根据文件名(命令名)查找包名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ rpm -qf &lt;file&gt; <span class="c1">#仅查询本地已安装的包</span>
+</code></pre></div><p>或</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ yum provides &lt;file&gt;
+
+<span class="c1"># Fedora22,RHEL8 以及 Centos8 引入了dnf用以取代yum</span>
+$ dnf provides &lt;file&gt; 
+</code></pre></div><p>根据包名查看其所包含文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ rpm -ql &lt;package&gt; <span class="c1">#仅查询本地已安装的包</span>
+</code></pre></div><p>要查询未安装的包所包含的文件需要额外工具 <code>repoquery</code> (使用 <code>sudo yum install yum-utils</code> 或 <code>sudo dnf install dnf-utils</code> 安装)</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ repoquery -l &lt;package&gt;
+</code></pre></div><h2 id="archmanjaro等使用-pacman-的发行版">Arch,Manjaro等使用 <code>pacman</code> 的发行版</h2>
+<p>根据文件名(命令名)查找包名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ pacman -Qo &lt;file&gt; <span class="c1">#仅查询本地已安装的包</span>
+</code></pre></div><p>或</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ pacman -F &lt;file&gt; <span class="c1">#在数据库中查找,可以加上&#39;-y&#39;选项先更新数据库</span>
+</code></pre></div><p>根据包名查看其所包含文件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ pacman -Ql &lt;package&gt; <span class="c1">#仅查询本地已安装的包</span>
+</code></pre></div><p>或</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ pacman -Fl &lt;package&gt; <span class="c1">#在数据库中查找,可以加上&#39;-y&#39;选项先更新数据库</span>
+</code></pre></div></article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/x-y-problem/"><span class="iconfont icon-article"></span>转载：X-Y Problem</a></p><p><a class="link" href="/posts/show-disro-info-in-cli/"><span class="iconfont icon-article"></span>命令行中查看当前Linux发行版信息</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a>
+<a href='https://ipv6-test.com/validate.php?url=referer'
+  ><img src='https://ipv6-test.com/button-ipv6-80x15.png' 
+        alt='ipv6 ready' title='ipv6 ready' border='0' 
+/></a>
+</p></div>
+</section></body>
+
+</html>

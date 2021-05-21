@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>SUID、SGID 和 SBIT&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="SUID、SGID 和 SBIT" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">SUID、SGID 和 SBIT</h1><p class="article date">Saturday, May 16, 2020</p></section><article class="article markdown-body"><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:center">SUID</th>
+<th style="text-align:center">SGID</th>
+<th style="text-align:center">SBIT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">全称</td>
+<td style="text-align:center">set UID</td>
+<td style="text-align:center">set GID</td>
+<td style="text-align:center">Sticky Bit</td>
+</tr>
+<tr>
+<td style="text-align:left">解释</td>
+<td style="text-align:center">s标志出现在文件拥有者的x权限位置上 ：-rw<strong>s</strong>r-xr-x</td>
+<td style="text-align:center">s标志出现在文件群组的x权限位置：-rwxr-<strong>s</strong>r-x</td>
+<td style="text-align:center">t标志出现在其他人的x权限位置：drwxr-sr-<strong>t</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">添加命令</td>
+<td style="text-align:center"><code>chmod a+s file</code></td>
+<td style="text-align:center"><code>chmod g+s file_or_dir</code></td>
+<td style="text-align:center"><code>chmod o+t dir</code></td>
+</tr>
+<tr>
+<td style="text-align:left">有效对象</td>
+<td style="text-align:center">二进制可执行文件</td>
+<td style="text-align:center">二进制可执行文件，文件夹</td>
+<td style="text-align:center">文件夹</td>
+</tr>
+<tr>
+<td style="text-align:left">效果</td>
+<td style="text-align:center">文件执行者在该程序运行期间将获得程序拥有者的权限</td>
+<td style="text-align:center"><strong>对于文件</strong>：文件执行者在该程序运行期间将获得程序所在群组的权限； <strong>对于文件夹</strong>：使用者在该文件夹下时，有效群组将变成该文件夹的群组</td>
+<td style="text-align:center">当使用者在该文件夹下创建文件或文件夹时，仅有自己与 root 才有权力删除该文件</td>
+</tr>
+</tbody>
+</table>
+<p>这三个权限都是建立在可执行权限之上，当可执行标志位为空时设置，如果设置了SUID、SGID和SBIT，会显示为大写：<code>rwSr-Sr-T</code></p>
+<hr>
+<p>参考：</p>
+<ul>
+<li>《鸟哥的Linux私房菜——基础学习篇（第四版）》</li>
+</ul>
+</article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/non-recursive-traversal-of-binary-tree/"><span class="iconfont icon-article"></span>非递归遍历二叉树</a></p><p><a class="link" href="/posts/convert-dos-file-to-unix-format/"><span class="iconfont icon-article"></span>将windows文本文件转换为linux格式</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a>
+<a href='https://ipv6-test.com/validate.php?url=referer'
+  ><img src='https://ipv6-test.com/button-ipv6-80x15.png' 
+        alt='ipv6 ready' title='ipv6 ready' border='0' 
+/></a>
+</p></div>
+</section></body>
+
+</html>
