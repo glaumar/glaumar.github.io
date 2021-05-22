@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Git&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Git" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Git</h1><p class="article date">Saturday, May 22, 2021</p></section><article class="article markdown-body"><ul>
+<li><a href="#%e9%85%8d%e7%bd%aeconfig">配置（config）</a>
+</li>
+<li><a href="#%e5%85%8b%e9%9a%86clone">克隆（clone）</a>
+</li>
+<li><a href="#%e5%ad%90%e4%bb%93%e5%ba%93submodule">子仓库（submodule）</a>
+</li>
+<li><a href="#%e6%8f%90%e4%ba%a4commit">提交（commit）</a>
+</li>
+<li><a href="#%e5%88%86%e6%94%afbranch">分支（branch）</a>
+</li>
+<li><a href="#%e8%b4%ae%e8%97%8fstash">贮藏（stash）</a>
+</li>
+<li><a href="#%e6%97%a5%e5%bf%97log">日志（log）</a>
+</li>
+<li><a href="#%e5%b8%ae%e5%8a%a9%e6%89%8b%e5%86%8chelp">帮助手册（help）</a>
+</li>
+</ul>
+<h1 id="配置config">配置（config）</h1>
+<p>显示当前配置</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git config -l
+</code></pre></div><p>设置全局用户名</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git config --global user.name <span class="s2">&#34;glaumar&#34;</span>
+</code></pre></div><p>设置全局邮件</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git config --global user.email <span class="s2">&#34;glaumar2018@outlook.com&#34;</span>
+</code></pre></div><h1 id="克隆clone">克隆（clone）</h1>
+<p>克隆仓库到指定目录</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git clone remote_repocitory path/to/directory
+</code></pre></div><h1 id="子仓库submodule">子仓库（submodule）</h1>
+<p>添加子仓库</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git submodule add remote_repocitory path/to/directory
+</code></pre></div><p>从远程仓库拉取所有子模块</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git submodule update --init --recursive
+</code></pre></div><p>更新所有子模块</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git submodule update --recursive --remote
+</code></pre></div><h1 id="提交commit">提交（commit）</h1>
+<p>覆盖上次提交</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git commit --amend
+</code></pre></div><h1 id="分支branch">分支（branch）</h1>
+<p>显示所有分支</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git branch
+</code></pre></div><p>创建新分支</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git branch branch_name
+</code></pre></div><p>切换到另一个分支</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git checkout branch_name
+<span class="c1"># or</span>
+git switch branch_name
+</code></pre></div><p>创建并切换到新分支</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git checkout -b branch_name
+</code></pre></div><p>删除分支</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git branch -d branch_name
+</code></pre></div><h1 id="贮藏stash">贮藏（stash）</h1>
+<p>贮藏现场，获得一个干净的工作环境（会保存modified和staged数据，不会保存untracked文件）</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git stash
+</code></pre></div><p>展示所有已贮藏现场</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git stash list
+</code></pre></div><p>恢复最新贮藏的现场(恢复后删除对应stash)</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git stash pop
+</code></pre></div><p>指定要恢复的现场(恢复后不会删除)</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git stash apply stash_name
+</code></pre></div><p>删除所有贮藏</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git stash clear
+</code></pre></div><h1 id="日志log">日志（log）</h1>
+<p>显示前n条提交记录，n是数字</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git log -n
+</code></pre></div><p>显示简要每次提交的简要变化</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git log --stat
+</code></pre></div><p>显示显示简要每次提交的详细变化</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git log -p
+</code></pre></div><p>显示分支变化情况</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git log --graph
+</code></pre></div><p>每条记录之显示一行</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git log --oneline
+</code></pre></div><h1 id="帮助手册help">帮助手册（help）</h1>
+<p>常用命令简介</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git <span class="nb">help</span>
+</code></pre></div><p>子命令帮助手册</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git <span class="nb">help</span> child_command
+</code></pre></div></article><section class="article labels"><a class="category" href=/categories/memo/>memo</a><a class="tag" href=/tags/git/>git</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
+</section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/compare-float-values/"><span class="iconfont icon-article"></span>浮点数比较</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

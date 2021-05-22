@@ -1,31 +1,77 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>命令行中查看当前Linux发行版信息&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="命令行中查看当前Linux发行版信息"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
-<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">命令行中查看当前Linux发行版信息</h1><p class="article date">Friday, January 17, 2020</p></section><article class="article markdown-body"><h2 id=1-通过-etcos-release-文件查看>1. 通过 /etc/os-release 文件查看</h2><p><code>/etc/os−release</code> 文件包含了当前操作系统的基本信息,可以直接使用 <code>cat</code> 查看</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ cat /etc/os-release 
-<span class=nv>NAME</span><span class=o>=</span><span class=s2>&#34;Manjaro Linux&#34;</span>
-<span class=nv>ID</span><span class=o>=</span>manjaro
-<span class=nv>ID_LIKE</span><span class=o>=</span>arch
-<span class=nv>PRETTY_NAME</span><span class=o>=</span><span class=s2>&#34;Manjaro Linux&#34;</span>
-<span class=nv>ANSI_COLOR</span><span class=o>=</span><span class=s2>&#34;1;32&#34;</span>
-<span class=nv>HOME_URL</span><span class=o>=</span><span class=s2>&#34;https://www.manjaro.org/&#34;</span>
-<span class=nv>SUPPORT_URL</span><span class=o>=</span><span class=s2>&#34;https://www.manjaro.org/&#34;</span>
-<span class=nv>BUG_REPORT_URL</span><span class=o>=</span><span class=s2>&#34;https://bugs.manjaro.org/&#34;</span>
-<span class=nv>LOGO</span><span class=o>=</span>manjarolinux
-</code></pre></div><p>值得注意的是 <code>ID_LIKE</code> 字段, 一般是当前Linux发行版密切相关的其他Linux发行版, 对于衍生的发行版来说放的就是上游的发行版(上游发行版不会在该字段中放其衍生发行版)。Manjaro基Arch Linux 所以 <code>ID_LIKE=arch</code> ,在Ubuntu中 <code>ID_LIKE=debian</code> ,在Centos中 <code>ID_LIKE="rhel fedora"</code> 等等</p><p>另外关于 <code>NAME</code> <code>ID</code> <code>PRETTY_NAME</code> 三者的区别有兴趣请自行查看手册( <code>man os-release</code> )</p><h3 id=在shell脚本中使用>在shell脚本中使用</h3><p>你可能已经发现了 <code>/etc/os-release</code> 文件的内容完全符和shell赋值语句的语法, 你可以在shell脚本中直接用 <code>source</code> 命令导入该文件包含的所有信息</p><p>还有一个有趣的地方, <code>/etc/os-release</code> 其实是符号链接, 指向 <code>../usr/lib/os-release</code></p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ ls -l /etc/os-release 
-lrwxrwxrwx <span class=m>1</span> root root <span class=m>21</span> Feb <span class=m>20</span>  <span class=m>2019</span> /etc/os-release -&gt; ../usr/lib/os-release
-</code></pre></div><p><strong>注意是 <code>../usr/lib/os-release</code> 而不是 <code>/usr/lib/os-release</code></strong> , 也就是说用的是<strong>相对路径</strong>而不是<strong>绝对路径</strong>, 对此手册中给出的解释是</p><blockquote><p>A relative symlink instead of an absolute symlink is necessary to avoid breaking the link in a chroot or initrd environment such as dracut.</p></blockquote><h2 id=2-使用-lsb_release-命令>2. 使用 lsb_release 命令</h2><p>使用 <code>-a</code> 选项显示所有信息</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ lsb_release -a
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>命令行中查看当前Linux发行版信息&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="命令行中查看当前Linux发行版信息" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">命令行中查看当前Linux发行版信息</h1><p class="article date">Friday, January 17, 2020</p></section><article class="article markdown-body"><h2 id="1-通过-etcos-release-文件查看">1. 通过 /etc/os-release 文件查看</h2>
+<p><code>/etc/os−release</code> 文件包含了当前操作系统的基本信息,可以直接使用 <code>cat</code> 查看</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ cat /etc/os-release 
+<span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Manjaro Linux&#34;</span>
+<span class="nv">ID</span><span class="o">=</span>manjaro
+<span class="nv">ID_LIKE</span><span class="o">=</span>arch
+<span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Manjaro Linux&#34;</span>
+<span class="nv">ANSI_COLOR</span><span class="o">=</span><span class="s2">&#34;1;32&#34;</span>
+<span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://www.manjaro.org/&#34;</span>
+<span class="nv">SUPPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://www.manjaro.org/&#34;</span>
+<span class="nv">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://bugs.manjaro.org/&#34;</span>
+<span class="nv">LOGO</span><span class="o">=</span>manjarolinux
+</code></pre></div><p>值得注意的是 <code>ID_LIKE</code> 字段, 一般是当前Linux发行版密切相关的其他Linux发行版, 对于衍生的发行版来说放的就是上游的发行版(上游发行版不会在该字段中放其衍生发行版)。Manjaro基Arch Linux 所以 <code>ID_LIKE=arch</code> ,在Ubuntu中 <code>ID_LIKE=debian</code> ,在Centos中 <code>ID_LIKE=&quot;rhel fedora&quot;</code> 等等</p>
+<p>另外关于 <code>NAME</code>  <code>ID</code>  <code>PRETTY_NAME</code> 三者的区别有兴趣请自行查看手册( <code>man os-release</code> )</p>
+<h3 id="在shell脚本中使用">在shell脚本中使用</h3>
+<p>你可能已经发现了 <code>/etc/os-release</code> 文件的内容完全符和shell赋值语句的语法, 你可以在shell脚本中直接用 <code>source</code> 命令导入该文件包含的所有信息</p>
+<p>还有一个有趣的地方, <code>/etc/os-release</code> 其实是符号链接, 指向 <code>../usr/lib/os-release</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ ls -l /etc/os-release 
+lrwxrwxrwx <span class="m">1</span> root root <span class="m">21</span> Feb <span class="m">20</span>  <span class="m">2019</span> /etc/os-release -&gt; ../usr/lib/os-release
+</code></pre></div><p><strong>注意是 <code>../usr/lib/os-release</code> 而不是 <code>/usr/lib/os-release</code></strong> , 也就是说用的是<strong>相对路径</strong>而不是<strong>绝对路径</strong>, 对此手册中给出的解释是</p>
+<blockquote>
+<p>A relative symlink instead of an absolute symlink is necessary to avoid breaking the link in a chroot or initrd environment such as dracut.</p>
+</blockquote>
+<h2 id="2-使用-lsb_release-命令">2. 使用 lsb_release 命令</h2>
+<p>使用 <code>-a</code> 选项显示所有信息</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ lsb_release -a
 LSB Version:	n/a
 Distributor ID:	ManjaroLinux
 Description:	Manjaro Linux
 Release:	18.1.5
 Codename:	Juhraya
-</code></pre></div><h3 id=在shell脚本中使用-1>在shell脚本中使用</h3><p>该命令所显示的信息在一些发型版中也会保存在 <code>/etc/lsb-release</code> 文件中，可以使用 <code>source</code> 命令导入。当然个人认为更好的方式是使用该命令的 <code>-s</code> 选项</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ lsb_release -si
+</code></pre></div><h3 id="在shell脚本中使用-1">在shell脚本中使用</h3>
+<p>该命令所显示的信息在一些发型版中也会保存在 <code>/etc/lsb-release</code> 文件中，可以使用 <code>source</code> 命令导入。当然个人认为更好的方式是使用该命令的 <code>-s</code> 选项</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ lsb_release -si
 ManjaroLinux
 $ lsb_release -sd
-<span class=s2>&#34;Manjaro Linux&#34;</span>
+<span class="s2">&#34;Manjaro Linux&#34;</span>
 $ lsb_release -sr
 18.1.5
 $ lsb_release -sc
 Juhraya
-</code></pre></div><p>在脚本中可以这样</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=nv>Distro_Description</span><span class=o>=</span><span class=sb>`</span>lsb_release -sd<span class=sb>`</span>
-</code></pre></div><p>或者更易读的形式</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=nv>Distro_Description</span><span class=o>=</span><span class=k>$(</span>lsb_release -s --description<span class=k>)</span>
-</code></pre></div><h2 id=3-使用neofetch>3. 使用neofetch</h2><p><a href=https://github.com/dylanaraps/neofetch target=_blank rel="noopener noreferrer">neofetch</a>
-是一个用bash写的命令行工具用以显示系统软硬件信息，用来向别人展示自己电脑的基本信息非常方便</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-04.png alt></p><p>当然你想的话也可以稍微调整一下参数显示其他发行版的LOGO</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-02.png alt></p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-05.png alt></p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-06.png alt></p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-07.png alt></p></article><section class="article labels"><a class=tag href=/tags/linux/>linux</a></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/list-files-owned-by-packages-and-find-package-s-owning-files/><span class="iconfont icon-article"></span>Linux查询文件所属包和查看包所包含文件</a></p><p><a class=link href=/posts/some-uesless-cli-tools/><span class="iconfont icon-article"></span>一些毫无卵用的命令行工具</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>
+</code></pre></div><p>在脚本中可以这样</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">Distro_Description</span><span class="o">=</span><span class="sb">`</span>lsb_release -sd<span class="sb">`</span>
+</code></pre></div><p>或者更易读的形式</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">Distro_Description</span><span class="o">=</span><span class="k">$(</span>lsb_release -s --description<span class="k">)</span>
+</code></pre></div><h2 id="3-使用neofetch">3. 使用neofetch</h2>
+<p><a href="https://github.com/dylanaraps/neofetch"target="_blank" rel="noopener noreferrer">neofetch</a>
+是一个用bash写的命令行工具用以显示系统软硬件信息，用来向别人展示自己电脑的基本信息非常方便</p>
+<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-04.png"
+        alt/></p>
+<p>当然你想的话也可以稍微调整一下参数显示其他发行版的LOGO</p>
+<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-02.png"
+        alt/></p>
+<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-05.png"
+        alt/></p>
+<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-06.png"
+        alt/></p>
+<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/show-disro-info-in-cli-07.png"
+        alt/></p>
+</article><section class="article labels"><a class="tag" href=/tags/linux/>linux</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
+</section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/list-files-owned-by-packages-and-find-package-s-owning-files/"><span class="iconfont icon-article"></span>Linux查询文件所属包和查看包所包含文件</a></p><p><a class="link" href="/posts/some-uesless-cli-tools/"><span class="iconfont icon-article"></span>一些毫无卵用的命令行工具</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>

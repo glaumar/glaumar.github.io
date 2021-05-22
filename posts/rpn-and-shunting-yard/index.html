@@ -1,63 +1,174 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>逆波兰表达式和调度场算法&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="逆波兰表达式和调度场算法"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
-<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">逆波兰表达式和调度场算法</h1><p class="article date">Friday, April 17, 2020</p></section><article class="article markdown-body"><h2 id=逆波兰表达式>逆波兰表达式</h2><p>逆波兰表达式也叫后缀表达式，而我们平常使用的则是中缀表达式</p><table><thead><tr><th>中缀表达式</th><th>后缀表达式</th></tr></thead><tbody><tr><td>1+2</td><td>12+</td></tr><tr><td>1+2+3</td><td>12+3+</td></tr><tr><td>1+2*3</td><td>123*+</td></tr><tr><td>3^3^3</td><td>333^^</td></tr></tbody></table><p>中缀表达符合人的思维和习惯，方便人阅读和理解，而后缀表达式则方便计算机处理。在逆波兰表达式中没有括号，也不需要注意运算符的优先级。计算逆波兰表达式一般基于堆栈，下面是维基百科给出的计算过程伪代码</p><hr><ul><li>while 有输入<ul><li>读入下一个符号X</li><li>IF X是一个操作数<ul><li>入栈</li></ul></li><li>ELSE IF X是一个操作符<ul><li>有一个先验的表格给出该操作符需要n个参数</li><li>IF堆栈中少于n个操作数<ul><li><strong>（错误）</strong> 用户没有输入足够的操作数</li></ul></li><li>Else，n个操作数出栈</li><li>计算操作符。</li><li>将计算所得的值入栈</li></ul></li></ul></li><li>IF栈内只有一个值<ul><li>这个值就是整个计算式的结果</li></ul></li><li>ELSE多于一个值<ul><li><strong>（错误）</strong> 用户输入了多余的操作数</li></ul></li></ul><hr><p>假设表达式本身没有错误的话，其实逻辑很简单</p><ul><li><p>遇到数字直接入栈</p></li><li><p>遇到运算符，从栈中弹出所需数量的操作数，计算结果入栈（例如减法需要两个操作数，负号只需要一个，这两个符号要用不同字符表示）</p></li><li><p>所有计算完成之后栈中剩余的最后一个数即为最终结果</p></li></ul><h2 id=调度场算法>调度场算法</h2><p>计算逆波兰表达式还是很简单的，比较困难的是将一般的中缀表达式转换为逆波兰表达式，<a href=https://zh.wikipedia.org/wiki/%E8%89%BE%E5%85%B9%E8%B5%AB%E5%B0%94%C2%B7%E6%88%B4%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89 target=_blank rel="noopener noreferrer">艾兹赫尔·韦伯·戴克斯特拉</a>
-(提出“<a href=https://zh.wikipedia.org/wiki/Goto#.E5.AF.B9.E4.BA.8Egoto.E4.BD.BF.E7.94.A8.E7.9A.84.E6.89.B9.E8.AF.84 target=_blank rel="noopener noreferrer">GOTO有害论</a>
-”，<a href=https://zh.wikipedia.org/wiki/%e4%bf%a1%e5%8f%b7%e9%87%8f target=_blank rel="noopener noreferrer">信号量</a>
-和<a href="https://zh.wikipedia.org/w/index.php?title=PV%e5%8e%9f%e8%af%ad&action=edit&redlink=1" target=_blank rel="noopener noreferrer">PV原语</a>
-，解决了“<a href=https://zh.wikipedia.org/wiki/%e5%93%b2%e5%ad%a6%e5%ae%b6%e5%b0%b1%e9%a4%90%e9%97%ae%e9%a2%98 target=_blank rel="noopener noreferrer">哲学家就餐问题</a>
-”）引入了调度场算法解决这个问题。</p><p>具体算法维基百科其实讲的很明白了，详情戳<a href=https://zh.wikipedia.org/zh-cn/%E8%B0%83%E5%BA%A6%E5%9C%BA%E7%AE%97%E6%B3%95#%E8%AF%A6%E7%BB%86%E7%9A%84%E7%AE%97%E6%B3%95 target=_blank rel="noopener noreferrer">这里</a></p><p>可能需要注意的就是运算符的左结合和有结合，解释好麻烦，直接看例子：</p><p><code>+</code> <code>-</code> <code>*</code> <code>/</code> 是左结合的，所以 <code>1-2-3</code> 相当于 <code>(1-2)-3</code> ，<code>2*3*4</code> 相当于 <code>(2*3)*4</code></p><p><code>^</code> 是右结合的，所以 <code>3^3^3</code> = <code>3^(3^3)</code> = <code>3^27</code> = <code>7625597484987</code> ，不注意这一点的话 <code>(3^3)^3</code> = <code>27^3</code> = <code>19683</code> ，答案差距还是相当大的</p><p>下面是我用Lua给fcitx5写的一个简易计算器的部分代码，仅处理了 <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>^</code> <code>~</code> (负号)</p><div class=highlight><pre class=chroma><code class=language-lua data-lang=lua><span class=kr>function</span> <span class=nf>shunting_yard</span><span class=p>(</span><span class=n>input</span><span class=p>)</span>
-    <span class=c1>-- 事先已经把用户输入的算式按操作数和运算符分割为一个个字符串，</span>
-    <span class=c1>-- 所以input其实是一个表</span>
-    <span class=c1>-- 负号已经处理成～</span>
-    <span class=c1>-- 无效符号已经删除</span>
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>逆波兰表达式和调度场算法&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="逆波兰表达式和调度场算法" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">逆波兰表达式和调度场算法</h1><p class="article date">Friday, April 17, 2020</p></section><article class="article markdown-body"><h2 id="逆波兰表达式">逆波兰表达式</h2>
+<p>逆波兰表达式也叫后缀表达式，而我们平常使用的则是中缀表达式</p>
+<table>
+<thead>
+<tr>
+<th>中缀表达式</th>
+<th>后缀表达式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1+2</td>
+<td>12+</td>
+</tr>
+<tr>
+<td>1+2+3</td>
+<td>12+3+</td>
+</tr>
+<tr>
+<td>1+2*3</td>
+<td>123*+</td>
+</tr>
+<tr>
+<td>3^3^3</td>
+<td>333^^</td>
+</tr>
+</tbody>
+</table>
+<p>中缀表达符合人的思维和习惯，方便人阅读和理解，而后缀表达式则方便计算机处理。在逆波兰表达式中没有括号，也不需要注意运算符的优先级。计算逆波兰表达式一般基于堆栈，下面是维基百科给出的计算过程伪代码</p>
+<hr>
+<ul>
+<li>while 有输入
+<ul>
+<li>读入下一个符号X</li>
+<li>IF X是一个操作数
+<ul>
+<li>入栈</li>
+</ul>
+</li>
+<li>ELSE IF X是一个操作符
+<ul>
+<li>有一个先验的表格给出该操作符需要n个参数</li>
+<li>IF堆栈中少于n个操作数
+<ul>
+<li><strong>（错误）</strong> 用户没有输入足够的操作数</li>
+</ul>
+</li>
+<li>Else，n个操作数出栈</li>
+<li>计算操作符。</li>
+<li>将计算所得的值入栈</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>IF栈内只有一个值
+<ul>
+<li>这个值就是整个计算式的结果</li>
+</ul>
+</li>
+<li>ELSE多于一个值
+<ul>
+<li><strong>（错误）</strong> 用户输入了多余的操作数</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>假设表达式本身没有错误的话，其实逻辑很简单</p>
+<ul>
+<li>
+<p>遇到数字直接入栈</p>
+</li>
+<li>
+<p>遇到运算符，从栈中弹出所需数量的操作数，计算结果入栈（例如减法需要两个操作数，负号只需要一个，这两个符号要用不同字符表示）</p>
+</li>
+<li>
+<p>所有计算完成之后栈中剩余的最后一个数即为最终结果</p>
+</li>
+</ul>
+<h2 id="调度场算法">调度场算法</h2>
+<p>计算逆波兰表达式还是很简单的，比较困难的是将一般的中缀表达式转换为逆波兰表达式，<a href="https://zh.wikipedia.org/wiki/%E8%89%BE%E5%85%B9%E8%B5%AB%E5%B0%94%C2%B7%E6%88%B4%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89"target="_blank" rel="noopener noreferrer">艾兹赫尔·韦伯·戴克斯特拉</a>
+ (提出“<a href="https://zh.wikipedia.org/wiki/Goto#.E5.AF.B9.E4.BA.8Egoto.E4.BD.BF.E7.94.A8.E7.9A.84.E6.89.B9.E8.AF.84"target="_blank" rel="noopener noreferrer">GOTO有害论</a>
+”，<a href="https://zh.wikipedia.org/wiki/%e4%bf%a1%e5%8f%b7%e9%87%8f"target="_blank" rel="noopener noreferrer">信号量</a>
+和<a href="https://zh.wikipedia.org/w/index.php?title=PV%e5%8e%9f%e8%af%ad&amp;action=edit&amp;redlink=1"target="_blank" rel="noopener noreferrer">PV原语</a>
+，解决了“<a href="https://zh.wikipedia.org/wiki/%e5%93%b2%e5%ad%a6%e5%ae%b6%e5%b0%b1%e9%a4%90%e9%97%ae%e9%a2%98"target="_blank" rel="noopener noreferrer">哲学家就餐问题</a>
+”）引入了调度场算法解决这个问题。</p>
+<p>具体算法维基百科其实讲的很明白了，详情戳<a href="https://zh.wikipedia.org/zh-cn/%E8%B0%83%E5%BA%A6%E5%9C%BA%E7%AE%97%E6%B3%95#%E8%AF%A6%E7%BB%86%E7%9A%84%E7%AE%97%E6%B3%95"target="_blank" rel="noopener noreferrer">这里</a>
+</p>
+<p>可能需要注意的就是运算符的左结合和有结合，解释好麻烦，直接看例子：</p>
+<p><code>+</code> <code>-</code> <code>*</code> <code>/</code> 是左结合的，所以 <code>1-2-3</code> 相当于 <code>(1-2)-3</code> ，<code>2*3*4</code> 相当于 <code>(2*3)*4</code></p>
+<p><code>^</code> 是右结合的，所以 <code>3^3^3</code> = <code>3^(3^3)</code> = <code>3^27</code> = <code>7625597484987</code> ，不注意这一点的话 <code>(3^3)^3</code> = <code>27^3</code> = <code>19683</code> ，答案差距还是相当大的</p>
+<p>下面是我用Lua给fcitx5写的一个简易计算器的部分代码，仅处理了 <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>^</code> <code>~</code>  (负号)</p>
+<div class="highlight"><pre class="chroma"><code class="language-lua" data-lang="lua"><span class="kr">function</span> <span class="nf">shunting_yard</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+    <span class="c1">-- 事先已经把用户输入的算式按操作数和运算符分割为一个个字符串，</span>
+    <span class="c1">-- 所以input其实是一个表</span>
+    <span class="c1">-- 负号已经处理成～</span>
+    <span class="c1">-- 无效符号已经删除</span>
     
-    <span class=c1>-- 用一张表记录各运算符的优先级，#标记栈底</span>
-    <span class=kd>local</span> <span class=n>priority</span> <span class=o>=</span> <span class=p>{}</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;#&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>0</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;+&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>1</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;-&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>1</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;~&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>2</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;*&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>2</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;/&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>2</span>
-    <span class=n>priority</span><span class=p>[</span><span class=s2>&#34;^&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=mi>3</span>
+    <span class="c1">-- 用一张表记录各运算符的优先级，#标记栈底</span>
+    <span class="kd">local</span> <span class="n">priority</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;#&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;+&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;-&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;~&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;*&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;/&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">priority</span><span class="p">[</span><span class="s2">&#34;^&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
 
-    <span class=kd>local</span> <span class=n>stack</span> <span class=o>=</span> <span class=p>{</span><span class=s2>&#34;#&#34;</span><span class=p>}</span>
-    <span class=kd>local</span> <span class=n>output</span> <span class=o>=</span> <span class=p>{}</span>
+    <span class="kd">local</span> <span class="n">stack</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;#&#34;</span><span class="p">}</span>
+    <span class="kd">local</span> <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class=kr>for</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=o>#</span><span class=n>input</span> <span class=kr>do</span>
-        <span class=kd>local</span> <span class=n>tmp</span> <span class=o>=</span> <span class=n>input</span><span class=p>[</span><span class=n>i</span><span class=p>]</span>
-        <span class=kr>if</span> <span class=n>tonumber</span><span class=p>(</span><span class=n>tmp</span><span class=p>)</span> <span class=kr>then</span> <span class=c1>-- 数字直接入栈</span>
-            <span class=n>table.insert</span><span class=p>(</span><span class=n>output</span><span class=p>,</span> <span class=n>tmp</span><span class=p>)</span>
-        <span class=kr>elseif</span> <span class=n>tmp</span> <span class=o>==</span> <span class=s1>&#39;(&#39;</span> <span class=kr>then</span> <span class=c1>-- 左括号直接入栈</span>
-            <span class=n>table.insert</span><span class=p>(</span><span class=n>stack</span><span class=p>,</span> <span class=n>tmp</span><span class=p>)</span>
-        <span class=kr>elseif</span> <span class=n>tmp</span> <span class=o>==</span> <span class=s1>&#39;)&#39;</span> <span class=kr>then</span> <span class=c1>-- 右括号则不断出栈，直到遇到&#39;(&#39;</span>
-            <span class=kr>while</span> <span class=n>stack</span><span class=p>[</span><span class=o>#</span><span class=n>stack</span><span class=p>]</span> <span class=o>~=</span> <span class=s1>&#39;(&#39;</span> <span class=kr>do</span>
-                <span class=n>table.insert</span><span class=p>(</span><span class=n>output</span><span class=p>,</span> <span class=n>table.remove</span><span class=p>(</span><span class=n>stack</span><span class=p>))</span>
-            <span class=kr>end</span>
-            <span class=n>table.remove</span><span class=p>(</span><span class=n>stack</span><span class=p>)</span>
-        <span class=kr>elseif</span> <span class=n>tmp</span> <span class=o>==</span> <span class=s1>&#39;^&#39;</span> <span class=kr>then</span> <span class=c1>-- 右结合运算符</span>
-            <span class=kr>while</span> <span class=n>priority</span><span class=p>[</span><span class=n>stack</span><span class=p>[</span><span class=o>#</span><span class=n>stack</span><span class=p>]]</span> <span class=o>~=</span> <span class=kc>nil</span> 
-				<span class=ow>and</span> <span class=n>priority</span><span class=p>[</span><span class=n>tmp</span><span class=p>]</span> <span class=o>&lt;</span> <span class=n>priority</span><span class=p>[</span><span class=n>stack</span><span class=p>[</span><span class=o>#</span><span class=n>stack</span><span class=p>]]</span>
-            <span class=kr>do</span>
-                <span class=n>table.insert</span><span class=p>(</span><span class=n>output</span><span class=p>,</span> <span class=n>table.remove</span><span class=p>(</span><span class=n>stack</span><span class=p>))</span>
-            <span class=kr>end</span>
-            <span class=n>table.insert</span><span class=p>(</span><span class=n>stack</span><span class=p>,</span> <span class=n>tmp</span><span class=p>)</span>
-        <span class=kr>else</span>
-            <span class=c1>-- 左结合运算符</span>
-            <span class=kr>while</span> <span class=n>priority</span><span class=p>[</span><span class=n>stack</span><span class=p>[</span><span class=o>#</span><span class=n>stack</span><span class=p>]]</span> <span class=o>~=</span> <span class=kc>nil</span> 
-            	<span class=ow>and</span> <span class=n>priority</span><span class=p>[</span><span class=n>tmp</span><span class=p>]</span> <span class=o>&lt;=</span> <span class=n>priority</span><span class=p>[</span><span class=n>stack</span><span class=p>[</span><span class=o>#</span><span class=n>stack</span><span class=p>]]</span>
-            <span class=kr>do</span>
-                <span class=n>table.insert</span><span class=p>(</span><span class=n>output</span><span class=p>,</span> <span class=n>table.remove</span><span class=p>(</span><span class=n>stack</span><span class=p>))</span>
-            <span class=kr>end</span>
-            <span class=n>table.insert</span><span class=p>(</span><span class=n>stack</span><span class=p>,</span> <span class=n>tmp</span><span class=p>)</span>
-        <span class=kr>end</span>
-    <span class=kr>end</span>
+    <span class="kr">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">input</span> <span class="kr">do</span>
+        <span class="kd">local</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="kr">if</span> <span class="n">tonumber</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="kr">then</span> <span class="c1">-- 数字直接入栈</span>
+            <span class="n">table.insert</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+        <span class="kr">elseif</span> <span class="n">tmp</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span> <span class="kr">then</span> <span class="c1">-- 左括号直接入栈</span>
+            <span class="n">table.insert</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+        <span class="kr">elseif</span> <span class="n">tmp</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span> <span class="kr">then</span> <span class="c1">-- 右括号则不断出栈，直到遇到&#39;(&#39;</span>
+            <span class="kr">while</span> <span class="n">stack</span><span class="p">[</span><span class="o">#</span><span class="n">stack</span><span class="p">]</span> <span class="o">~=</span> <span class="s1">&#39;(&#39;</span> <span class="kr">do</span>
+                <span class="n">table.insert</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">table.remove</span><span class="p">(</span><span class="n">stack</span><span class="p">))</span>
+            <span class="kr">end</span>
+            <span class="n">table.remove</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+        <span class="kr">elseif</span> <span class="n">tmp</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span> <span class="kr">then</span> <span class="c1">-- 右结合运算符</span>
+            <span class="kr">while</span> <span class="n">priority</span><span class="p">[</span><span class="n">stack</span><span class="p">[</span><span class="o">#</span><span class="n">stack</span><span class="p">]]</span> <span class="o">~=</span> <span class="kc">nil</span> 
+				<span class="ow">and</span> <span class="n">priority</span><span class="p">[</span><span class="n">tmp</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">priority</span><span class="p">[</span><span class="n">stack</span><span class="p">[</span><span class="o">#</span><span class="n">stack</span><span class="p">]]</span>
+            <span class="kr">do</span>
+                <span class="n">table.insert</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">table.remove</span><span class="p">(</span><span class="n">stack</span><span class="p">))</span>
+            <span class="kr">end</span>
+            <span class="n">table.insert</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+        <span class="kr">else</span>
+            <span class="c1">-- 左结合运算符</span>
+            <span class="kr">while</span> <span class="n">priority</span><span class="p">[</span><span class="n">stack</span><span class="p">[</span><span class="o">#</span><span class="n">stack</span><span class="p">]]</span> <span class="o">~=</span> <span class="kc">nil</span> 
+            	<span class="ow">and</span> <span class="n">priority</span><span class="p">[</span><span class="n">tmp</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">priority</span><span class="p">[</span><span class="n">stack</span><span class="p">[</span><span class="o">#</span><span class="n">stack</span><span class="p">]]</span>
+            <span class="kr">do</span>
+                <span class="n">table.insert</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">table.remove</span><span class="p">(</span><span class="n">stack</span><span class="p">))</span>
+            <span class="kr">end</span>
+            <span class="n">table.insert</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
 
 
-    <span class=c1>-- 弹出栈中剩余运算符到输出队列</span>
-    <span class=kr>while</span> <span class=o>#</span><span class=n>stack</span> <span class=o>&gt;</span> <span class=mi>1</span> <span class=kr>do</span>
-            <span class=n>table.insert</span><span class=p>(</span><span class=n>output</span><span class=p>,</span> <span class=n>table.remove</span><span class=p>(</span><span class=n>stack</span><span class=p>))</span>
-    <span class=kr>end</span>
+    <span class="c1">-- 弹出栈中剩余运算符到输出队列</span>
+    <span class="kr">while</span> <span class="o">#</span><span class="n">stack</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="kr">do</span>
+            <span class="n">table.insert</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">table.remove</span><span class="p">(</span><span class="n">stack</span><span class="p">))</span>
+    <span class="kr">end</span>
     
-    <span class=kr>return</span> <span class=n>output</span>
-<span class=kr>end</span>
-</code></pre></div><p>至于为什么要给一个输入法框架写个计算器脚本，呃，Just For Fun😀</p><hr><p>参考：</p><ul><li><a href=https://zh.wikipedia.org/wiki/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E7%A4%BA%E6%B3%95 target=_blank rel="noopener noreferrer">维基百科 - 逆波兰表示法</a></li><li><a href=https://zh.wikipedia.org/zh-cn/%E8%B0%83%E5%BA%A6%E5%9C%BA%E7%AE%97%E6%B3%95 target=_blank rel="noopener noreferrer">维基百科 - 调度场算法</a></li></ul></article><section class="article labels"><a class=tag href=/tags/algorithm/>algorithm</a></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/lua-modulo-and-math_fmod/><span class="iconfont icon-article"></span>C 和 Lua 取模运算的异同</a></p><p><a class=link href=/posts/pkexec/><span class="iconfont icon-article"></span>Linux图形化身份认证</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>
+    <span class="kr">return</span> <span class="n">output</span>
+<span class="kr">end</span>
+</code></pre></div><p>至于为什么要给一个输入法框架写个计算器脚本，呃，Just For Fun😀</p>
+<hr>
+<p>参考：</p>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E7%A4%BA%E6%B3%95"target="_blank" rel="noopener noreferrer">维基百科 - 逆波兰表示法</a>
+</li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E8%B0%83%E5%BA%A6%E5%9C%BA%E7%AE%97%E6%B3%95"target="_blank" rel="noopener noreferrer">维基百科 - 调度场算法</a>
+</li>
+</ul>
+</article><section class="article labels"><a class="tag" href=/tags/algorithm/>algorithm</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
+</section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/lua-modulo-and-math_fmod/"><span class="iconfont icon-article"></span>C 和 Lua 取模运算的异同</a></p><p><a class="link" href="/posts/pkexec/"><span class="iconfont icon-article"></span>Linux图形化身份认证</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 glaumar.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>
