@@ -1,93 +1,20 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>linux下查看帮助文档的几种方式&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="linux下查看帮助文档的几种方式" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">linux下查看帮助文档的几种方式</h1><p class="article date">Saturday, March 28, 2020</p></section><article class="article markdown-body"><h2 id="--help选项">&ndash;help选项</h2>
-<p>大多数linux的命令都可以使用 <code>command --hlep</code> 来获取命令使用格式和选项的简要解释</p>
-<h2 id="man-page">Man page</h2>
-<p>大多数linux下的命令都有自己的man page，了解一条命令最好的方式就是 <code>man command</code> 。</p>
-<p>得益于无数前辈的努力，相当一部分man page有中文翻译，但大多是中文man page已经多年未更新，有能力阅读英文的还是尽量阅读英文。</p>
-<p>下面介绍几个常用选项</p>
-<p><code>man</code> 会根据系统设置来选择man page语言，也可以手动指定man page语言，例如：</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man -L zh_CN ls
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>linux下查看帮助文档的几种方式&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="linux下查看帮助文档的几种方式"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">linux下查看帮助文档的几种方式</h1><p class="article date">Saturday, March 28, 2020</p></section><article class="article markdown-body"><h2 id=--help选项>&ndash;help选项</h2><p>大多数linux的命令都可以使用 <code>command --hlep</code> 来获取命令使用格式和选项的简要解释</p><h2 id=man-page>Man page</h2><p>大多数linux下的命令都有自己的man page，了解一条命令最好的方式就是 <code>man command</code> 。</p><p>得益于无数前辈的努力，相当一部分man page有中文翻译，但大多是中文man page已经多年未更新，有能力阅读英文的还是尽量阅读英文。</p><p>下面介绍几个常用选项</p><p><code>man</code> 会根据系统设置来选择man page语言，也可以手动指定man page语言，例如：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man -L zh_CN ls
 $ man -L en_US ls
-</code></pre></div><p>根据关键字查找man page</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man -k keyword
-</code></pre></div><p>使用浏览器查看man page</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man -H <span class="nb">command</span>
-</code></pre></div><p>浏览器由变量 <code>BROWSER</code> 指定，也可一在 <code>-H</code> 后面手动指定，例如：</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man -Hfirefox <span class="nb">command</span>
-</code></pre></div><p><code>-f</code> 只显示命令的简短介绍，因为man page可能会重名，这个选项一般用来展示所有同名man page</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man -f <span class="nb">command</span>
-</code></pre></div><p>例如：</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man -f <span class="nb">printf</span>
-<span class="nb">printf</span> <span class="o">(</span>1<span class="o">)</span>           - format and print data
-<span class="nb">printf</span> <span class="o">(</span>3<span class="o">)</span>           - formatted output conversion
-<span class="nb">printf</span> <span class="o">(</span>3p<span class="o">)</span>          - print formatted output
-<span class="nb">printf</span> <span class="o">(</span>1p<span class="o">)</span>          - write formatted output
-</code></pre></div><p>可以用括号里的数字指定具体查看哪个man page，例如：</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ man <span class="m">3</span> <span class="nb">printf</span>
-<span class="c1"># 或者</span>
+</code></pre></div><p>根据关键字查找man page</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man -k keyword
+</code></pre></div><p>使用浏览器查看man page</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man -H <span class=nb>command</span>
+</code></pre></div><p>浏览器由变量 <code>BROWSER</code> 指定，也可一在 <code>-H</code> 后面手动指定，例如：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man -Hfirefox <span class=nb>command</span>
+</code></pre></div><p><code>-f</code> 只显示命令的简短介绍，因为man page可能会重名，这个选项一般用来展示所有同名man page</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man -f <span class=nb>command</span>
+</code></pre></div><p>例如：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man -f <span class=nb>printf</span>
+<span class=nb>printf</span> <span class=o>(</span>1<span class=o>)</span>           - format and print data
+<span class=nb>printf</span> <span class=o>(</span>3<span class=o>)</span>           - formatted output conversion
+<span class=nb>printf</span> <span class=o>(</span>3p<span class=o>)</span>          - print formatted output
+<span class=nb>printf</span> <span class=o>(</span>1p<span class=o>)</span>          - write formatted output
+</code></pre></div><p>可以用括号里的数字指定具体查看哪个man page，例如：</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ man <span class=m>3</span> <span class=nb>printf</span>
+<span class=c1># 或者</span>
 $ man printf.3
-</code></pre></div><p>p代表POSIX，括号内数字的具体含义参看下表：</p>
-<table>
-<thead>
-<tr>
-<th>num</th>
-<th>mean</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Executable programs or shell commands</td>
-<td>可执行的普通程序或shell命令</td>
-</tr>
-<tr>
-<td>2</td>
-<td>System calls (functions provided by the kernel)</td>
-<td>内核提供的系统调用</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Library calls (functions within program libraries)</td>
-<td>库调用（库函数），一般就是C语言库</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Special files (usually found in /dev)</td>
-<td>特殊文件（通常在/dev目录下）</td>
-</tr>
-<tr>
-<td>5</td>
-<td>File formats and conventions</td>
-<td>文件格式规范</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Games</td>
-<td>游戏</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Miscellaneous (including macro packages and conventions)</td>
-<td>杂项（及其规范）</td>
-</tr>
-<tr>
-<td>8</td>
-<td>System administration commands (usually only for root)</td>
-<td>系统管理命令（通常仅root用户可用）</td>
-</tr>
-</tbody>
-</table>
-<h2 id="tldr">TLDR</h2>
-<p>github主页在<a href="https://github.com/tldr-pages/tldr"target="_blank" rel="noopener noreferrer">这里</a>
-，取义于 “tl;dr”，即“Too long; didn&rsquo;t read” 的缩写。对于日常使用来说，没必要去了解“回”字的四种写法（少年，你经历过被tar支配的恐惧么），tldr提供非常简短直白，但却异常有用的命令用法示例</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ tldr man
+</code></pre></div><p>p代表POSIX，括号内数字的具体含义参看下表：</p><table><thead><tr><th>num</th><th>mean</th><th>含义</th></tr></thead><tbody><tr><td>1</td><td>Executable programs or shell commands</td><td>可执行的普通程序或shell命令</td></tr><tr><td>2</td><td>System calls (functions provided by the kernel)</td><td>内核提供的系统调用</td></tr><tr><td>3</td><td>Library calls (functions within program libraries)</td><td>库调用（库函数），一般就是C语言库</td></tr><tr><td>4</td><td>Special files (usually found in /dev)</td><td>特殊文件（通常在/dev目录下）</td></tr><tr><td>5</td><td>File formats and conventions</td><td>文件格式规范</td></tr><tr><td>6</td><td>Games</td><td>游戏</td></tr><tr><td>7</td><td>Miscellaneous (including macro packages and conventions)</td><td>杂项（及其规范）</td></tr><tr><td>8</td><td>System administration commands (usually only for root)</td><td>系统管理命令（通常仅root用户可用）</td></tr></tbody></table><h2 id=tldr>TLDR</h2><p>github主页在<a href=https://github.com/tldr-pages/tldr target=_blank rel="noopener noreferrer">这里</a>
+，取义于 “tl;dr”，即“Too long; didn&rsquo;t read” 的缩写。对于日常使用来说，没必要去了解“回”字的四种写法（少年，你经历过被tar支配的恐惧么），tldr提供非常简短直白，但却异常有用的命令用法示例</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ tldr man
 
   Archiving utility.
   Often combined with a compression method, such as gzip or bzip.
@@ -105,9 +32,9 @@ $ man printf.3
 
       tar czf target.tar.gz -C path/to/directory .
 
-  Extract a <span class="o">(</span>compressed<span class="o">)</span> archive into the current directory:
+  Extract a <span class=o>(</span>compressed<span class=o>)</span> archive into the current directory:
 
-      tar xf source.tar<span class="o">[</span>.gz<span class="p">|</span>.bz2<span class="p">|</span>.xz<span class="o">]</span>
+      tar xf source.tar<span class=o>[</span>.gz<span class=p>|</span>.bz2<span class=p>|</span>.xz<span class=o>]</span>
 
   Extract an archive into a target directory:
 
@@ -123,42 +50,7 @@ $ man printf.3
 
   Extract files matching a pattern:
 
-      tar xf source.tar --wildcards <span class="s2">&#34;*.html&#34;</span>
-</code></pre></div><p>下载安装前你可以先试试<a href="https://tldr.ostera.io"target="_blank" rel="noopener noreferrer">TLDR网页版</a>
-，或者<a href="https://tldr.linux.cn/"target="_blank" rel="noopener noreferrer">这个国内的中文版</a>
-</p>
-<h2 id="texinfoinfo-page">Texinfo（Info page）</h2>
-<p>GNU项目的一部分，使用 <code>info</code> 命令来阅读，相比与man page最大的优点是支持超链接，可以从一个页面跳转到另一个页面，也可以从文档的索引跳到正文。功能还是相当强大的，但实际支持的文档似乎没有man page多（个人感觉，没有统计过），一些文档沿用了man page的格式 。我个人用的比较少。</p>
-<h2 id="usrsharedoc">/usr/share/doc</h2>
-<p>很多软件会把自身相关的一些文档放在这个目录，各种格式的都有，有些甚至有html，可以直接在浏览器查看，例如：</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/get-help-in-linux-1.png"
-        alt/></p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/get-help-in-linux.png"
-        alt/></p>
-<p>还有一些文档和软件保存在 <code>/usr/share/</code> 比如gimp的官方教程（需安装 <code>gimp-help-en</code> ）完整路径是 <code>/usr/share/gimp/2.0/help/en/index.html</code>，gtk3的参考手册在 <code>/usr/share/gtk-doc/html/gtk3/index.html</code></p>
-<h2 id="api文档查看工具devdocs">API文档查看工具DevDocs</h2>
-<p>DevDocs是一个自由开源的web应用，无需下载安装，直接访问<a href="https://devdocs.io/"target="_blank" rel="noopener noreferrer">https://devdocs.io/</a>
-即可，文档相当丰富。虽然身为为一个web应用，但文档数据可以下载保存在本地，不用每次从服务器拉取数据；比较丰富的快捷键（键盘党表示很舒服）；可以添加到浏览器引擎，直接在浏览器搜索框搜索。</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/get-help-in-linux-2.png"
-        alt/></p>
-<hr>
-<p>参考：</p>
-<ul>
-<li><a href="https://wiki.archlinux.org/index.php/Man_page_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29"target="_blank" rel="noopener noreferrer">Arch wiki - Man page(简体中文)</a>
-</li>
-<li><a href="https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read"target="_blank" rel="noopener noreferrer">Wikipedia:Too long; didn&rsquo;t read</a>
-</li>
-<li><a href="https://unix.stackexchange.com/questions/77514/what-is-gnu-info-for"target="_blank" rel="noopener noreferrer">What is GNU Info for?</a>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/linux/>linux</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/linux-clipboard/"><span class="iconfont icon-article"></span>Linux(X Window)剪贴板</a></p><p><a class="link" href="/posts/install-and-config-slax/"><span class="iconfont icon-article"></span>Slax的安装和基本配置</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+      tar xf source.tar --wildcards <span class=s2>&#34;*.html&#34;</span>
+</code></pre></div><p>下载安装前你可以先试试<a href=https://tldr.ostera.io target=_blank rel="noopener noreferrer">TLDR网页版</a>
+，或者<a href=https://tldr.linux.cn/ target=_blank rel="noopener noreferrer">这个国内的中文版</a></p><h2 id=texinfoinfo-page>Texinfo（Info page）</h2><p>GNU项目的一部分，使用 <code>info</code> 命令来阅读，相比与man page最大的优点是支持超链接，可以从一个页面跳转到另一个页面，也可以从文档的索引跳到正文。功能还是相当强大的，但实际支持的文档似乎没有man page多（个人感觉，没有统计过），一些文档沿用了man page的格式 。我个人用的比较少。</p><h2 id=usrsharedoc>/usr/share/doc</h2><p>很多软件会把自身相关的一些文档放在这个目录，各种格式的都有，有些甚至有html，可以直接在浏览器查看，例如：</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/get-help-in-linux-1.png alt></p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/get-help-in-linux.png alt></p><p>还有一些文档和软件保存在 <code>/usr/share/</code> 比如gimp的官方教程（需安装 <code>gimp-help-en</code> ）完整路径是 <code>/usr/share/gimp/2.0/help/en/index.html</code>，gtk3的参考手册在 <code>/usr/share/gtk-doc/html/gtk3/index.html</code></p><h2 id=api文档查看工具devdocs>API文档查看工具DevDocs</h2><p>DevDocs是一个自由开源的web应用，无需下载安装，直接访问<a href=https://devdocs.io/ target=_blank rel="noopener noreferrer">https://devdocs.io/</a>
+即可，文档相当丰富。虽然身为为一个web应用，但文档数据可以下载保存在本地，不用每次从服务器拉取数据；比较丰富的快捷键（键盘党表示很舒服）；可以添加到浏览器引擎，直接在浏览器搜索框搜索。</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/get-help-in-linux-2.png alt></p><hr><p>参考：</p><ul><li><a href=https://wiki.archlinux.org/index.php/Man_page_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29 target=_blank rel="noopener noreferrer">Arch wiki - Man page(简体中文)</a></li><li><a href=https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read target=_blank rel="noopener noreferrer">Wikipedia:Too long; didn&rsquo;t read</a></li><li><a href=https://unix.stackexchange.com/questions/77514/what-is-gnu-info-for target=_blank rel="noopener noreferrer">What is GNU Info for?</a></li></ul></article><section class="article labels"><a class=tag href=/tags/linux/>linux</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/linux-clipboard/><span class="iconfont icon-article"></span>Linux(X Window)剪贴板</a></p><p><a class=link href=/posts/install-and-config-slax/><span class="iconfont icon-article"></span>Slax的安装和基本配置</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

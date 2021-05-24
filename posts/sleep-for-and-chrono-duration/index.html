@@ -1,162 +1,42 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>this_thread::sleep_for()和chrono::duration, ratio;&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="this_thread::sleep_for()和chrono::duration, ratio;" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">this_thread::sleep_for()和chrono::duration, ratio;</h1><p class="article date">Friday, August 14, 2020</p></section><article class="article markdown-body"><p>想着找个跨平台的 <code>sleep()</code> , 看到了标准库里的 <code>sleep_for()</code> , 用起来不难, 但涉及到一些没见过的类</p>
-<h2 id="tldr">TL;DR</h2>
-<p>C++11</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">));</span>
-<span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
-<span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">chrono</span><span class="o">::</span><span class="n">minutes</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
-</code></pre></div><p>C++14</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono_literals</span><span class="p">;</span>
-<span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="mi">500</span><span class="n">ms</span><span class="p">);</span>
-<span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="mi">2</span><span class="n">s</span><span class="p">);</span>
-<span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="mi">1</span><span class="n">min</span><span class="p">);</span>
-</code></pre></div><h2 id="stdthis_threadsleep_for">std::this_thread::sleep_for</h2>
-<p><strong>header</strong>: &lt;thread&gt;</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">template</span><span class="o">&lt;</span> <span class="k">class</span> <span class="nc">Rep</span><span class="p">,</span> <span class="k">class</span> <span class="nc">Period</span> <span class="o">&gt;</span>
-<span class="kt">void</span> <span class="n">sleep_for</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="n">Rep</span><span class="p">,</span> <span class="n">Period</span><span class="o">&gt;&amp;</span> <span class="n">sleep_duration</span> <span class="p">);</span>
-</code></pre></div><p>阻塞当前线程至少一个 <code>sleep_duration</code>  (可能会由于调度或者资源竞争产生延迟)</p>
-<p>显然我们需要构造一个 <code>duration</code> 对象来表示要阻塞的时间</p>
-<h2 id="stdchronoduration">std::chrono::duration</h2>
-<p><strong>header</strong>: &lt;chrono&gt;</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">template</span><span class="o">&lt;</span>
-    <span class="k">class</span> <span class="nc">Rep</span><span class="p">,</span> 
-    <span class="k">class</span> <span class="nc">Period</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span> 
-<span class="o">&gt;</span> <span class="k">class</span> <span class="nc">duration</span><span class="p">;</span>
-</code></pre></div><p><code>Rep</code> 是一个数值类型, 如: <code>int</code> , <code>double</code></p>
-<p><code>Period</code> 表示时间周期, 单位是秒, 默认是1秒 ( <code>std::ratio</code> 类用来表示一个有理数, 将在后面讲解)</p>
-<p>一个 <code>duration</code> 对象内唯一的数据是一个 <code>Rep</code> 类型的数, 用来表示时间</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">tow_sec</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// 一个表示2秒的duration对象
-</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">60</span><span class="o">&gt;&gt;</span> <span class="n">half_min</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span> <span class="c1">// 一个表示半分钟的duration对象
-</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="o">&gt;&gt;</span> <span class="n">five_hundred_milli</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span> <span class="c1">// 一个表示500毫秒的duration对象
-</span></code></pre></div><p>C++11中预先定义好的常用类型</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>std::chrono::nanoseconds</code></td>
-<td><code>duration&lt;/*signed integer type of at least 64 bits*/, std::nano&gt;</code></td>
-</tr>
-<tr>
-<td><code>std::chrono::microseconds</code></td>
-<td><code>duration&lt;/*signed integer type of at least 55 bits*/, std::micro&gt;</code></td>
-</tr>
-<tr>
-<td><code>std::chrono::milliseconds</code></td>
-<td><code>duration&lt;/*signed integer type of at least 45 bits*/, std::milli&gt;</code></td>
-</tr>
-<tr>
-<td><code>std::chrono::seconds</code></td>
-<td><code>duration&lt;/*signed integer type of at least 35 bits*/&gt;</code></td>
-</tr>
-<tr>
-<td><code>std::chrono::minutes</code></td>
-<td><code>duration&lt;/*signed integer type of at least 29 bits*/, std::ratio&lt;60&gt;&gt;</code></td>
-</tr>
-<tr>
-<td><code>std::chrono::hours</code></td>
-<td><code>duration&lt;/*signed integer type of at least 23 bits*/, std::ratio&lt;3600&gt;&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="c14">C++14</h3>
-<p>C++14在标准库里添加了几个函数, 使得 <code>duration</code> 的使用变得相当友好, 就像博客开头那样</p>
-<p>Defined in inline namespace <code>std::literals::chrono_literals</code></p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Introduction</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22h"target="_blank" rel="noopener noreferrer"> operator&quot;&ldquo;h</a>
-(C++14)</td>
-<td>A <strong>std::chrono::duration</strong> literal representing hours    (function)</td>
-</tr>
-<tr>
-<td><a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22min"target="_blank" rel="noopener noreferrer"> operator&quot;&ldquo;min</a>
-(C++14)</td>
-<td>A <strong>std::chrono::duration</strong> literal representing minutes    (function)</td>
-</tr>
-<tr>
-<td><a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22s"target="_blank" rel="noopener noreferrer"> operator&quot;&ldquo;s</a>
-(C++14)</td>
-<td>A <strong>std::chrono::duration</strong> literal representing seconds    (function)</td>
-</tr>
-<tr>
-<td><a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22ms"target="_blank" rel="noopener noreferrer"> operator&quot;&ldquo;ms</a>
-(C++14)</td>
-<td>A <strong>std::chrono::duration</strong> literal representing milliseconds    (function)</td>
-</tr>
-<tr>
-<td><a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22us"target="_blank" rel="noopener noreferrer"> operator&quot;&ldquo;us</a>
-(C++14)</td>
-<td>A <strong>std::chrono::duration</strong> literal representing microseconds    (function)</td>
-</tr>
-<tr>
-<td><a href="https://en.cppreference.com/w/cpp/chrono/operator%22%22ns"target="_blank" rel="noopener noreferrer"> operator&quot;&ldquo;ns</a>
-(C++14)</td>
-<td>A <strong>std::chrono::duration</strong> literal representing nanoseconds    (function)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="stdratio">std::ratio</h2>
-<p><strong>header</strong>: &lt;ratio&gt;</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">template</span><span class="o">&lt;</span> 
-    <span class="n">std</span><span class="o">::</span><span class="n">intmax_t</span> <span class="n">Num</span><span class="p">,</span> 
-    <span class="n">std</span><span class="o">::</span><span class="n">intmax_t</span> <span class="n">Denom</span> <span class="o">=</span> <span class="mi">1</span> 
-<span class="o">&gt;</span> <span class="k">class</span> <span class="nc">ratio</span><span class="p">;</span>
-</code></pre></div><p><code>ratio</code> 以分数的形式来保存有理数, <code>Num</code> 表示分子, <code>Denom</code> 表示分母, 分母默认为1</p>
-<p><code>ration</code> 定义了两个静态数据成员 <code>num</code> 和 <code>den</code> 来保存分子和分母, 可以通过 <code>对象名::num</code> 和 <code>对象名::den</code> 直接获取相应数据</p>
-<p>从模板声明可以看出来, 不同有理数的类型并不一样, 直接重载算术运算符没有什么意义, 要对有理数进行运算需要用 <code>&lt;ratio&gt;</code> 头文件里定义的类</p>
-<p>下面是c++官方文档给出的将两个有理数相加的 Example:</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;ratio&gt;</span><span class="cp">
-</span><span class="cp"></span> 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="n">two_third</span><span class="p">;</span>
-    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="o">&gt;</span> <span class="n">one_sixth</span><span class="p">;</span>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>this_thread::sleep_for()和chrono::duration, ratio;&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="this_thread::sleep_for()和chrono::duration, ratio;"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">this_thread::sleep_for()和chrono::duration, ratio;</h1><p class="article date">Friday, August 14, 2020</p></section><article class="article markdown-body"><p>想着找个跨平台的 <code>sleep()</code> , 看到了标准库里的 <code>sleep_for()</code> , 用起来不难, 但涉及到一些没见过的类</p><h2 id=tldr>TL;DR</h2><p>C++11</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+<span class=n>this_thread</span><span class=o>::</span><span class=n>sleep_for</span><span class=p>(</span><span class=n>chrono</span><span class=o>::</span><span class=n>milliseconds</span><span class=p>(</span><span class=mi>500</span><span class=p>));</span>
+<span class=n>this_thread</span><span class=o>::</span><span class=n>sleep_for</span><span class=p>(</span><span class=n>chrono</span><span class=o>::</span><span class=n>seconds</span><span class=p>(</span><span class=mi>2</span><span class=p>));</span>
+<span class=n>this_thread</span><span class=o>::</span><span class=n>sleep_for</span><span class=p>(</span><span class=n>chrono</span><span class=o>::</span><span class=n>minutes</span><span class=p>(</span><span class=mi>1</span><span class=p>));</span>
+</code></pre></div><p>C++14</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+<span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=o>::</span><span class=n>chrono_literals</span><span class=p>;</span>
+<span class=n>this_thread</span><span class=o>::</span><span class=n>sleep_for</span><span class=p>(</span><span class=mi>500</span><span class=n>ms</span><span class=p>);</span>
+<span class=n>this_thread</span><span class=o>::</span><span class=n>sleep_for</span><span class=p>(</span><span class=mi>2</span><span class=n>s</span><span class=p>);</span>
+<span class=n>this_thread</span><span class=o>::</span><span class=n>sleep_for</span><span class=p>(</span><span class=mi>1</span><span class=n>min</span><span class=p>);</span>
+</code></pre></div><h2 id=stdthis_threadsleep_for>std::this_thread::sleep_for</h2><p><strong>header</strong>: &lt;thread></p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>template</span><span class=o>&lt;</span> <span class=k>class</span> <span class=nc>Rep</span><span class=p>,</span> <span class=k>class</span> <span class=nc>Period</span> <span class=o>&gt;</span>
+<span class=kt>void</span> <span class=n>sleep_for</span><span class=p>(</span> <span class=k>const</span> <span class=n>std</span><span class=o>::</span><span class=n>chrono</span><span class=o>::</span><span class=n>duration</span><span class=o>&lt;</span><span class=n>Rep</span><span class=p>,</span> <span class=n>Period</span><span class=o>&gt;&amp;</span> <span class=n>sleep_duration</span> <span class=p>);</span>
+</code></pre></div><p>阻塞当前线程至少一个 <code>sleep_duration</code> (可能会由于调度或者资源竞争产生延迟)</p><p>显然我们需要构造一个 <code>duration</code> 对象来表示要阻塞的时间</p><h2 id=stdchronoduration>std::chrono::duration</h2><p><strong>header</strong>: &lt;chrono></p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>template</span><span class=o>&lt;</span>
+    <span class=k>class</span> <span class=nc>Rep</span><span class=p>,</span> 
+    <span class=k>class</span> <span class=nc>Period</span> <span class=o>=</span> <span class=n>std</span><span class=o>::</span><span class=n>ratio</span><span class=o>&lt;</span><span class=mi>1</span><span class=o>&gt;</span> 
+<span class=o>&gt;</span> <span class=k>class</span> <span class=nc>duration</span><span class=p>;</span>
+</code></pre></div><p><code>Rep</code> 是一个数值类型, 如: <code>int</code> , <code>double</code></p><p><code>Period</code> 表示时间周期, 单位是秒, 默认是1秒 ( <code>std::ratio</code> 类用来表示一个有理数, 将在后面讲解)</p><p>一个 <code>duration</code> 对象内唯一的数据是一个 <code>Rep</code> 类型的数, 用来表示时间</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=n>std</span><span class=o>::</span><span class=n>chrono</span><span class=o>::</span><span class=n>duration</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=n>tow_sec</span><span class=p>(</span><span class=mi>2</span><span class=p>);</span> <span class=c1>// 一个表示2秒的duration对象
+</span><span class=c1></span><span class=n>std</span><span class=o>::</span><span class=n>chrono</span><span class=o>::</span><span class=n>duration</span><span class=o>&lt;</span><span class=kt>double</span><span class=p>,</span> <span class=n>std</span><span class=o>::</span><span class=n>ratio</span><span class=o>&lt;</span><span class=mi>60</span><span class=o>&gt;&gt;</span> <span class=n>half_min</span><span class=p>(</span><span class=mf>0.5</span><span class=p>);</span> <span class=c1>// 一个表示半分钟的duration对象
+</span><span class=c1></span><span class=n>std</span><span class=o>::</span><span class=n>chrono</span><span class=o>::</span><span class=n>duration</span><span class=o>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=n>std</span><span class=o>::</span><span class=n>ratio</span><span class=o>&lt;</span><span class=mi>1</span><span class=p>,</span> <span class=mi>1000</span><span class=o>&gt;&gt;</span> <span class=n>five_hundred_milli</span><span class=p>(</span><span class=mi>500</span><span class=p>);</span> <span class=c1>// 一个表示500毫秒的duration对象
+</span></code></pre></div><p>C++11中预先定义好的常用类型</p><table><thead><tr><th>Type</th><th>Definition</th></tr></thead><tbody><tr><td><code>std::chrono::nanoseconds</code></td><td><code>duration&lt;/*signed integer type of at least 64 bits*/, std::nano></code></td></tr><tr><td><code>std::chrono::microseconds</code></td><td><code>duration&lt;/*signed integer type of at least 55 bits*/, std::micro></code></td></tr><tr><td><code>std::chrono::milliseconds</code></td><td><code>duration&lt;/*signed integer type of at least 45 bits*/, std::milli></code></td></tr><tr><td><code>std::chrono::seconds</code></td><td><code>duration&lt;/*signed integer type of at least 35 bits*/></code></td></tr><tr><td><code>std::chrono::minutes</code></td><td><code>duration&lt;/*signed integer type of at least 29 bits*/, std::ratio&lt;60>></code></td></tr><tr><td><code>std::chrono::hours</code></td><td><code>duration&lt;/*signed integer type of at least 23 bits*/, std::ratio&lt;3600>></code></td></tr></tbody></table><h3 id=c14>C++14</h3><p>C++14在标准库里添加了几个函数, 使得 <code>duration</code> 的使用变得相当友好, 就像博客开头那样</p><p>Defined in inline namespace <code>std::literals::chrono_literals</code></p><table><thead><tr><th>Function</th><th>Introduction</th></tr></thead><tbody><tr><td><a href=https://en.cppreference.com/w/cpp/chrono/operator%22%22h target=_blank rel="noopener noreferrer">operator"&ldquo;h</a>
+(C++14)</td><td>A <strong>std::chrono::duration</strong> literal representing hours (function)</td></tr><tr><td><a href=https://en.cppreference.com/w/cpp/chrono/operator%22%22min target=_blank rel="noopener noreferrer">operator"&ldquo;min</a>
+(C++14)</td><td>A <strong>std::chrono::duration</strong> literal representing minutes (function)</td></tr><tr><td><a href=https://en.cppreference.com/w/cpp/chrono/operator%22%22s target=_blank rel="noopener noreferrer">operator"&ldquo;s</a>
+(C++14)</td><td>A <strong>std::chrono::duration</strong> literal representing seconds (function)</td></tr><tr><td><a href=https://en.cppreference.com/w/cpp/chrono/operator%22%22ms target=_blank rel="noopener noreferrer">operator"&ldquo;ms</a>
+(C++14)</td><td>A <strong>std::chrono::duration</strong> literal representing milliseconds (function)</td></tr><tr><td><a href=https://en.cppreference.com/w/cpp/chrono/operator%22%22us target=_blank rel="noopener noreferrer">operator"&ldquo;us</a>
+(C++14)</td><td>A <strong>std::chrono::duration</strong> literal representing microseconds (function)</td></tr><tr><td><a href=https://en.cppreference.com/w/cpp/chrono/operator%22%22ns target=_blank rel="noopener noreferrer">operator"&ldquo;ns</a>
+(C++14)</td><td>A <strong>std::chrono::duration</strong> literal representing nanoseconds (function)</td></tr></tbody></table><h2 id=stdratio>std::ratio</h2><p><strong>header</strong>: &lt;ratio></p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>template</span><span class=o>&lt;</span> 
+    <span class=n>std</span><span class=o>::</span><span class=n>intmax_t</span> <span class=n>Num</span><span class=p>,</span> 
+    <span class=n>std</span><span class=o>::</span><span class=n>intmax_t</span> <span class=n>Denom</span> <span class=o>=</span> <span class=mi>1</span> 
+<span class=o>&gt;</span> <span class=k>class</span> <span class=nc>ratio</span><span class=p>;</span>
+</code></pre></div><p><code>ratio</code> 以分数的形式来保存有理数, <code>Num</code> 表示分子, <code>Denom</code> 表示分母, 分母默认为1</p><p><code>ration</code> 定义了两个静态数据成员 <code>num</code> 和 <code>den</code> 来保存分子和分母, 可以通过 <code>对象名::num</code> 和 <code>对象名::den</code> 直接获取相应数据</p><p>从模板声明可以看出来, 不同有理数的类型并不一样, 直接重载算术运算符没有什么意义, 要对有理数进行运算需要用 <code>&lt;ratio></code> 头文件里定义的类</p><p>下面是c++官方文档给出的将两个有理数相加的 Example:</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;ratio&gt;</span><span class=cp>
+</span><span class=cp></span> 
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=k>typedef</span> <span class=n>std</span><span class=o>::</span><span class=n>ratio</span><span class=o>&lt;</span><span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=o>&gt;</span> <span class=n>two_third</span><span class=p>;</span>
+    <span class=k>typedef</span> <span class=n>std</span><span class=o>::</span><span class=n>ratio</span><span class=o>&lt;</span><span class=mi>1</span><span class=p>,</span> <span class=mi>6</span><span class=o>&gt;</span> <span class=n>one_sixth</span><span class=p>;</span>
  
-    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio_add</span><span class="o">&lt;</span><span class="n">two_third</span><span class="p">,</span> <span class="n">one_sixth</span><span class="o">&gt;</span> <span class="n">sum</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;2/3 + 1/6 = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">sum</span><span class="o">::</span><span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">sum</span><span class="o">::</span><span class="n">den</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><p>output:</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span> <span class="o">=</span> <span class="mi">5</span><span class="o">/</span><span class="mi">6</span>
-</code></pre></div><hr>
-<p>参考:</p>
-<ul>
-<li>
-<p><a href="https://en.cppreference.com/w/"target="_blank" rel="noopener noreferrer">C++官方文档</a>
-</p>
-</li>
-<li>
-<p><a href="https://www.cnblogs.com/jwk000/p/3560086.html"target="_blank" rel="noopener noreferrer">博客园 - C++11 std::chrono库详解</a>
-</p>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/cpp/>cpp</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/compare-float-values/"><span class="iconfont icon-article"></span>浮点数比较</a></p><p><a class="link" href="/posts/image-rounded-corners-in-qml/"><span class="iconfont icon-article"></span>QML实现图片圆角</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+    <span class=k>typedef</span> <span class=n>std</span><span class=o>::</span><span class=n>ratio_add</span><span class=o>&lt;</span><span class=n>two_third</span><span class=p>,</span> <span class=n>one_sixth</span><span class=o>&gt;</span> <span class=n>sum</span><span class=p>;</span>
+    <span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;2/3 + 1/6 = &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>sum</span><span class=o>::</span><span class=n>num</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;/&#39;</span> <span class=o>&lt;&lt;</span> <span class=n>sum</span><span class=o>::</span><span class=n>den</span> <span class=o>&lt;&lt;</span> <span class=sc>&#39;\n&#39;</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>output:</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=mi>2</span><span class=o>/</span><span class=mi>3</span> <span class=o>+</span> <span class=mi>1</span><span class=o>/</span><span class=mi>6</span> <span class=o>=</span> <span class=mi>5</span><span class=o>/</span><span class=mi>6</span>
+</code></pre></div><hr><p>参考:</p><ul><li><p><a href=https://en.cppreference.com/w/ target=_blank rel="noopener noreferrer">C++官方文档</a></p></li><li><p><a href=https://www.cnblogs.com/jwk000/p/3560086.html target=_blank rel="noopener noreferrer">博客园 - C++11 std::chrono库详解</a></p></li></ul></article><section class="article labels"><a class=tag href=/tags/cpp/>cpp</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/compare-float-values/><span class="iconfont icon-article"></span>浮点数比较</a></p><p><a class=link href=/posts/image-rounded-corners-in-qml/><span class="iconfont icon-article"></span>QML实现图片圆角</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

@@ -1,43 +1,8 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Bash中的模式匹配”glob patterns“和”extglob“&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Bash中的模式匹配”glob patterns“和”extglob“" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Bash中的模式匹配”glob patterns“和”extglob“</h1><p class="article date">Sunday, December 15, 2019</p></section><article class="article markdown-body"><p>“glob patterns”（也有wildcard patterns或globbing的说法，指的大体是一个东西，我不太了解个中差异）用以匹配文件名或路径名，类似正则表达式，但正则表达式主要用来匹配文本， 相比glob patterns更加强大，但更慢。UNIX中曾有 <code>\etc\glob</code> 后来被整合进shell中并一直延续到现在。在Bash中glob patterns也可以在test语句和case语句中使用。</p>
-<p>glob paterns的语法十分简单</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Pattern</th>
-<th style="text-align:center">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>*</code></td>
-<td style="text-align:center">匹配任意数量的任意字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>?</code></td>
-<td style="text-align:center">匹配一个任意字符</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>[...]</code></td>
-<td style="text-align:center">字符集，匹配一个中括号内列出的字符，支持 <code>[a-z]</code> 这种范围表示法，支持POSIX标准定义的字符集（见<a href="#posix%e6%a0%87%e5%87%86%e5%ae%9a%e4%b9%89%e7%9a%84%e5%ad%97%e7%ac%a6%e9%9b%86">文末</a>
-）</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>[!...]</code></td>
-<td style="text-align:center">同上，但匹配一个中括号内没有列出的字符</td>
-</tr>
-</tbody>
-</table>
-<p>来几个实例感受一下</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先建立实验环境</span>
-$ <span class="nb">cd</span> /tmp
-$ mkdir <span class="nb">test</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nb">test</span>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>Bash中的模式匹配”glob patterns“和”extglob“&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="Bash中的模式匹配”glob patterns“和”extglob“"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">Bash中的模式匹配”glob patterns“和”extglob“</h1><p class="article date">Sunday, December 15, 2019</p></section><article class="article markdown-body"><p>“glob patterns”（也有wildcard patterns或globbing的说法，指的大体是一个东西，我不太了解个中差异）用以匹配文件名或路径名，类似正则表达式，但正则表达式主要用来匹配文本， 相比glob patterns更加强大，但更慢。UNIX中曾有 <code>\etc\glob</code> 后来被整合进shell中并一直延续到现在。在Bash中glob patterns也可以在test语句和case语句中使用。</p><p>glob paterns的语法十分简单</p><table><thead><tr><th style=text-align:center>Pattern</th><th style=text-align:center>Description</th></tr></thead><tbody><tr><td style=text-align:center><code>*</code></td><td style=text-align:center>匹配任意数量的任意字符</td></tr><tr><td style=text-align:center><code>?</code></td><td style=text-align:center>匹配一个任意字符</td></tr><tr><td style=text-align:center><code>[...]</code></td><td style=text-align:center>字符集，匹配一个中括号内列出的字符，支持 <code>[a-z]</code> 这种范围表示法，支持POSIX标准定义的字符集（见<a href=#posix%e6%a0%87%e5%87%86%e5%ae%9a%e4%b9%89%e7%9a%84%e5%ad%97%e7%ac%a6%e9%9b%86>文末</a>
+）</td></tr><tr><td style=text-align:center><code>[!...]</code></td><td style=text-align:center>同上，但匹配一个中括号内没有列出的字符</td></tr></tbody></table><p>来几个实例感受一下</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 先建立实验环境</span>
+$ <span class=nb>cd</span> /tmp
+$ mkdir <span class=nb>test</span> <span class=o>&amp;&amp;</span> <span class=nb>cd</span> <span class=nb>test</span>
 $ touch a b c ab ac bc abc bcd cde 
 
 $ ls ?
@@ -52,212 +17,57 @@ a  ab  abc  abcd  ac  b  bc  bcd  c  cde
 $ ls a*
 a  ab  abc  abcd  ac
 
-$ ls <span class="o">[</span>ab<span class="o">]</span>*
+$ ls <span class=o>[</span>ab<span class=o>]</span>*
 a  ab  abc  abcd  ac  b  bc  bcd
 
-$ ls <span class="o">[</span>a-c<span class="o">][</span>bc<span class="o">]</span>
+$ ls <span class=o>[</span>a-c<span class=o>][</span>bc<span class=o>]</span>
 ab  ac  bc
-</code></pre></div><p>有几个需要注意的地方：</p>
-<ul>
-<li>
-<p><code>[^...]</code> 在Bash中的行为与 <code>[!...]</code> 相同，但不建议使用，在POSIX标准中 <code>[^...]</code> 的行为是未定义的</p>
-</li>
-<li>
-<p>匹配隐藏文件（文件名以 <code>.</code> 开头）应当明确指出</p>
-</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ touch .a .b .c  
+</code></pre></div><p>有几个需要注意的地方：</p><ul><li><p><code>[^...]</code> 在Bash中的行为与 <code>[!...]</code> 相同，但不建议使用，在POSIX标准中 <code>[^...]</code> 的行为是未定义的</p></li><li><p>匹配隐藏文件（文件名以 <code>.</code> 开头）应当明确指出</p></li></ul><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ touch .a .b .c  
 
-$ <span class="nb">echo</span> *
+$ <span class=nb>echo</span> *
 a ab abc abcd ac b bc bcd c cde
 
-$ <span class="nb">echo</span> .*
+$ <span class=nb>echo</span> .*
 . .. .a .b .c
-</code></pre></div><ul>
-<li>不要多此一举使用引号把模式包起来， shell会认为那仅仅是个字符串而采用另外的处理方式</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">echo</span> a*
+</code></pre></div><ul><li>不要多此一举使用引号把模式包起来， shell会认为那仅仅是个字符串而采用另外的处理方式</li></ul><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ <span class=nb>echo</span> a*
 a ab abc abcd ac
 
-$ <span class="nb">echo</span> <span class="s2">&#34;a*&#34;</span>
+$ <span class=nb>echo</span> <span class=s2>&#34;a*&#34;</span>
 a*
 
-$ ls <span class="s2">&#34;a[a-c]&#34;</span>
-ls: cannot access <span class="s1">&#39;a[a-c]&#39;</span>: No such file or directory
-</code></pre></div><ul>
-<li><code>*</code> <code>?</code> <code>[...]</code> 都无法匹配 <code>/</code> ，因此需要匹配子文件夹内容时需明确指出</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 目录结构</span>
+$ ls <span class=s2>&#34;a[a-c]&#34;</span>
+ls: cannot access <span class=s1>&#39;a[a-c]&#39;</span>: No such file or directory
+</code></pre></div><ul><li><code>*</code> <code>?</code> <code>[...]</code> 都无法匹配 <code>/</code> ，因此需要匹配子文件夹内容时需明确指出</li></ul><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 目录结构</span>
 $ tree --charset X
 .
-<span class="p">|</span>-- abc
-<span class="p">|</span>-- child1
-<span class="p">|</span>   <span class="sb">`</span>-- abc
-<span class="p">|</span>-- child2
-<span class="p">|</span>   <span class="sb">`</span>-- abc
-<span class="sb">`</span>-- child3
-    <span class="sb">`</span>-- bbc
+<span class=p>|</span>-- abc
+<span class=p>|</span>-- child1
+<span class=p>|</span>   <span class=sb>`</span>-- abc
+<span class=p>|</span>-- child2
+<span class=p>|</span>   <span class=sb>`</span>-- abc
+<span class=sb>`</span>-- child3
+    <span class=sb>`</span>-- bbc
     
-<span class="m">3</span> directories, <span class="m">4</span> files
+<span class=m>3</span> directories, <span class=m>4</span> files
 
-$ <span class="nb">echo</span> child*
+$ <span class=nb>echo</span> child*
 child1 child2 child3
 
-$ <span class="nb">echo</span> child?/*
+$ <span class=nb>echo</span> child?/*
 child1/abc child2/abc child3/bbc
-</code></pre></div><ul>
-<li>一个合格的文件名不应包含奇怪的字符（最好只包含个字符集 <code>[0-9a-zA-Z_-.]</code> ），因此我不打算解释像下列这样你这辈子都不会用上的奇怪写法具体是怎么运行的，有兴趣的自行 <code>man glob.7</code></li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ ll <span class="o">[]</span>a<span class="o">[][</span>a<span class="o">[]</span>
--rw-r--r-- <span class="m">1</span> glaumar glaumar <span class="m">0</span> Dec <span class="m">13</span> 22:44 <span class="s1">&#39;[a&#39;</span>
--rw-r--r-- <span class="m">1</span> glaumar glaumar <span class="m">0</span> Dec <span class="m">13</span> 22:47  <span class="o">]</span>a
--rw-r--r-- <span class="m">1</span> glaumar glaumar <span class="m">0</span> Dec <span class="m">13</span> 22:35 <span class="s1">&#39;a[&#39;</span>
--rw-r--r-- <span class="m">1</span> glaumar glaumar <span class="m">0</span> Dec <span class="m">13</span> 23:11  aa
-</code></pre></div><h2 id="bash对glob的扩展">Bash对glob的扩展</h2>
-<p>如果你有正则表达式基础会发现glob patterns中没用量词，尽管很少需要但确实有些让人不爽，所幸GNU在Bash中进行了相应扩展</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Pattern</th>
-<th style="text-align:center">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>?(pattern-list)</code></td>
-<td style="text-align:center">括号内模式匹配0次或1次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>*(pattern-list)</code></td>
-<td style="text-align:center">括号内模式匹配0次到多次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>+(pattern-list)</code></td>
-<td style="text-align:center">括号内模式匹配1次到多次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>@(pattern-list)</code></td>
-<td style="text-align:center">括号内模式匹配1次</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>!(pattern-list)</code></td>
-<td style="text-align:center">匹配括号内的模式以外的其他内容</td>
-</tr>
-</tbody>
-</table>
-<p>默认情况下Bash没有开启这些扩展，需手动启动</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看是否开启 extglob</span>
-$ <span class="nb">shopt</span> extglob
+</code></pre></div><ul><li>一个合格的文件名不应包含奇怪的字符（最好只包含个字符集 <code>[0-9a-zA-Z_-.]</code> ），因此我不打算解释像下列这样你这辈子都不会用上的奇怪写法具体是怎么运行的，有兴趣的自行 <code>man glob.7</code></li></ul><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ ll <span class=o>[]</span>a<span class=o>[][</span>a<span class=o>[]</span>
+-rw-r--r-- <span class=m>1</span> glaumar glaumar <span class=m>0</span> Dec <span class=m>13</span> 22:44 <span class=s1>&#39;[a&#39;</span>
+-rw-r--r-- <span class=m>1</span> glaumar glaumar <span class=m>0</span> Dec <span class=m>13</span> 22:47  <span class=o>]</span>a
+-rw-r--r-- <span class=m>1</span> glaumar glaumar <span class=m>0</span> Dec <span class=m>13</span> 22:35 <span class=s1>&#39;a[&#39;</span>
+-rw-r--r-- <span class=m>1</span> glaumar glaumar <span class=m>0</span> Dec <span class=m>13</span> 23:11  aa
+</code></pre></div><h2 id=bash对glob的扩展>Bash对glob的扩展</h2><p>如果你有正则表达式基础会发现glob patterns中没用量词，尽管很少需要但确实有些让人不爽，所幸GNU在Bash中进行了相应扩展</p><table><thead><tr><th style=text-align:center>Pattern</th><th style=text-align:center>Description</th></tr></thead><tbody><tr><td style=text-align:center><code>?(pattern-list)</code></td><td style=text-align:center>括号内模式匹配0次或1次</td></tr><tr><td style=text-align:center><code>*(pattern-list)</code></td><td style=text-align:center>括号内模式匹配0次到多次</td></tr><tr><td style=text-align:center><code>+(pattern-list)</code></td><td style=text-align:center>括号内模式匹配1次到多次</td></tr><tr><td style=text-align:center><code>@(pattern-list)</code></td><td style=text-align:center>括号内模式匹配1次</td></tr><tr><td style=text-align:center><code>!(pattern-list)</code></td><td style=text-align:center>匹配括号内的模式以外的其他内容</td></tr></tbody></table><p>默认情况下Bash没有开启这些扩展，需手动启动</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 查看是否开启 extglob</span>
+$ <span class=nb>shopt</span> extglob
 extglob        	off
 
-<span class="c1"># 开启 extglob</span>
-$ <span class="nb">shopt</span> -s extglob
-</code></pre></div><p><code>extglob</code> 语法都十分简单明了，这里不作过多演示，唯一你可能令你感到疑惑的或许是 <code>@(pattern-list)</code> ，只匹配一次看起来毫无作用，显得有些多余。多说无益，看例子</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ touch ab1234 cd1234
+<span class=c1># 开启 extglob</span>
+$ <span class=nb>shopt</span> -s extglob
+</code></pre></div><p><code>extglob</code> 语法都十分简单明了，这里不作过多演示，唯一你可能令你感到疑惑的或许是 <code>@(pattern-list)</code> ，只匹配一次看起来毫无作用，显得有些多余。多说无益，看例子</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ touch ab1234 cd1234
 
-$ ls @<span class="o">(</span>ab<span class="p">|</span><span class="nb">cd</span><span class="o">)</span><span class="m">1234</span>
+$ ls @<span class=o>(</span>ab<span class=p>|</span><span class=nb>cd</span><span class=o>)</span><span class=m>1234</span>
 ab1234  cd1234
-</code></pre></div><p><code>pattern-list</code> 是一个或多个使用 <code>|</code> 隔开的模式， <code>@(pattern1|pattern2)</code>  与正则表达式中的 <code>(pattern1|pattern2)</code> 效果相同，类似的 <code>?(pattern1|pattern2)</code>  <code>*(pattern1|pattern2)</code>  <code>+(pattern1|pattern2)</code> 对应 <code>(pattern1|pattern2)?</code>  <code>(pattern1|pattern2)*</code>  <code>(pattern1|pattern2)+</code></p>
-<p>或许你觉得 <code>extglob</code> 的语法显得臃肿和丑陋，例如正则表达式中简单的 <code>a?bc|xyz</code> 写成glob pattern却是 <code>@(?(a)bc|xyz)</code> 。这些丑陋的语法体现的更多是一种妥协，要向下兼容，要方便交互式地使用，不能与shell现有语法冲突……</p>
-<h2 id="posix标准定义的字符集">POSIX标准定义的字符集</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">POSIX</th>
-<th style="text-align:left">Description</th>
-<th style="text-align:left">ASCII</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">[:alnum:]</td>
-<td style="text-align:left">数字和字母</td>
-<td style="text-align:left">[a-zA-Z0-9]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:alpha:]</td>
-<td style="text-align:left">字母</td>
-<td style="text-align:left">[a-zA-Z]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:ascii:]</td>
-<td style="text-align:left">ASCII字符</td>
-<td style="text-align:left">[\x00-\x7F]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:blank:]</td>
-<td style="text-align:left">空格和 <code>Tab</code></td>
-<td style="text-align:left">[ \t]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:cntrl:]</td>
-<td style="text-align:left">控制字符</td>
-<td style="text-align:left">[\x00-\x1F\x7F]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:digit:]</td>
-<td style="text-align:left">数字</td>
-<td style="text-align:left">[0-9]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:graph:]</td>
-<td style="text-align:left">可视字符</td>
-<td style="text-align:left">[\x21-\x7E]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:lower:]</td>
-<td style="text-align:left">小写字母</td>
-<td style="text-align:left">[a-z]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:print:]</td>
-<td style="text-align:left">可打印字符</td>
-<td style="text-align:left">[\x20-\x7E]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:punct:]</td>
-<td style="text-align:left">标点符号</td>
-<td style="text-align:left">[!&quot;#$%&amp;'()*+, -./:;&lt;=&gt;?@[ ]^_‘{|}~]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:space:]</td>
-<td style="text-align:left">所有空白字符</td>
-<td style="text-align:left">[ \t\r\n\v\f]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:upper:]</td>
-<td style="text-align:left">大写字母</td>
-<td style="text-align:left">[A-Z]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:word:]</td>
-<td style="text-align:left">单词</td>
-<td style="text-align:left">[A-Za-z0-9_]</td>
-</tr>
-<tr>
-<td style="text-align:left">[:xdigit:]</td>
-<td style="text-align:left">十六进制数</td>
-<td style="text-align:left">[A-Fa-f0-9]</td>
-</tr>
-</tbody>
-</table>
-<p><strong>注意：</strong><code>[</code> 和 <code>]</code> 也是该字符集名称的一部分，即在使用中和 <code>[0-9]</code> 等价的是 <code>[[:digit:]]</code> 而不是 <code>[:digit:]</code></p>
-<hr>
-<p>参考：</p>
-<ul>
-<li><a href="https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching"target="_blank" rel="noopener noreferrer">https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching</a>
-</li>
-<li><a href="https://www.linuxjournal.com/content/pattern-matching-bash"target="_blank" rel="noopener noreferrer">https://www.linuxjournal.com/content/pattern-matching-bash</a>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/shell/>shell</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/shell-special-parameters/"><span class="iconfont icon-article"></span>Shell特殊变量</a></p><p><a class="link" href="/posts/bre-and-ere/"><span class="iconfont icon-article"></span>基本正则表达式（BRE）和扩展正则表达式（ERE）</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+</code></pre></div><p><code>pattern-list</code> 是一个或多个使用 <code>|</code> 隔开的模式， <code>@(pattern1|pattern2)</code> 与正则表达式中的 <code>(pattern1|pattern2)</code> 效果相同，类似的 <code>?(pattern1|pattern2)</code> <code>*(pattern1|pattern2)</code> <code>+(pattern1|pattern2)</code> 对应 <code>(pattern1|pattern2)?</code> <code>(pattern1|pattern2)*</code> <code>(pattern1|pattern2)+</code></p><p>或许你觉得 <code>extglob</code> 的语法显得臃肿和丑陋，例如正则表达式中简单的 <code>a?bc|xyz</code> 写成glob pattern却是 <code>@(?(a)bc|xyz)</code> 。这些丑陋的语法体现的更多是一种妥协，要向下兼容，要方便交互式地使用，不能与shell现有语法冲突……</p><h2 id=posix标准定义的字符集>POSIX标准定义的字符集</h2><table><thead><tr><th style=text-align:left>POSIX</th><th style=text-align:left>Description</th><th style=text-align:left>ASCII</th></tr></thead><tbody><tr><td style=text-align:left>[:alnum:]</td><td style=text-align:left>数字和字母</td><td style=text-align:left>[a-zA-Z0-9]</td></tr><tr><td style=text-align:left>[:alpha:]</td><td style=text-align:left>字母</td><td style=text-align:left>[a-zA-Z]</td></tr><tr><td style=text-align:left>[:ascii:]</td><td style=text-align:left>ASCII字符</td><td style=text-align:left>[\x00-\x7F]</td></tr><tr><td style=text-align:left>[:blank:]</td><td style=text-align:left>空格和 <code>Tab</code></td><td style=text-align:left>[ \t]</td></tr><tr><td style=text-align:left>[:cntrl:]</td><td style=text-align:left>控制字符</td><td style=text-align:left>[\x00-\x1F\x7F]</td></tr><tr><td style=text-align:left>[:digit:]</td><td style=text-align:left>数字</td><td style=text-align:left>[0-9]</td></tr><tr><td style=text-align:left>[:graph:]</td><td style=text-align:left>可视字符</td><td style=text-align:left>[\x21-\x7E]</td></tr><tr><td style=text-align:left>[:lower:]</td><td style=text-align:left>小写字母</td><td style=text-align:left>[a-z]</td></tr><tr><td style=text-align:left>[:print:]</td><td style=text-align:left>可打印字符</td><td style=text-align:left>[\x20-\x7E]</td></tr><tr><td style=text-align:left>[:punct:]</td><td style=text-align:left>标点符号</td><td style=text-align:left>[!"#$%&'()*+, -./:;&lt;=>?@[ ]^_‘{|}~]</td></tr><tr><td style=text-align:left>[:space:]</td><td style=text-align:left>所有空白字符</td><td style=text-align:left>[ \t\r\n\v\f]</td></tr><tr><td style=text-align:left>[:upper:]</td><td style=text-align:left>大写字母</td><td style=text-align:left>[A-Z]</td></tr><tr><td style=text-align:left>[:word:]</td><td style=text-align:left>单词</td><td style=text-align:left>[A-Za-z0-9_]</td></tr><tr><td style=text-align:left>[:xdigit:]</td><td style=text-align:left>十六进制数</td><td style=text-align:left>[A-Fa-f0-9]</td></tr></tbody></table><p><strong>注意：</strong><code>[</code> 和 <code>]</code> 也是该字符集名称的一部分，即在使用中和 <code>[0-9]</code> 等价的是 <code>[[:digit:]]</code> 而不是 <code>[:digit:]</code></p><hr><p>参考：</p><ul><li><a href=https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching target=_blank rel="noopener noreferrer">https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching</a></li><li><a href=https://www.linuxjournal.com/content/pattern-matching-bash target=_blank rel="noopener noreferrer">https://www.linuxjournal.com/content/pattern-matching-bash</a></li></ul></article><section class="article labels"><a class=tag href=/tags/shell/>shell</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/shell-special-parameters/><span class="iconfont icon-article"></span>Shell特殊变量</a></p><p><a class=link href=/posts/bre-and-ere/><span class="iconfont icon-article"></span>基本正则表达式（BRE）和扩展正则表达式（ERE）</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

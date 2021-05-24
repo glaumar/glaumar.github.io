@@ -1,93 +1,58 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>c&#43;&#43;中&#43;&#43;i和i&#43;&#43;的区别&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="c&#43;&#43;中&#43;&#43;i和i&#43;&#43;的区别" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">c++中++i和i++的区别</h1><p class="article date">Saturday, June 6, 2020</p></section><article class="article markdown-body"><h2 id="1-计算顺序不同">1. 计算顺序不同</h2>
-<p><code>i++</code> 返回 <code>i</code> 本身，然后将 <code>i</code>  加一</p>
-<p><code>++i</code> 将 <code>i</code>  加一，然后返回 <code>i</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="o">++</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">++</span><span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span>
-</code></pre></div><p>output：</p>
-<pre><code>0 1
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>c++中++i和i++的区别&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="c++中++i和i++的区别"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">c++中++i和i++的区别</h1><p class="article date">Saturday, June 6, 2020</p></section><article class="article markdown-body"><h2 id=1-计算顺序不同>1. 计算顺序不同</h2><p><code>i++</code> 返回 <code>i</code> 本身，然后将 <code>i</code> 加一</p><p><code>++i</code> 将 <code>i</code> 加一，然后返回 <code>i</code></p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+<span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>i</span><span class=o>++</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>i</span><span class=p>;</span>
+<span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>endl</span><span class=p>;</span>
+<span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=o>++</span><span class=n>i</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>i</span><span class=p>;</span>
+</code></pre></div><p>output：</p><pre><code>0 1
 2 2
-</code></pre><h2 id="2-返回值性质不同">2. 返回值性质不同</h2>
-<p><code>i++</code> 返回右值，<code>++i</code> 返回左值（<a href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC"target="_blank" rel="noopener noreferrer">百度百科关于左值和右值的词条</a>
-）</p>
-<p>所以 <code>i++ = 3</code> 编译器会报错， <code>++i = 3</code> 则没有问题</p>
-<h2 id="3-运算符重载和效率差别">3. 运算符重载和效率差别</h2>
-<p>我们定义一个简单（简陋）的类，包含保存坐标x和y，并且重载前置和后置递增运算符</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Coordinate</span> <span class="p">{</span>
- <span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">x_</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">y_</span><span class="p">;</span>
+</code></pre><h2 id=2-返回值性质不同>2. 返回值性质不同</h2><p><code>i++</code> 返回右值，<code>++i</code> 返回左值（<a href=https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC target=_blank rel="noopener noreferrer">百度百科关于左值和右值的词条</a>
+）</p><p>所以 <code>i++ = 3</code> 编译器会报错， <code>++i = 3</code> 则没有问题</p><h2 id=3-运算符重载和效率差别>3. 运算符重载和效率差别</h2><p>我们定义一个简单（简陋）的类，包含保存坐标x和y，并且重载前置和后置递增运算符</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>class</span> <span class=nc>Coordinate</span> <span class=p>{</span>
+ <span class=k>private</span><span class=o>:</span>
+    <span class=kt>int</span> <span class=n>x_</span><span class=p>;</span>
+    <span class=kt>int</span> <span class=n>y_</span><span class=p>;</span>
 
- <span class="k">public</span><span class="o">:</span>
-    <span class="c1">//构造函数
-</span><span class="c1"></span>    <span class="k">explicit</span> <span class="n">Coordinate</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:</span> <span class="n">x_</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y_</span><span class="p">(</span><span class="n">y</span><span class="p">){};</span>
+ <span class=k>public</span><span class=o>:</span>
+    <span class=c1>//构造函数
+</span><span class=c1></span>    <span class=k>explicit</span> <span class=n>Coordinate</span><span class=p>(</span><span class=kt>int</span> <span class=n>x</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span> <span class=kt>int</span> <span class=n>y</span> <span class=o>=</span> <span class=mi>0</span><span class=p>)</span> <span class=o>:</span> <span class=n>x_</span><span class=p>(</span><span class=n>x</span><span class=p>),</span> <span class=n>y_</span><span class=p>(</span><span class=n>y</span><span class=p>){};</span>
     
-    <span class="c1">//打印x和y
-</span><span class="c1"></span>    <span class="kt">void</span> <span class="nf">printXY</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x_</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;,&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">y_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
-    <span class="p">}</span>
+    <span class=c1>//打印x和y
+</span><span class=c1></span>    <span class=kt>void</span> <span class=nf>printXY</span><span class=p>()</span> <span class=k>const</span> <span class=p>{</span>
+        <span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>x_</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;,&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>y_</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>endl</span><span class=p>;</span> 
+    <span class=p>}</span>
     
-    <span class="c1">//重载前置递增
-</span><span class="c1"></span>    <span class="n">Coordinate</span> <span class="k">operator</span><span class="o">++</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">x_</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">y_</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class=c1>//重载前置递增
+</span><span class=c1></span>    <span class=n>Coordinate</span> <span class=k>operator</span><span class=o>++</span><span class=p>()</span> <span class=p>{</span>
+        <span class=k>this</span><span class=o>-&gt;</span><span class=n>x_</span> <span class=o>+=</span> <span class=mi>1</span><span class=p>;</span>
+        <span class=k>this</span><span class=o>-&gt;</span><span class=n>y_</span> <span class=o>+=</span> <span class=mi>1</span><span class=p>;</span>
+        <span class=k>return</span> <span class=o>*</span><span class=k>this</span><span class=p>;</span>
+    <span class=p>}</span>
     
-    <span class="c1">//重载后置递增
-</span><span class="c1"></span>    <span class="n">Coordinate</span> <span class="k">operator</span><span class="o">++</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Coordinate</span> <span class="n">old</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">x_</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">this</span><span class="o">-&gt;</span><span class="n">y_</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">old</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div><p>对比前置和后置递增的实现，可以看到为了实现后置递增的语义，我们需要一个额外的变量（old）保存对象原本的值，也就是说对于 <code>Coordinate</code> 类的一个对象 <code>co</code>  来说，理论上 <code>++co</code> 的效率要高于 <code>co++</code> 。其实对于C++内置类型来说这一点也是一样的，但现代编译器都会做优化，因此对于整型 <code>i</code> 来说 <code>++i</code> 和 <code>i++</code>效率上很可能没什么区别</p>
-<p>测试一下刚才写的类：</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Coordinate</span> <span class="n">co1</span><span class="p">,</span> <span class="n">co2</span><span class="p">;</span>
+    <span class=c1>//重载后置递增
+</span><span class=c1></span>    <span class=n>Coordinate</span> <span class=k>operator</span><span class=o>++</span><span class=p>(</span><span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>Coordinate</span> <span class=n>old</span> <span class=o>=</span> <span class=o>*</span><span class=k>this</span><span class=p>;</span>
+        <span class=k>this</span><span class=o>-&gt;</span><span class=n>x_</span> <span class=o>+=</span> <span class=mi>1</span><span class=p>;</span>
+        <span class=k>this</span><span class=o>-&gt;</span><span class=n>y_</span> <span class=o>+=</span> <span class=mi>1</span><span class=p>;</span>
+        <span class=k>return</span> <span class=n>old</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>};</span>
+</code></pre></div><p>对比前置和后置递增的实现，可以看到为了实现后置递增的语义，我们需要一个额外的变量（old）保存对象原本的值，也就是说对于 <code>Coordinate</code> 类的一个对象 <code>co</code> 来说，理论上 <code>++co</code> 的效率要高于 <code>co++</code> 。其实对于C++内置类型来说这一点也是一样的，但现代编译器都会做优化，因此对于整型 <code>i</code> 来说 <code>++i</code> 和 <code>i++</code>效率上很可能没什么区别</p><p>测试一下刚才写的类：</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>**</span><span class=n>argv</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>Coordinate</span> <span class=n>co1</span><span class=p>,</span> <span class=n>co2</span><span class=p>;</span>
 
-    <span class="n">co2</span> <span class="o">=</span> <span class="o">++</span><span class="n">co1</span><span class="p">;</span>
-    <span class="n">co2</span><span class="p">.</span><span class="n">printXY</span><span class="p">();</span>
-    <span class="n">co1</span><span class="p">.</span><span class="n">printXY</span><span class="p">();</span>
+    <span class=n>co2</span> <span class=o>=</span> <span class=o>++</span><span class=n>co1</span><span class=p>;</span>
+    <span class=n>co2</span><span class=p>.</span><span class=n>printXY</span><span class=p>();</span>
+    <span class=n>co1</span><span class=p>.</span><span class=n>printXY</span><span class=p>();</span>
 
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>endl</span><span class=p>;</span>
 
-    <span class="n">co2</span> <span class="o">=</span> <span class="n">co1</span><span class="o">++</span><span class="p">;</span>
-    <span class="n">co2</span><span class="p">.</span><span class="n">printXY</span><span class="p">();</span>
-    <span class="n">co1</span><span class="p">.</span><span class="n">printXY</span><span class="p">();</span>
+    <span class=n>co2</span> <span class=o>=</span> <span class=n>co1</span><span class=o>++</span><span class=p>;</span>
+    <span class=n>co2</span><span class=p>.</span><span class=n>printXY</span><span class=p>();</span>
+    <span class=n>co1</span><span class=p>.</span><span class=n>printXY</span><span class=p>();</span>
 
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><p>output：</p>
-<pre><code>1,1
+    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></div><p>output：</p><pre><code>1,1
 1,1
 
 1,1
 2,2
-</code></pre><hr>
-<p>参考：</p>
-<ul>
-<li><a href="https://www.zhihu.com/question/19811087/answer/80210083"target="_blank" rel="noopener noreferrer">在程序开发中，++i 与 i++的区别在哪里？ - 叶王的回答 - 知乎</a>
-</li>
-<li>《C++ Primer （第5版）》</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/cpp/>cpp</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/generate-random-number-using-stl/"><span class="iconfont icon-article"></span>使用STL生成随机数</a></p><p><a class="link" href="/posts/non-recursive-traversal-of-binary-tree/"><span class="iconfont icon-article"></span>非递归遍历二叉树</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+</code></pre><hr><p>参考：</p><ul><li><a href=https://www.zhihu.com/question/19811087/answer/80210083 target=_blank rel="noopener noreferrer">在程序开发中，++i 与 i++的区别在哪里？ - 叶王的回答 - 知乎</a></li><li>《C++ Primer （第5版）》</li></ul></article><section class="article labels"><a class=tag href=/tags/cpp/>cpp</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/generate-random-number-using-stl/><span class="iconfont icon-article"></span>使用STL生成随机数</a></p><p><a class=link href=/posts/non-recursive-traversal-of-binary-tree/><span class="iconfont icon-article"></span>非递归遍历二叉树</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

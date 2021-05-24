@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>使用STL生成随机数&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="使用STL生成随机数" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">使用STL生成随机数</h1><p class="article date">Monday, June 15, 2020</p></section><article class="article markdown-body"><h2 id="随机数种子">随机数种子</h2>
-<p>使用随机数引擎生成（伪）随机数前，我们通常需要传入一个种子以确保程序每次运行能生成不同的随机数</p>
-<p><code>random_device</code> 类可以使用系统提供的数据源，并返回一个<strong>真随机数</strong>（根据实现，如果数据源不可用也可能生成伪随机数），取值范围是[std::random_device::min() , std::random_device::max()]</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>使用STL生成随机数&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="使用STL生成随机数"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">使用STL生成随机数</h1><p class="article date">Monday, June 15, 2020</p></section><article class="article markdown-body"><h2 id=随机数种子>随机数种子</h2><p>使用随机数引擎生成（伪）随机数前，我们通常需要传入一个种子以确保程序每次运行能生成不同的随机数</p><p><code>random_device</code> 类可以使用系统提供的数据源，并返回一个<strong>真随机数</strong>（根据实现，如果数据源不可用也可能生成伪随机数），取值范围是[std::random_device::min() , std::random_device::max()]</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;random&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Max: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">random_device</span><span class="o">::</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Min: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">random_device</span><span class="o">::</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;Max: &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>random_device</span><span class=o>::</span><span class=n>max</span><span class=p>()</span> <span class=o>&lt;&lt;</span><span class=n>endl</span><span class=p>;</span>
+    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;Min: &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>random_device</span><span class=o>::</span><span class=n>min</span><span class=p>()</span> <span class=o>&lt;&lt;</span><span class=n>endl</span><span class=p>;</span>
 
-    <span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rd</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>输出：</p>
-<pre><code>Max: 4294967295
+    <span class=n>random_device</span> <span class=n>rd</span><span class=p>;</span>
+    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>n</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>n</span> <span class=o>&lt;</span> <span class=mi>8</span><span class=p>;</span> <span class=o>++</span><span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>rd</span><span class=p>()</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>输出：</p><pre><code>Max: 4294967295
 Min: 0
 2767121154
 1691292331
@@ -34,28 +24,23 @@ Min: 0
 213760575
 301031565
 973228337
-</code></pre><h3 id="为什么不直接使用random_device生成的随机数">为什么不直接使用random_device生成的随机数</h3>
-<p>生成一个真随机数会急剧消耗系统采集的熵，采集速度远远不及实际的使用速度，熵小了，生成的数就不那么随机了</p>
-<h2 id="随机数引擎">随机数引擎</h2>
-<p>使用默认随机数引擎</p>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</code></pre><h3 id=为什么不直接使用random_device生成的随机数>为什么不直接使用random_device生成的随机数</h3><p>生成一个真随机数会急剧消耗系统采集的熵，采集速度远远不及实际的使用速度，熵小了，生成的数就不那么随机了</p><h2 id=随机数引擎>随机数引擎</h2><p>使用默认随机数引擎</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;random&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Max: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">default_random_engine</span><span class="o">::</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Min: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">default_random_engine</span><span class="o">::</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;Max: &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>default_random_engine</span><span class=o>::</span><span class=n>max</span><span class=p>()</span> <span class=o>&lt;&lt;</span><span class=n>endl</span><span class=p>;</span>
+    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;Min: &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>default_random_engine</span><span class=o>::</span><span class=n>min</span><span class=p>()</span> <span class=o>&lt;&lt;</span><span class=n>endl</span><span class=p>;</span>
 
-    <span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>
-    <span class="n">default_random_engine</span> <span class="n">e</span><span class="p">(</span><span class="n">rd</span><span class="p">());</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>输出：</p>
-<pre><code>Max: 2147483646
+    <span class=n>random_device</span> <span class=n>rd</span><span class=p>;</span>
+    <span class=n>default_random_engine</span> <span class=n>e</span><span class=p>(</span><span class=n>rd</span><span class=p>());</span>
+    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>n</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>n</span> <span class=o>&lt;</span> <span class=mi>8</span><span class=p>;</span> <span class=o>++</span><span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>e</span><span class=p>()</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>输出：</p><pre><code>Max: 2147483646
 Min: 1
 1723848096
 1013067795
@@ -65,61 +50,35 @@ Min: 1
 1769844091
 973642840
 189821740
-</code></pre><p>其他引擎可以参看参考手册https://devdocs.io/cpp/header/random</p>
-<h2 id="使用分布类">使用分布类</h2>
-<p>有时候我们可能对随机数有额外要求，比如取值范围，比如负数，比如浮点数……</p>
-<p>当然我们可以自己对引擎生成的随机数做额外处理，但更简单可靠的方法是使用STL的分布类</p>
-<h3 id="离散均匀分布">离散均匀分布</h3>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</code></pre><p>其他引擎可以参看参考手册https://devdocs.io/cpp/header/random</p><h2 id=使用分布类>使用分布类</h2><p>有时候我们可能对随机数有额外要求，比如取值范围，比如负数，比如浮点数……</p><p>当然我们可以自己对引擎生成的随机数做额外处理，但更简单可靠的方法是使用STL的分布类</p><h3 id=离散均匀分布>离散均匀分布</h3><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;random&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>
-    <span class="n">default_random_engine</span> <span class="n">e</span><span class="p">(</span><span class="n">rd</span><span class="p">());</span>
-    <span class="n">uniform_int_distribution</span><span class="o">&lt;&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="c1">//返回值范围为[-5, 5]
-</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">dist</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>输出：</p>
-<pre><code>5 -1 -1 3 5 -4 4 -5 
-</code></pre><h3 id="连续均匀分布">连续均匀分布</h3>
-<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp">
-</span><span class="cp"></span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>random_device</span> <span class=n>rd</span><span class=p>;</span>
+    <span class=n>default_random_engine</span> <span class=n>e</span><span class=p>(</span><span class=n>rd</span><span class=p>());</span>
+    <span class=n>uniform_int_distribution</span><span class=o>&lt;&gt;</span> <span class=n>dist</span><span class=p>(</span><span class=o>-</span><span class=mi>5</span><span class=p>,</span> <span class=mi>5</span><span class=p>);</span> <span class=c1>//返回值范围为[-5, 5]
+</span><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>n</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>n</span> <span class=o>&lt;</span> <span class=mi>8</span><span class=p>;</span> <span class=o>++</span><span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>dist</span><span class=p>(</span><span class=n>e</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; &#34;</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>输出：</p><pre><code>5 -1 -1 3 5 -4 4 -5 
+</code></pre><h3 id=连续均匀分布>连续均匀分布</h3><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;random&gt;</span><span class=cp>
+</span><span class=cp></span>
+<span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>
-    <span class="n">default_random_engine</span> <span class="n">e</span><span class="p">(</span><span class="n">rd</span><span class="p">());</span>
-    <span class="c1">//返回值范围为[0, 214)
-</span><span class="c1"></span>    <span class="n">uniform_real_distribution</span><span class="o">&lt;&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">214.0</span><span class="p">);</span> 
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">dist</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; &#34;</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>输出：</p>
-<pre><code>68.0202 10.1525 17.0463 142.749 40.447 57.8053 58.8224 153.853 
-</code></pre><p>STL中还有正态分布，泊松分布等，我平常用的比较少不再赘述</p>
-<hr>
-<p>参考：</p>
-<ul>
-<li>《C++标准模板库编程实战》 [美] Ivor Horton</li>
-<li><a href="https://www.cnblogs.com/egmkang/archive/2012/09/06/2673253.html"target="_blank" rel="noopener noreferrer">博客园 - C++11带来的随机数生成器</a>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/cpp/>cpp</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/center-block-but-align-contents-to-the-left/"><span class="iconfont icon-article"></span>Div+CSS实现文本居中左对齐</a></p><p><a class="link" href="/posts/the-difference-between-&#43;&#43;i-and-i&#43;&#43;-in-cpp/"><span class="iconfont icon-article"></span>c++中++i和i++的区别</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+<span class=p>{</span>
+    <span class=n>random_device</span> <span class=n>rd</span><span class=p>;</span>
+    <span class=n>default_random_engine</span> <span class=n>e</span><span class=p>(</span><span class=n>rd</span><span class=p>());</span>
+    <span class=c1>//返回值范围为[0, 214)
+</span><span class=c1></span>    <span class=n>uniform_real_distribution</span><span class=o>&lt;&gt;</span> <span class=n>dist</span><span class=p>(</span><span class=mf>0.0</span><span class=p>,</span> <span class=mf>214.0</span><span class=p>);</span> 
+    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>n</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>n</span> <span class=o>&lt;</span> <span class=mi>8</span><span class=p>;</span> <span class=o>++</span><span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>dist</span><span class=p>(</span><span class=n>e</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; &#34;</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>输出：</p><pre><code>68.0202 10.1525 17.0463 142.749 40.447 57.8053 58.8224 153.853 
+</code></pre><p>STL中还有正态分布，泊松分布等，我平常用的比较少不再赘述</p><hr><p>参考：</p><ul><li>《C++标准模板库编程实战》 [美] Ivor Horton</li><li><a href=https://www.cnblogs.com/egmkang/archive/2012/09/06/2673253.html target=_blank rel="noopener noreferrer">博客园 - C++11带来的随机数生成器</a></li></ul></article><section class="article labels"><a class=tag href=/tags/cpp/>cpp</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/center-block-but-align-contents-to-the-left/><span class="iconfont icon-article"></span>Div+CSS实现文本居中左对齐</a></p><p><a class=link href=/posts/the-difference-between-++i-and-i++-in-cpp/><span class="iconfont icon-article"></span>c++中++i和i++的区别</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

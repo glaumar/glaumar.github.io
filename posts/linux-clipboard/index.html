@@ -1,66 +1,12 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Linux(X Window)剪贴板&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Linux(X Window)剪贴板" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Linux(X Window)剪贴板</h1><p class="article date">Sunday, April 5, 2020</p></section><article class="article markdown-body"><p>Linux下的剪贴板通常由“X Window”提供（X目前还是主流，但Wayland正逐渐取代X），X提供了好几个剪贴板，常用的是 <strong>Primery seletion</strong> 和 <strong>Clipboard seletion</strong>，它们使用不同的区域存储数据。</p>
-<p><strong>Clipboard seletion</strong> 就是我们熟悉的剪贴板，和Windows下一样：</p>
-<ul>
-<li>复制： <code>Ctrl</code> + <code>c</code> (或 <code>Ctrl</code> + <code>Insert</code>)</li>
-<li>剪切： <code>Ctrl</code> + <code>x</code> (或 <code>Shift</code> + <code>Delete</code>)</li>
-<li>粘贴： <code>Ctrl</code> + <code>v</code> (或 <code>Shift</code> + <code>Insert</code>)</li>
-</ul>
-<p><strong>Primery seletion</strong> 则不需要使用额外的快捷键，鼠标选中自动复制，鼠标中建粘贴</p>
-<h2 id="在虚拟终端terminal中">在虚拟终端（terminal）中</h2>
-<p>在虚拟终端里为了避免快捷键冲突一般使用 <code>Ctrl</code> + <code>Shift</code> + <code>c</code> 和 <code>Ctrl</code> + <code>Shift</code> + <code>v</code> 来复制和粘贴。</p>
-<h2 id="在vim中">在vim中</h2>
-<p><strong>Primery seletion</strong> 和 <strong>Clipboard seletion</strong> 分别对应vim中的 <code>*</code> 寄存器和 <code>+</code> 寄存器。使用举例：</p>
-<ul>
-<li>普通模式（Normal-mode）中复制当前行到 <strong>Clipboard seletion</strong> ： <code>&quot;+yy</code></li>
-<li>普通模式中粘贴 <strong>Primery seletion</strong> 的内容： <code>&quot;*p</code></li>
-<li>插入模式（Insert-mode）中粘贴 <strong>Primery seletion</strong> 的内容： <code>Ctrl</code> + <code>r</code> ,<code>*</code> （同时按下  <code>Ctrl</code> 和 <code>r</code> ，松开后按 <code>*</code> ）</li>
-</ul>
-<h2 id="剪贴板管理器">剪贴板管理器</h2>
-<p>fcitx输入法框架自带有一个简单的剪贴板管理器，能够满足日常需求，快捷键是 <code>Ctlr</code> + <code>;</code></p>
-<p>如果有更复杂的需求（比如从剪贴板中检测下载链接并开始下载）则可能需要专门的剪贴板管理器，<a href="https://wiki.archlinux.org/index.php/Clipboard#Managers"target="_blank" rel="noopener noreferrer">这里</a>
-列出了一些剪贴板管理器。</p>
-<h2 id="cli工具">CLI工具</h2>
-<p>要在shell脚本中使用剪贴板的内容需要借助命令行工具，常用的是“xclip”，下面是<a href="https://github.com/tldr-pages/tldr"target="_blank" rel="noopener noreferrer">tldr</a>
-给出的使用示例：</p>
-<p>Copy the output from a command to the X11 primary selection area (clipboard):</p>
-<pre><code>$ echo 123 | xclip
-</code></pre><p>Copy the output from a command to a given X11 selection area:</p>
-<pre><code>$ echo 123 | xclip -selection primary|secondary|clipboard
-</code></pre><p>Copy the contents of a file to the system clipboard, using short notation:</p>
-<pre><code>$ echo 123 | xclip -sel clip
-</code></pre><p>Copy the contents of a file into the system clipboard:</p>
-<pre><code>$ xclip -sel clip input_file.txt
-</code></pre><p>Copy the contents of a PNG image into the system clipboard (can be pasted in other programs correctly):</p>
-<pre><code>$ xclip -sel clip -t image/png input_file.png
-</code></pre><p>Paste the contents of the X11 primary selection area to the console:</p>
-<pre><code>$ xclip -o
-</code></pre><p>Paste the contents of the system clipboard to the console:</p>
-<pre><code>$ xclip -o -sel clip
-</code></pre><p>Paste the contents of the system clipboard into a file:</p>
-<pre><code>$ xclip -o -sel clip &gt; output_file.txt
-</code></pre><hr>
-<p>参考：</p>
-<ul>
-<li><a href="https://zh.wikipedia.org/wiki/%E5%89%AA%E8%B4%B4%E6%9D%BF"target="_blank" rel="noopener noreferrer">维基百科 - 剪贴板</a>
-</li>
-<li><a href="https://blog.lilydjwg.me/2013/11/24/clipboards-in-x-window.41800.html"target="_blank" rel="noopener noreferrer">依云&rsquo;s Blog - X Window 中的剪贴板</a>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/linux/>linux</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/pkexec/"><span class="iconfont icon-article"></span>Linux图形化身份认证</a></p><p><a class="link" href="/posts/get-help-in-linux/"><span class="iconfont icon-article"></span>linux下查看帮助文档的几种方式</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>Linux(X Window)剪贴板&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="Linux(X Window)剪贴板"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">Linux(X Window)剪贴板</h1><p class="article date">Sunday, April 5, 2020</p></section><article class="article markdown-body"><p>Linux下的剪贴板通常由“X Window”提供（X目前还是主流，但Wayland正逐渐取代X），X提供了好几个剪贴板，常用的是 <strong>Primery seletion</strong> 和 <strong>Clipboard seletion</strong>，它们使用不同的区域存储数据。</p><p><strong>Clipboard seletion</strong> 就是我们熟悉的剪贴板，和Windows下一样：</p><ul><li>复制： <code>Ctrl</code> + <code>c</code> (或 <code>Ctrl</code> + <code>Insert</code>)</li><li>剪切： <code>Ctrl</code> + <code>x</code> (或 <code>Shift</code> + <code>Delete</code>)</li><li>粘贴： <code>Ctrl</code> + <code>v</code> (或 <code>Shift</code> + <code>Insert</code>)</li></ul><p><strong>Primery seletion</strong> 则不需要使用额外的快捷键，鼠标选中自动复制，鼠标中建粘贴</p><h2 id=在虚拟终端terminal中>在虚拟终端（terminal）中</h2><p>在虚拟终端里为了避免快捷键冲突一般使用 <code>Ctrl</code> + <code>Shift</code> + <code>c</code> 和 <code>Ctrl</code> + <code>Shift</code> + <code>v</code> 来复制和粘贴。</p><h2 id=在vim中>在vim中</h2><p><strong>Primery seletion</strong> 和 <strong>Clipboard seletion</strong> 分别对应vim中的 <code>*</code> 寄存器和 <code>+</code> 寄存器。使用举例：</p><ul><li>普通模式（Normal-mode）中复制当前行到 <strong>Clipboard seletion</strong> ： <code>"+yy</code></li><li>普通模式中粘贴 <strong>Primery seletion</strong> 的内容： <code>"*p</code></li><li>插入模式（Insert-mode）中粘贴 <strong>Primery seletion</strong> 的内容： <code>Ctrl</code> + <code>r</code> ,<code>*</code> （同时按下 <code>Ctrl</code> 和 <code>r</code> ，松开后按 <code>*</code> ）</li></ul><h2 id=剪贴板管理器>剪贴板管理器</h2><p>fcitx输入法框架自带有一个简单的剪贴板管理器，能够满足日常需求，快捷键是 <code>Ctlr</code> + <code>;</code></p><p>如果有更复杂的需求（比如从剪贴板中检测下载链接并开始下载）则可能需要专门的剪贴板管理器，<a href=https://wiki.archlinux.org/index.php/Clipboard#Managers target=_blank rel="noopener noreferrer">这里</a>
+列出了一些剪贴板管理器。</p><h2 id=cli工具>CLI工具</h2><p>要在shell脚本中使用剪贴板的内容需要借助命令行工具，常用的是“xclip”，下面是<a href=https://github.com/tldr-pages/tldr target=_blank rel="noopener noreferrer">tldr</a>
+给出的使用示例：</p><p>Copy the output from a command to the X11 primary selection area (clipboard):</p><pre><code>$ echo 123 | xclip
+</code></pre><p>Copy the output from a command to a given X11 selection area:</p><pre><code>$ echo 123 | xclip -selection primary|secondary|clipboard
+</code></pre><p>Copy the contents of a file to the system clipboard, using short notation:</p><pre><code>$ echo 123 | xclip -sel clip
+</code></pre><p>Copy the contents of a file into the system clipboard:</p><pre><code>$ xclip -sel clip input_file.txt
+</code></pre><p>Copy the contents of a PNG image into the system clipboard (can be pasted in other programs correctly):</p><pre><code>$ xclip -sel clip -t image/png input_file.png
+</code></pre><p>Paste the contents of the X11 primary selection area to the console:</p><pre><code>$ xclip -o
+</code></pre><p>Paste the contents of the system clipboard to the console:</p><pre><code>$ xclip -o -sel clip
+</code></pre><p>Paste the contents of the system clipboard into a file:</p><pre><code>$ xclip -o -sel clip &gt; output_file.txt
+</code></pre><hr><p>参考：</p><ul><li><a href=https://zh.wikipedia.org/wiki/%E5%89%AA%E8%B4%B4%E6%9D%BF target=_blank rel="noopener noreferrer">维基百科 - 剪贴板</a></li><li><a href=https://blog.lilydjwg.me/2013/11/24/clipboards-in-x-window.41800.html target=_blank rel="noopener noreferrer">依云&rsquo;s Blog - X Window 中的剪贴板</a></li></ul></article><section class="article labels"><a class=tag href=/tags/linux/>linux</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/pkexec/><span class="iconfont icon-article"></span>Linux图形化身份认证</a></p><p><a class=link href=/posts/get-help-in-linux/><span class="iconfont icon-article"></span>linux下查看帮助文档的几种方式</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>

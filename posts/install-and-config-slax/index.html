@@ -1,57 +1,22 @@
-<!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.83.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Slax的安装和基本配置&nbsp;&ndash;&nbsp;Glaumar&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css" integrity="sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Slax的安装和基本配置" /><body><section id="header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Glaumar's Blog</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a></nav></div></span></div><div class="site slogan"><span class="title">#! /because/we/can</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Slax的安装和基本配置</h1><p class="article date">Monday, March 23, 2020</p></section><article class="article markdown-body"><h2 id="介绍">介绍</h2>
-<p><a href="https://www.slax.org/"target="_blank" rel="noopener noreferrer">Slax</a>
-是一个基于Debian的口袋操作系统（Pocket operating system）,可以直接从u盘启动和使用。本质上它和主流发行版安装时使用的live CD是一样的，不会保存用户对系统的修改，不同的是Slax会自动将用户的修改保存到外部文件中，下次启动时再自动加载，以实现保存用户数据的目的。</p>
-<h2 id="准备一个u盘">准备一个u盘</h2>
-<p>u盘可以是各系统通用的 <code>fat32</code> 格式，也可以是Linux的 <code>ext4</code> 格式。在FAT文件系统中，slax 使用单个文件 <code>/slax/changes/changes.dat</code> 来保存用户对系统的修改，又由于 <code>fat32</code> 单个文件最大为4GB，所以用户能够保存下来的数据大小为4GB（可以通过自制模块在一定程度上规避这个问题）， <code>ext4</code> 则不存在这个问题，请根据需要自己取舍。</p>
-<h2 id="下载镜像">下载镜像</h2>
-<p>请到<a href="https://www.slax.org/"target="_blank" rel="noopener noreferrer">官网</a>
-选择你需要的镜像</p>
-<h2 id="安装到u盘">安装到u盘</h2>
-<p>解压刚刚下载的ISO文件，里面只有一个文件夹 <code>slax</code> 和一个 <code>readme.txt</code> 文件。将slax文件夹复制到你的u盘根目录，然后在u盘中执行 <code>slax/boot</code> 目录下的安装脚本 <code>bootinst.bat</code> (windows环境下) 或者 <code>bootinst.sh</code> （linux环境下）。linux中如果在文件管理器里双击无法执行该脚本可以在命令行中进入脚本所在目录，然后</p>
-<pre><code>$ sudo sh bootinst.sh
-</code></pre><p>执行结果大概是这个样子</p>
-<pre><code>* attempting to install bootloader to /run/media/glaumar/8115-F818/slax/boot...
+<!doctype html><html lang=en><meta charset=utf-8><meta name=generator content="Hugo 0.83.1"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=color-scheme content="light dark"><meta name=supported-color-schemes content="light dark"><title>Slax的安装和基本配置&nbsp;&ndash;&nbsp;Glaumar's Blog</title><link rel=stylesheet href=/css/core.min.78719e8336f9f7af67a9d03a6d2bcd57bbe5df387d3b75b34078aaa427279d260421eebb4123000aba27599bfce6538c.css integrity=sha384-eHGegzb5969nqdA6bSvNV7vl3zh9O3WzQHiqpCcnnSYEIe67QSMACronWZv85lOM><meta name=twitter:card content="summary"><meta name=twitter:title content="Slax的安装和基本配置"><body><section id=header><div class="header wrap"><span class="header left-side"><a class="site home" href=/><span class="site name">Glaumar's Blog</span></a></span>
+<span class="header right-side"><div class="nav wrap"><nav class=nav><a class="nav item" href=/categories/>Categories</a><a class="nav item" href=/tags/>Tags</a><a class="nav item" href=/about>About</a></nav></div></span></div><div class="site slogan"><span class=title>#! /because/we/can</span></div></section><section id=content><div class=article-container><section class="article header"><h1 class="article title">Slax的安装和基本配置</h1><p class="article date">Monday, March 23, 2020</p></section><article class="article markdown-body"><h2 id=介绍>介绍</h2><p><a href=https://www.slax.org/ target=_blank rel="noopener noreferrer">Slax</a>
+是一个基于Debian的口袋操作系统（Pocket operating system）,可以直接从u盘启动和使用。本质上它和主流发行版安装时使用的live CD是一样的，不会保存用户对系统的修改，不同的是Slax会自动将用户的修改保存到外部文件中，下次启动时再自动加载，以实现保存用户数据的目的。</p><h2 id=准备一个u盘>准备一个u盘</h2><p>u盘可以是各系统通用的 <code>fat32</code> 格式，也可以是Linux的 <code>ext4</code> 格式。在FAT文件系统中，slax 使用单个文件 <code>/slax/changes/changes.dat</code> 来保存用户对系统的修改，又由于 <code>fat32</code> 单个文件最大为4GB，所以用户能够保存下来的数据大小为4GB（可以通过自制模块在一定程度上规避这个问题）， <code>ext4</code> 则不存在这个问题，请根据需要自己取舍。</p><h2 id=下载镜像>下载镜像</h2><p>请到<a href=https://www.slax.org/ target=_blank rel="noopener noreferrer">官网</a>
+选择你需要的镜像</p><h2 id=安装到u盘>安装到u盘</h2><p>解压刚刚下载的ISO文件，里面只有一个文件夹 <code>slax</code> 和一个 <code>readme.txt</code> 文件。将slax文件夹复制到你的u盘根目录，然后在u盘中执行 <code>slax/boot</code> 目录下的安装脚本 <code>bootinst.bat</code> (windows环境下) 或者 <code>bootinst.sh</code> （linux环境下）。linux中如果在文件管理器里双击无法执行该脚本可以在命令行中进入脚本所在目录，然后</p><pre><code>$ sudo sh bootinst.sh
+</code></pre><p>执行结果大概是这个样子</p><pre><code>* attempting to install bootloader to /run/media/glaumar/8115-F818/slax/boot...
 /run/media/glaumar/8115-F818/slax/boot is device /dev/sdb
 Boot installation finished.
 Press Enter...
-</code></pre><h2 id="启动">启动</h2>
-<p>像其他发行版那样开机是选择从u盘启动即可
-<em>注意：Slax不支持UEFI启动，如果你之前在BIOS里禁用了传统的BIOS启动方式，记得修改</em></p>
-<h2 id="启动选项">启动选项</h2>
-<p>启动时会在系统LOGO处等待5秒，期间按下 <code>ESC</code> 可以选择启动项，默认使用第一个启动项</p>
-<pre><code>	Run Slax (Keep changes persistent)
+</code></pre><h2 id=启动>启动</h2><p>像其他发行版那样开机是选择从u盘启动即可
+<em>注意：Slax不支持UEFI启动，如果你之前在BIOS里禁用了传统的BIOS启动方式，记得修改</em></p><h2 id=启动选项>启动选项</h2><p>启动时会在系统LOGO处等待5秒，期间按下 <code>ESC</code> 可以选择启动项，默认使用第一个启动项</p><pre><code>	Run Slax (Keep changes persistent)
     Run Slax (Fresh start)
     Run Slax (Copy to RAM)
-</code></pre><p>三个启动项都比较直白不做过多解释，没有特殊需求直接回车即可</p>
-<p>Slax使用的是fluxbox桌面（我和你一样完全没听说过）
+</code></pre><p>三个启动项都比较直白不做过多解释，没有特殊需求直接回车即可</p><p>Slax使用的是fluxbox桌面（我和你一样完全没听说过）
 进入桌面后是这个样子
-<img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/install-and-config-slax-2.png"
-        alt/></p>
-<p>只安装了几个必要应用，按下键盘的 <code>PrtSc</code> 键可以截图
-<img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/install-and-config-slax-3"
-        alt/></p>
-<h2 id="配置">配置</h2>
-<p>这个系统主要是作为我的应急救援系统，以下只做一些最基本的配置。</p>
-<p>预装有图形化的网络工具，连接网络后开始配置</p>
-<h3 id="软件模块">软件模块</h3>
-<p>官网说的很清楚Slax 9不再支持官网下载的模块，不要被老教程带偏了</p>
-<blockquote>
-<p>Warning: This part of Slax website is deprecated.
+<img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/install-and-config-slax-2.png alt></p><p>只安装了几个必要应用，按下键盘的 <code>PrtSc</code> 键可以截图
+<img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/install-and-config-slax-3 alt></p><h2 id=配置>配置</h2><p>这个系统主要是作为我的应急救援系统，以下只做一些最基本的配置。</p><p>预装有图形化的网络工具，连接网络后开始配置</p><h3 id=软件模块>软件模块</h3><p>官网说的很清楚Slax 9不再支持官网下载的模块，不要被老教程带偏了</p><blockquote><p>Warning: This part of Slax website is deprecated.
 Modules downloadable from this website were made for old Slax versions (7.x) and they may not work on current Slax 9.x.
-For Slax 9, use &lsquo;apt&rsquo; to install software, there is no need for dedicated module repository anymore.</p>
-</blockquote>
-<p>相对的，现在的slax直接使用debian的软件源，使用 <code>apt</code> 安装即可</p>
-<h3 id="换源">换源</h3>
-<p>默认使用的debian官方软件源国内访问速度堪忧，这里准备换成清华大学源。
-先确定当前slax基于哪个版本的debian，slax9基于debian9（stretch），如果不确定可以执行 <code>cat /etc/os-release</code> 查看详细信息</p>
-<pre><code>$ cat /etc/os-release
+For Slax 9, use &lsquo;apt&rsquo; to install software, there is no need for dedicated module repository anymore.</p></blockquote><p>相对的，现在的slax直接使用debian的软件源，使用 <code>apt</code> 安装即可</p><h3 id=换源>换源</h3><p>默认使用的debian官方软件源国内访问速度堪忧，这里准备换成清华大学源。
+先确定当前slax基于哪个版本的debian，slax9基于debian9（stretch），如果不确定可以执行 <code>cat /etc/os-release</code> 查看详细信息</p><pre><code>$ cat /etc/os-release
 PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;
 NAME=&quot;Debian GNU/Linux&quot;
 VERSION_ID=&quot;9&quot;
@@ -61,13 +26,8 @@ ID=debian
 HOME_URL=&quot;https://www.debian.org/&quot;
 SUPPORT_URL=&quot;https://www.debian.org/support&quot;
 BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;
-</code></pre><p>然后到<a href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/"target="_blank" rel="noopener noreferrer">这里</a>
-选择相应版本并复制软件源链接</p>
-<p><img  src="https://raw.githubusercontent.com/glaumar/pictures/master/blog/install-and-config-slax-1.png"
-        alt/></p>
-<p>打开 <code>/etc/apt/sources.list</code> ，把刚刚复制的内容粘贴进去覆盖原有文本，并把https改为http（slax缺个包，暂时不支持https），按 <code>Ctrl+S</code> 保存。</p>
-<p>改完后 <code>/etc/apt/sources.list</code> 大概是这个样子（中文部分会变成框框，因为现在没有安装中文字体无需理会）</p>
-<pre><code># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+</code></pre><p>然后到<a href=https://mirrors.tuna.tsinghua.edu.cn/help/debian/ target=_blank rel="noopener noreferrer">这里</a>
+选择相应版本并复制软件源链接</p><p><img src=https://raw.githubusercontent.com/glaumar/pictures/master/blog/install-and-config-slax-1.png alt></p><p>打开 <code>/etc/apt/sources.list</code> ，把刚刚复制的内容粘贴进去覆盖原有文本，并把https改为http（slax缺个包，暂时不支持https），按 <code>Ctrl+S</code> 保存。</p><p>改完后 <code>/etc/apt/sources.list</code> 大概是这个样子（中文部分会变成框框，因为现在没有安装中文字体无需理会）</p><pre><code># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
 deb http://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free
 deb http://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free
@@ -76,51 +36,18 @@ deb http://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib n
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free
 deb http://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free
-</code></pre><h3 id="更新系统">更新系统</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt update <span class="o">&amp;&amp;</span> apt upgrade -y
-</code></pre></div><h3 id="https源支持可选">https源支持（可选）</h3>
-<p>安装必要的包</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt install apt-transport-https
-</code></pre></div><p>把 <code>/etc/apt/sources.list</code> 的内容改回原来的https，然后更新缓存</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt update
-</code></pre></div><h3 id="中文化">中文化</h3>
-<p>我更喜欢英文界面，这里只是增加中文的支持不是修改系统为中文</p>
-<h4 id="中文字体">中文字体</h4>
-<p>安装中文字体</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt install fonts-noto-cjk
+</code></pre><h3 id=更新系统>更新系统</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ apt update <span class=o>&amp;&amp;</span> apt upgrade -y
+</code></pre></div><h3 id=https源支持可选>https源支持（可选）</h3><p>安装必要的包</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ apt install apt-transport-https
+</code></pre></div><p>把 <code>/etc/apt/sources.list</code> 的内容改回原来的https，然后更新缓存</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ apt update
+</code></pre></div><h3 id=中文化>中文化</h3><p>我更喜欢英文界面，这里只是增加中文的支持不是修改系统为中文</p><h4 id=中文字体>中文字体</h4><p>安装中文字体</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ apt install fonts-noto-cjk
 </code></pre></div><p>修改fluxbox字体
-在 <code>/root/.fluxbox/overlay</code> 中添加下面这行并保存</p>
-<pre><code>*font: Noto Sans CJK SC-9
-</code></pre><p><em>注意：需要重启或者重新进入桌面才能让配置生效</em></p>
-<h4 id="输入法">输入法</h4>
-<p>安装必要的包</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ apt install dbus-x11 fcitx fcitx-libpinyin fcitx-frontend-* fcitx-config-gtk
-</code></pre></div><p>将 <code>~/.initrc</code> 修改为下面这样</p>
-<pre><code>export GTK_IM_MODULE=fcitx
+在 <code>/root/.fluxbox/overlay</code> 中添加下面这行并保存</p><pre><code>*font: Noto Sans CJK SC-9
+</code></pre><p><em>注意：需要重启或者重新进入桌面才能让配置生效</em></p><h4 id=输入法>输入法</h4><p>安装必要的包</p><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ apt install dbus-x11 fcitx fcitx-libpinyin fcitx-frontend-* fcitx-config-gtk
+</code></pre></div><p>将 <code>~/.initrc</code> 修改为下面这样</p><pre><code>export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=&quot;@im=fcitx&quot;
 fcitx&amp;
 startfluxbox
-</code></pre><h3 id="修改时区">修改时区</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-</code></pre></div><p>重启然后根据你的需要安装其他软件，比如换个称手的编辑器 <code>vim</code>，换个喜欢的浏览器 <code>firefox</code>，亦或是自己制作软件模块（<a href="https://www.slax.org/customize.php"target="_blank" rel="noopener noreferrer">官方教程</a>
-）</p>
-<hr>
-<p>参考：</p>
-<ul>
-<li><a href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/"target="_blank" rel="noopener noreferrer">清华大学Debian 镜像使用帮助</a>
-</li>
-<li><a href="https://www.slax.org/starting.php"target="_blank" rel="noopener noreferrer">Slax官方安装教程</a>
-</li>
-</ul>
-</article><section class="article labels"><a class="tag" href=/tags/linux/>linux</a></section><section class="article author"><div class="details"><a class="item" href="https://github.com/glaumar" target="_blank" rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div>
-</section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/get-help-in-linux/"><span class="iconfont icon-article"></span>linux下查看帮助文档的几种方式</a></p><p><a class="link" href="/posts/x-y-problem/"><span class="iconfont icon-article"></span>转载：X-Y Problem</a></p></section></div></section><section id="footer"><div class="footer-wrap">
-    <p class="copyright">©2021 glaumar.</p>
-    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
-        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
-</section></body>
-
-</html>
+</code></pre><h3 id=修改时区>修改时区</h3><div class=highlight><pre class=chroma><code class=language-shell data-lang=shell>$ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</code></pre></div><p>重启然后根据你的需要安装其他软件，比如换个称手的编辑器 <code>vim</code>，换个喜欢的浏览器 <code>firefox</code>，亦或是自己制作软件模块（<a href=https://www.slax.org/customize.php target=_blank rel="noopener noreferrer">官方教程</a>
+）</p><hr><p>参考：</p><ul><li><a href=https://mirrors.tuna.tsinghua.edu.cn/help/debian/ target=_blank rel="noopener noreferrer">清华大学Debian 镜像使用帮助</a></li><li><a href=https://www.slax.org/starting.php target=_blank rel="noopener noreferrer">Slax官方安装教程</a></li></ul></article><section class="article labels"><a class=tag href=/tags/linux/>linux</a></section><section class="article author"><div class=details><a class=item href=https://github.com/glaumar target=_blank rel="noopener noreferrer"><span class="iconfont icon-github"></span>&nbsp;glaumar</a></div></section></div><div class="article bottom"><section class="article navigation"><p><a class=link href=/posts/get-help-in-linux/><span class="iconfont icon-article"></span>linux下查看帮助文档的几种方式</a></p><p><a class=link href=/posts/x-y-problem/><span class="iconfont icon-article"></span>转载：X-Y Problem</a></p></section></div></section><section id=footer><div class=footer-wrap><p class=copyright>©2021 glaumar.</p><p class=powerby><span>Powered&nbsp;by&nbsp;</span><a href=https://gohugo.io target=_blank rel="noopener noreferrer">Hugo</a><span>&nbsp;&&nbsp;</span><a href=https://themes.gohugo.io/hugo-notepadium/ target=_blank rel="noopener noreferrer">Notepadium</a></p></div></section></body></html>
